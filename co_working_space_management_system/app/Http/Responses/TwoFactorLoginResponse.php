@@ -24,9 +24,9 @@ class TwoFactorLoginResponse implements TwoFactorLoginResponseContract
             case '0':
                 return redirect()->intended(config('fortify.home'));
             case '1':
-                return redirect()->intended('/host/dashboard');
+                return redirect()->intended(config('fortify.home'));
             default:
-                return redirect('/');
+                return redirect()->intended(config('fortify.home'));
         }
     }
 }
