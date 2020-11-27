@@ -22,11 +22,11 @@ class LoginResponse implements LoginResponseContract
 
         switch ($role) {
             case 0:
-                return redirect()->intended(config('fortify.home'));
+                return redirect()->intended(config('fortify.home')); //admin dashboard
             case 1:
-                return redirect()->intended('/host/dashboard');
+                return redirect()->intended(config('fortify.home')); //employee dashboard
             default:
-                return redirect('/');
+                return redirect()->intended(config('fortify.home')); //customer dashboard
         }
     }
 }

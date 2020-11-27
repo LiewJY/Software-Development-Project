@@ -101,23 +101,30 @@
                     </div>
                     <div x-show="open" x-description="Profile dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
                         <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Your Profile</a>
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Sign out</a>
+                        <form method="POST" action="{{ route('logout') }}">
+                            @csrf
+
+                            <x-jet-dropdown-link href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem" onclick="event.preventDefault();
+                                this.closest('form').submit();">
+                                {{ __('Logout') }}
+                            </x-jet-dropdown-link>
+                            <!-- <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Sign out</a>
+                    </div> -->
                     </div>
+                    @endguest
+
                 </div>
-                @endguest
-
             </div>
-        </div>
 
-        {{-- mobile menu --}}
-        <div x-description="Mobile menu, toggle classes based on menu state." x-state:on="Menu open" x-state:off="Menu closed" :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
-            <div class="px-2 pt-2 pb-3 space-y-1">
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900">Dashboard</a>
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Team</a>
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Projects</a>
-                <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Calendar</a>
+            {{-- mobile menu --}}
+            <div x-description="Mobile menu, toggle classes based on menu state." x-state:on="Menu open" x-state:off="Menu closed" :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
+                <div class="px-2 pt-2 pb-3 space-y-1">
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900">Dashboard</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Team</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Projects</a>
+                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Calendar</a>
+                </div>
             </div>
-        </div>
     </nav>
 
 
