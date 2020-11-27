@@ -21,7 +21,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 </head>
 
-<body>
+<body class="bg-white">
 
 
     <nav x-data="{ open: false }" class="bg-gray-800">
@@ -46,39 +46,39 @@
                         <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
                         <img class="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
                     </div>
-                    {{-- content --}}
+                    {{-- content any chnages here need to be made to mobile view below--}}
                     <div class="hidden md:block sm:ml-6">
                         @guest
                         <div class="flex space-x-4">
-                            <a href="{{ url('/') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Home</a>
-                            <a href="{{ url('/locations') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Locations</a>
-                            <a href="{{ url('/membershipplans') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Membership Plans</a>
-                            <a href="{{ url('/contactus') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Contact Us</a>
-                            <a href="{{ url('/aboutus') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">About Us</a>
+                            <a href="{{ url('/') }}" class="px-3 py-3 border-b-4 border-white text-sm font-medium text-white hover:bg-gray-700">Home</a>
+                            <a href="{{ url('/locations') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Locations</a>
+                            <a href="{{ url('/membershipplans') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Membership Plans</a>
+                            <a href="{{ url('/contactus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Contact Us</a>
+                            <a href="{{ url('/aboutus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">About Us</a>
                         </div>
                         @elseif(Auth::user()->roles == 0)
                         <div class="flex space-x-4">
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Staff</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Maintenance</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Membership Plans</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Business Report</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Locations</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Rooms</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Staff</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Maintenance</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Membership Plans</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Business Report</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Locations</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Rooms</a>
                         </div>
                         @elseif(Auth::user()->roles == 1)
                         <div class="flex space-x-4">
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Reservations</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Customer</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Maintenance</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Reservations</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Customer</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Maintenance</a>
                         </div>
                         @elseif(Auth::user()->roles == 2)
                         <div class="flex space-x-4">
-                            <a href="{{ url('/') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Home</a>
-                            <a href="{{ url('/locations') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Locations</a>
-                            <a href="{{ url('/membershipplans') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Membership Plans</a>
-                            <a href="#" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Bookings</a>
-                            <a href="{{ url('/contactus') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">Contact Us</a>
-                            <a href="{{ url('/aboutus') }}" class="px-3 py-2 rounded-md text-sm font-medium text-white hover:text-white hover:bg-gray-700">About Us</a>
+                            <a href="{{ url('/') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Home</a>
+                            <a href="{{ url('/locations') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Locations</a>
+                            <a href="{{ url('/membershipplans') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Membership Plans</a>
+                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Bookings</a>
+                            <a href="{{ url('/contactus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Contact Us</a>
+                            <a href="{{ url('/aboutus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">About Us</a>
                         </div>
 
                         @endguest
@@ -100,11 +100,11 @@
                         </button>
                     </div>
                     <div x-show="open" x-description="Profile dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Your Profile</a>
+                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-grey-700" role="menuitem">Your Profile</a>
                         <form method="POST" action="{{ route('logout') }}">
                             @csrf
 
-                            <x-jet-dropdown-link href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem" onclick="event.preventDefault();
+                            <x-jet-dropdown-link href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-grey-700" role="menuitem" onclick="event.preventDefault();
                                 this.closest('form').submit();">
                                 {{ __('Logout') }}
                             </x-jet-dropdown-link>
@@ -119,12 +119,41 @@
 
             {{-- mobile menu --}}
             <div x-description="Mobile menu, toggle classes based on menu state." x-state:on="Menu open" x-state:off="Menu closed" :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
-                <div class="px-2 pt-2 pb-3 space-y-1">
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-white bg-gray-900">Dashboard</a>
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Team</a>
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Projects</a>
-                    <a href="#" class="block px-3 py-2 rounded-md text-base font-medium text-gray-300 hover:text-white hover:bg-gray-700">Calendar</a>
-                </div>
+                @guest
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        <a href="{{ url('/') }}" class="block px-3 py-2 border-b-2 border-white text-base font-medium text-gray-300 hover:bg-gray-700">Home</a>
+                        <a href="{{ url('/locations') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Locations</a>
+                        <a href="{{ url('/membershipplans') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Membership Plans</a>
+                        <a href="{{ url('/contactus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Contact Us</a>
+                        <a href="{{ url('/aboutus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">About Us</a>
+                    </div>
+                    @elseif(Auth::user()->roles == 0)
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Staff</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Maintenance</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Membership Plans</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Business Report</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Locations</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Rooms</a>
+                    </div>
+                    @elseif(Auth::user()->roles == 1)
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Reservations</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Customer</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Maintenance</a>
+                    </div>
+                    @elseif(Auth::user()->roles == 2)
+                    <div class="px-2 pt-2 pb-3 space-y-1">
+                        <a href="{{ url('/') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Home</a>
+                        <a href="{{ url('/locations') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Locations</a>
+                        <a href="{{ url('/membershipplans') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Membership Plans</a>
+                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Bookings</a>
+                        <a href="{{ url('/contactus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Contact Us</a>
+                        <a href="{{ url('/aboutus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">About Us</a>
+                    </div>
+
+                @endguest
+
             </div>
     </nav>
 
