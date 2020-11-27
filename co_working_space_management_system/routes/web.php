@@ -15,19 +15,19 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('index');
-});
+})->name('index');
 Route::get('/locations', function () {
     return view('locations');
-});
+})->name('locations');
 Route::get('/membershipplans', function () {
     return view('membershipPlans');
-});
+})->name('membershipplans');
 Route::get('/contactus', function () {
     return view('contactUs');
-});
+})->name('contactus');
 Route::get('/aboutus', function () {
     return view('aboutUs');
-});
+})->name('aboutus');
 
 
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {

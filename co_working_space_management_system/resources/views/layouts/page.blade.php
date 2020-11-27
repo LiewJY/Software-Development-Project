@@ -43,8 +43,7 @@
                 <div class="flex-1 flex items-center justify-center md:items-stretch md:justify-start">
                     {{-- logo --}}
                     <div class="flex-shrink-0 flex items-center">
-                        <img class="block lg:hidden h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-mark-indigo-500.svg" alt="Workflow">
-                        <img class="hidden lg:block h-8 w-auto" src="https://tailwindui.com/img/logos/workflow-logo-indigo-500-mark-white-text.svg" alt="Workflow">
+                        <x-jet-application-logo class="block h-10 w-52" />
                     </div>
                     {{-- content any chnages here need to be made to mobile view below--}}
                     <div class="hidden md:block sm:ml-6">
@@ -81,7 +80,8 @@
                             <a href="{{ url('/aboutus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">About Us</a>
                         </div>
 
-                        @endguest
+
+                        @endauth
                     </div>
                 </div>
 
@@ -93,68 +93,139 @@
                 </div>
                 @else
                 {{-- after login is here --}}
-                <div @click.away="open = false" class="ml-3 relative justify-end" x-data="{ open: false }">
-                    <div>
-                        <button @click="open = !open" class="text-white" id="user-menu" aria-haspopup="true" x-bind:aria-expanded="open" aria-expanded="true">
-                            {{ Auth::user()->name }}
-                        </button>
-                    </div>
-                    <div x-show="open" x-description="Profile dropdown panel, show/hide based on dropdown state." x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="origin-top-right absolute right-0 mt-2 w-48 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5" role="menu" aria-orientation="vertical" aria-labelledby="user-menu">
-                        <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-grey-700" role="menuitem">Your Profile</a>
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
+                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                    <x-jet-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                            <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                                <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                            </button>
+                            @else
+                            <button class="flex items-center text-sm font-medium text-gray-500 hover:text-gray-700 hover:border-gray-300 focus:outline-none focus:text-gray-700 focus:border-gray-300 transition duration-150 ease-in-out">
+                                <div class="text-white">{{ Auth::user()->name }}</div>
 
-                            <x-jet-dropdown-link href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-grey-700" role="menuitem" onclick="event.preventDefault();
-                                this.closest('form').submit();">
-                                {{ __('Logout') }}
+                                <div class="ml-1 text-white">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                            @endif
+                        </x-slot>
+
+                        <x-slot name="content">
+                            <!-- Account Management -->
+                            <div class="block px-4 py-2 text-xs text-gray-400">
+                                {{ __('Manage Account') }}
+                            </div>
+
+                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                                {{ __('Profile') }}
                             </x-jet-dropdown-link>
-                        </form>    
-                            <!-- <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Sign out</a>
-                    </div> -->
-                    </div>
-                    @endguest
 
+                            <div class="border-t border-gray-100"></div>
+
+                            <!-- Authentication -->
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+
+                                <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                                                            this.closest('form').submit();">
+                                    {{ __('Logout') }}
+                                </x-jet-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-jet-dropdown>
                 </div>
+                <!-- <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Sign out</a>
+                    </div> -->
             </div>
 
-            {{-- mobile menu --}}
-            <div x-description="Mobile menu, toggle classes based on menu state." x-state:on="Menu open" x-state:off="Menu closed" :class="{ 'block': open, 'hidden': !open }" class="hidden md:hidden">
+            @endauth
+
+        </div>
+        </div>
+
+        {{-- mobile menu --}}
+        <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+            <div class="pt-2 pb-3 space-y-1">
                 @guest
-                    <div class="px-2 pt-2 pb-3 space-y-1">
-                        <a href="{{ url('/') }}" class="block px-3 py-2 border-b-2 border-white text-base font-medium text-gray-300 hover:bg-gray-700">Home</a>
-                        <a href="{{ url('/locations') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Locations</a>
-                        <a href="{{ url('/membershipplans') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Membership Plans</a>
-                        <a href="{{ url('/contactus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Contact Us</a>
-                        <a href="{{ url('/aboutus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">About Us</a>
-                    </div>
-                    @elseif(Auth::user()->roles == 0)
-                    <div class="px-2 pt-2 pb-3 space-y-1">
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Staff</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Maintenance</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Membership Plans</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Business Report</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Locations</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Rooms</a>
-                    </div>
-                    @elseif(Auth::user()->roles == 1)
-                    <div class="px-2 pt-2 pb-3 space-y-1">
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Reservations</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Customer</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Maintenance</a>
-                    </div>
-                    @elseif(Auth::user()->roles == 2)
-                    <div class="px-2 pt-2 pb-3 space-y-1">
-                        <a href="{{ url('/') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Home</a>
-                        <a href="{{ url('/locations') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Locations</a>
-                        <a href="{{ url('/membershipplans') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Membership Plans</a>
-                        <a href="#" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Bookings</a>
-                        <a href="{{ url('/contactus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">Contact Us</a>
-                        <a href="{{ url('/aboutus') }}" class="block px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700">About Us</a>
-                    </div>
+
+                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Home') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                        {{ __('Locations') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                        {{ __('Membership Plans') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                        {{ __('Contact Us') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                        {{ __('About Us') }}
+                    </x-jet-responsive-nav-link>
+
+                @elseif(Auth::user()->roles == 0)
+
+                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Staff') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                        {{ __('Maintenance') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                        {{ __('Membership Plans') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                        {{ __('Business Report') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                        {{ __('Locations') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                        {{ __('Rooms') }}
+                    </x-jet-responsive-nav-link>
+
+                @elseif(Auth::user()->roles == 1)
+
+                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Reservations') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                        {{ __('Customer') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                        {{ __('Maintenance') }}
+                    </x-jet-responsive-nav-link>
+                    
+                @elseif(Auth::user()->roles == 2)
+
+                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                        {{ __('Home') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                        {{ __('Locations') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                        {{ __('Membership Plans') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                        {{ __('Bookings') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                        {{ __('Contact Us') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                        {{ __('About Us') }}
+                    </x-jet-responsive-nav-link>
 
                 @endguest
-
             </div>
+            
+        </div>
+
     </nav>
 
 
