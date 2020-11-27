@@ -108,6 +108,7 @@
                                 this.closest('form').submit();">
                                 {{ __('Logout') }}
                             </x-jet-dropdown-link>
+                        </form>    
                             <!-- <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Sign out</a>
                     </div> -->
                     </div>
