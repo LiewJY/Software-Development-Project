@@ -27,7 +27,7 @@
     <nav x-data="{ open: false }" class="bg-gray-800">
         <div class="mx-auto px-2 sm:px-6 lg:px-8">
             <div class="relative flex items-center justify-between h-14">
-                <div class="absolute inset-y-0 left-0 flex items-center md:hidden">
+                <div class="absolute inset-y-0 left-0 flex items-center lg:hidden">
                     <!-- Mobile menu button-->
                     <button @click="open = !open" class="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-white hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white" x-bind:aria-expanded="open">
                         <!-- Icon when menu is closed. -->
@@ -40,44 +40,84 @@
                         </svg>
                     </button>
                 </div>
-                <div class="flex-1 flex items-center justify-center md:items-stretch md:justify-start">
+                <div class="flex-1 flex items-center justify-center lg:items-stretch lg:justify-start">
                     {{-- logo --}}
                     <div class="flex-shrink-0 flex items-center">
                         <x-jet-application-logo class="block h-10 w-52" />
                     </div>
                     {{-- content any chnages here need to be made to mobile view below--}}
-                    <div class="hidden md:block sm:ml-6">
+                    <div class="hidden lg:block sm:ml-6">
                         @guest
                         <div class="flex space-x-4">
-                            <a href="{{ url('/') }}" class="px-3 py-3 border-b-4 border-white text-sm font-medium text-white hover:bg-gray-700">Home</a>
-                            <a href="{{ url('/locations') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Locations</a>
-                            <a href="{{ url('/membershipplans') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Membership Plans</a>
-                            <a href="{{ url('/contactus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Contact Us</a>
-                            <a href="{{ url('/aboutus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">About Us</a>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Home') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                                {{ __('Locations') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                                {{ __('Membership Plans') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                                {{ __('Contact Us') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                                {{ __('About Us') }}
+                            </x-jet-nav-link>
                         </div>
                         @elseif(Auth::user()->roles == 0)
                         <div class="flex space-x-4">
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Staff</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Maintenance</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Membership Plans</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Business Report</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Locations</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Rooms</a>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Staff') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Maintenance') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Membership Plans') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Business Report') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Locations') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Rooms') }}
+                            </x-jet-nav-link>
                         </div>
                         @elseif(Auth::user()->roles == 1)
                         <div class="flex space-x-4">
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Reservations</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Customer</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Maintenance</a>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Reservations') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Customer') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Maintenance') }}
+                            </x-jet-nav-link>
                         </div>
                         @elseif(Auth::user()->roles == 2)
                         <div class="flex space-x-4">
-                            <a href="{{ url('/') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Home</a>
-                            <a href="{{ url('/locations') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Locations</a>
-                            <a href="{{ url('/membershipplans') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Membership Plans</a>
-                            <a href="#" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Bookings</a>
-                            <a href="{{ url('/contactus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">Contact Us</a>
-                            <a href="{{ url('/aboutus') }}" class="px-3 py-3 text-sm font-medium text-white hover:bg-gray-700">About Us</a>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Home') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                                {{ __('Locations') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                                {{ __('Membership Plans') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                                {{ __('Bookings') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                                {{ __('Contact Us') }}
+                            </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                                {{ __('About Us') }}
+                            </x-jet-nav-link>
                         </div>
 
 
@@ -87,13 +127,17 @@
 
                 @guest
                 {{-- put login and register here --}}
-                <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
-                    <a href="{{ route('login') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">Login</a>
-                    <a href="{{ route('register') }}" class="px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:text-white hover:bg-gray-700">Register</a>
+                <div  class="absolute right-0 flex items-center pr-2 hidden lg:block sm:ml-6">
+                    <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                        {{ __('Login') }}
+                    </x-jet-nav-link>
+                    <x-jet-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                        {{ __('Register') }}
+                    </x-jet-nav-link>
                 </div>
                 @else
                 {{-- after login is here --}}
-                <div class="hidden sm:flex sm:items-center sm:ml-6">
+                <div class="sm:flex sm:items-center sm:ml-6">
                     <x-jet-dropdown align="right" width="48">
                         <x-slot name="trigger">
                             @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
@@ -130,15 +174,14 @@
                                 @csrf
 
                                 <x-jet-dropdown-link href="{{ route('logout') }}" onclick="event.preventDefault();
-                                                            this.closest('form').submit();">
+                                 this.closest('form').submit();">
                                     {{ __('Logout') }}
                                 </x-jet-dropdown-link>
                             </form>
                         </x-slot>
                     </x-jet-dropdown>
                 </div>
-                <!-- <a href="{{ route('logout') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-black" role="menuitem">Sign out</a>
-                    </div> -->
+
             </div>
 
             @endauth
@@ -147,7 +190,7 @@
         </div>
 
         {{-- mobile menu --}}
-        <div :class="{'block': open, 'hidden': ! open}" class="hidden sm:hidden">
+        <div :class="{'block': open, 'hidden': ! open}" class="hidden lg:hidden">
             <div class="pt-2 pb-3 space-y-1">
                 @guest
 
@@ -165,6 +208,13 @@
                     </x-jet-responsive-nav-link>
                     <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
                         {{ __('About Us') }}
+                    </x-jet-responsive-nav-link>
+                    <hr>
+                    <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                        {{ __('Login') }}
+                    </x-jet-responsive-nav-link>
+                    <x-jet-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                        {{ __('Register') }}
                     </x-jet-responsive-nav-link>
 
                 @elseif(Auth::user()->roles == 0)
@@ -228,9 +278,10 @@
 
     </nav>
 
+<div class=" items-center xl:container mx-auto">
 
     @yield('content')
-
+</div>
 
 </body>
 
