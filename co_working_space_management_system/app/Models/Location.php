@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Membership extends Model
+class Location extends Model
 {
     use HasFactory;
 
@@ -16,9 +16,20 @@ class Membership extends Model
      */
     protected $fillable = [
         'name',
-        'price',
-        'descritption'
+        'address',
+        'contact_number',
+        'description'
     ];
 
+    /**
+     * To disable timestamp on locations table
+     *
+     * @var bool
+     */
     public $timestamps = false;
+
+    public function rooms()
+    {
+        return $this->hasMany('App\Models\Room');
+    }
 }

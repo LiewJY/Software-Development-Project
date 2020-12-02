@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
+
 class UserSeeder extends Seeder
 {
     /**
@@ -16,7 +17,7 @@ class UserSeeder extends Seeder
     public function run()
     {
         User::create([
-            'name' => 'Administrator',
+            'username' => 'admin',
             'email' => 'admin@gmail.com',
             'email_verified_at' => now(),
             'roles' => 0,
@@ -25,7 +26,7 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Employee',
+            'username' => 'employee',
             'email' => 'employee@gmail.com',
             'email_verified_at' => now(),
             'roles' => 1,
@@ -34,12 +35,14 @@ class UserSeeder extends Seeder
         ]);
 
         User::create([
-            'name' => 'Customer',
+            'username' => 'customer',
             'email' => 'customer@gmail.com',
             'email_verified_at' => now(),
             'roles' => 2,
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
         ]);
+
+        
     }
 }

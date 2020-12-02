@@ -2,9 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Location;
 use Illuminate\Database\Seeder;
 
-class LocationsSeeder extends Seeder
+class LocationSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -13,6 +14,6 @@ class LocationsSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Location::factory()->count(3)->hasRooms(5)->create();
     }
 }

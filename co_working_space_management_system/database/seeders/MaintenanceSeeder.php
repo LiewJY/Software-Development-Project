@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Maintenance;
 use Illuminate\Database\Seeder;
 
 class MaintenanceSeeder extends Seeder
@@ -13,6 +14,8 @@ class MaintenanceSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Maintenance::factory()->count(3)->forRoom()->create();
+        Maintenance::factory()->count(3)->forEmployee()->create();
+        Maintenance::factory()->count(3)->forRoom()->create();
     }
 }

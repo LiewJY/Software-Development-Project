@@ -2,7 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
+use Database\Factories\EmployeeFactory;
 use Illuminate\Database\Seeder;
+
 
 class EmployeeSeeder extends Seeder
 {
@@ -13,6 +16,6 @@ class EmployeeSeeder extends Seeder
      */
     public function run()
     {
-        //
+        Employee::factory()->count(10)->create();
     }
 }

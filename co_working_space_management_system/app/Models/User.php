@@ -29,6 +29,7 @@ class User extends Authenticatable
         'password',
     ];
 
+
     /**
      * The attributes that should be hidden for arrays.
      *
@@ -58,4 +59,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
+
+    public function employee()
+    {
+        return $this->hasOne('App\Models\Employee');
+    }
 }
