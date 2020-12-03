@@ -2,7 +2,7 @@
 
 @section('content')
 <!-- Hero -->
-<header class="relative bg-no-repeat bg-cover lg:bg-center p-10" style="background-image: url('https://fj-employer-blog.s3.amazonaws.com/employer-blog/wp-content/uploads/2016/12/30043608/The-Benefits-of-Coworking-Spaces-for-Corporations.jpg')">
+<header class="relative bg-no-repeat bg-cover lg:bg-center p-20" style="background-image: url('https://fj-employer-blog.s3.amazonaws.com/employer-blog/wp-content/uploads/2016/12/30043608/The-Benefits-of-Coworking-Spaces-for-Corporations.jpg')">
 <div class="max-w-5xl mx-auto lg:py-32 py-2">
     <h2 class="lg:text-5xl text-4xl font-semibold text-gray-700 leading-none mb-4">
     Welcome to ShareSpace
@@ -12,7 +12,7 @@
         <a href="#" class="transition bg-gray-100 px-10 py-3 rounded font-bold hover:bg-gray-300 block w-full text-center border-2 border-white">Explore</a>
     </div>
     <div class="lg:pl-5 w-full lg:w-1/2">
-        <a href="#" class="transition bg-transparent px-10 py-3 rounded font-bold hover:bg-gray-500 text-black block w-full text-center border-2 border-gray-600">Book a Tour!</a>
+        <a href="#" class="transition bg-transparent px-10 py-3 rounded font-bold hover:bg-gray-800 hover:text-gray-100 text-black block w-full text-center border-2 border-gray-900">Book a Tour!</a>
     </div>
 </div>
 </div>
