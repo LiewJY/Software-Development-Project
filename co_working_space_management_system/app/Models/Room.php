@@ -38,7 +38,7 @@ class Room extends Model
     {
         return $this->belongsTo('App\Models\Location');
     }
-    
+
     /**
      * Define the one to many relationship to maintenances table
      *
@@ -47,5 +47,15 @@ class Room extends Model
     public function maintenance()
     {
         return $this->hasMany('App\Models\Maintenance');
+    }
+
+    /**
+     * Define many to many relationship on slots table
+     *
+     * @return void
+     */
+    public function slots()
+    {
+        return $this->belongsToMany(Slot::class);
     }
 }

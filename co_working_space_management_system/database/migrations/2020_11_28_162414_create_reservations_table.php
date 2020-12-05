@@ -17,7 +17,7 @@ class CreateReservationsTable extends Migration
             $table->id();
             $table->foreignId('customer_id')->nullable()->constrained();
             $table->foreignId('room_id')->nullable()->constrained();
-            $table->foreignId('room_slot_id')->nullable()->constrained();
+            $table->foreignId('room_slot_id')->nullable()->constrained('room_slot');
             $table->foreignId('payment_id')->nullable()->constrained();
             $table->date('reservation_date')->nullable();
             $table->string('payment_status')->default(false);

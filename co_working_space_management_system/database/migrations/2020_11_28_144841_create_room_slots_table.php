@@ -13,7 +13,7 @@ class CreateRoomSlotsTable extends Migration
      */
     public function up()
     {
-        Schema::create('room_slots', function (Blueprint $table) {
+        Schema::create('room_slot', function (Blueprint $table) {
             $table->id();
             $table->foreignId('slot_id')->nullable()->constrained();
             $table->foreignId('room_id')->nullable()->constrained();

@@ -2,6 +2,10 @@
 
 namespace Database\Seeders;
 
+use App\Models\Employee;
+use App\Models\Location;
+use App\Models\Maintenance;
+use App\Models\Room;
 use App\Models\User;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
@@ -42,7 +46,5 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
         ]);
-
-        
     }
 }

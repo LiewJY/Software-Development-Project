@@ -29,7 +29,7 @@ class EmployeeFactory extends Factory
             'last_name' => $this->faker->lastName,
             'address' => $this->faker->address,
             'contact_number' => rand(12, 12),
-            'user_id' => User::factory()->employee()->create()
+            'user_id' => User::factory()
         ];
 
       
