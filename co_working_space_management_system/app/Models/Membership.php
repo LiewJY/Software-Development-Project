@@ -19,6 +19,11 @@ class Membership extends Model
         'price',
         'descritption'
     ];
-
+    
+    /**
+     * Disable timestamp on membership table
+     *
+     * @var bool
+     */
     public $timestamps = false;
 }

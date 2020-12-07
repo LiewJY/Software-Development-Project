@@ -2,11 +2,13 @@
 
 namespace Database\Seeders;
 
+use App\Models\Customer;
 use App\Models\Employee;
 use App\Models\Location;
 use App\Models\Maintenance;
 use App\Models\Room;
 use App\Models\User;
+use Database\Factories\CustomerFactory;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -38,7 +40,7 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        User::create([
+        $defaultCustomer = new User([
             'username' => 'customer',
             'email' => 'customer@gmail.com',
             'email_verified_at' => now(),
@@ -46,5 +48,16 @@ class UserSeeder extends Seeder
             'password' => bcrypt('password'),
             'remember_token' => Str::random(10),
         ]);
+
+        $defaultCustomer->save();
+        $details = Customer::factory()->default()->make();
+
+        $defaultCustomer->customer()->save(
+            $details
+        );
+
+        // User::create([]);
+
+        User::factory(3)->customer()->hasCustomer()->create();
     }
 }

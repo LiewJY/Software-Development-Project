@@ -18,9 +18,8 @@ class CreateCustomersTable extends Migration
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address');
-            $table->string('contact_number' , 12);
-            //$table->foreignId('subsciption_id')->constrained();
-            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');   
+            $table->string('contact_number', 12);
+            $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
         });
     }
 

@@ -59,9 +59,24 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-
+    
+    /**
+     * Define one to one relationship on employee table
+     *
+     * @return void
+     */
     public function employee()
     {
         return $this->hasOne('App\Models\Employee');
+    }
+    
+    /**
+     * Define one to one relationship to customer table
+     *
+     * @return void
+     */
+    public function customer()
+    {
+        return $this->hasOne('App\Models\Customer');
     }
 }

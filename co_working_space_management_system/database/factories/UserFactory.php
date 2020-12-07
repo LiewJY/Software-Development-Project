@@ -38,4 +38,11 @@ class UserFactory extends Factory
             'roles' => $this->faker->numberBetween(0, 1)
         ]);
     }
+
+    public function customer()
+    {
+        return $this->state([
+            'roles' => 2
+        ]);
+    }
 }

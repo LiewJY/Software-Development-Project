@@ -28,6 +28,11 @@ class Location extends Model
      */
     public $timestamps = false;
 
+    /**
+     * Define one to many relationship to rooms table
+     *
+     * @return void
+     */
     public function rooms()
     {
         return $this->hasMany('App\Models\Room');
