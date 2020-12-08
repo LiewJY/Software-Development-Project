@@ -10,6 +10,7 @@ use App\Models\Room;
 use App\Models\User;
 use Database\Factories\CustomerFactory;
 use Illuminate\Database\Seeder;
+use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Support\Str;
 
 
@@ -40,7 +41,7 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        $defaultCustomer = new User([
+        User::create([
             'username' => 'customer',
             'email' => 'customer@gmail.com',
             'email_verified_at' => now(),
@@ -49,15 +50,6 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
         ]);
 
-        $defaultCustomer->save();
-        $details = Customer::factory()->default()->make();
-
-        $defaultCustomer->customer()->save(
-            $details
-        );
-
-        // User::create([]);
-
-        User::factory(3)->customer()->hasCustomer()->create();
+        User::factory(10)->create();
     }
 }

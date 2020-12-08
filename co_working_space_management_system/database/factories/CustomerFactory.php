@@ -27,7 +27,7 @@ class CustomerFactory extends Factory
             'last_name' => $this->faker->lastName,
             'address' => $this->faker->address,
             'contact_number' => $this->faker->randomNumber(),
-            'user_id' => User::factory()
+            // 'user_id' => User::factory()
         ];
     }
 

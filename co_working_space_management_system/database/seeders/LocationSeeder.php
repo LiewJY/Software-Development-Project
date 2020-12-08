@@ -18,6 +18,6 @@ class LocationSeeder extends Seeder
      */
     public function run()
     {
-        Location::factory(3)->has(Room::factory(3)->has(Maintenance::factory(3)->for(Employee::factory()->for(User::factory()->employee()))))->create();
+        Location::factory(3)->hasRooms(3)->create();
     }
 }

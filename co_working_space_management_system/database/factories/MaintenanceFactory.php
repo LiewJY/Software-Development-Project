@@ -2,9 +2,7 @@
 
 namespace Database\Factories;
 
-use App\Models\Employee;
 use App\Models\Maintenance;
-use App\Models\Room;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 class MaintenanceFactory extends Factory
@@ -24,8 +22,8 @@ class MaintenanceFactory extends Factory
     public function definition()
     {
         return [
-            'room_id' => Room::factory(),
-            'employee_id' => Employee::factory(),
+            // 'room_id' => $roomID,
+            // 'employee_id' => $employeeID,
             'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'status' => $this->faker->numberBetween(0, 1)
         ];
