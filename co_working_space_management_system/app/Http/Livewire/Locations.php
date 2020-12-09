@@ -10,7 +10,7 @@ class Locations extends Component
 {
     public function render()
     {
-        $locations = DB::select('SELECT * FROM locations');
+        $locations = Location::all();
         return view('livewire.locations', ['locations' => $locations]);
     }
 }
