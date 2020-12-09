@@ -2,8 +2,9 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Membership;
 use Livewire\Component;
-use DB;
+
 class MembershipPlans extends Component
 {
     public function render()

@@ -2,9 +2,8 @@
 
 namespace App\Http\Livewire;
 
+use App\Models\Location;
 use Livewire\Component;
-use DB;
-
 
 class Locations extends Component
 {
