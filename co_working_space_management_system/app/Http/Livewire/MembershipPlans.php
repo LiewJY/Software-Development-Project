@@ -8,7 +8,7 @@ class MembershipPlans extends Component
 {
     public function render()
     {
-        $memberships = DB::select('SELECT * FROM memberships');
+        $memberships = Membership::all();
         return view('livewire.membership-plans', ['memberships' => $memberships]);
     }
 }
