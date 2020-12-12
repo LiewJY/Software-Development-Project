@@ -17,20 +17,20 @@ class MembershipSeeder extends Seeder
 
         Membership::create([
             'name' => 'Basic',
-            'price' => '100',
-            'description' => 'Basic membership package'
+            'price' => '99',
+            'description' => 'Full Access to Pantry,Full Access Free Seating Area, Acccess to One Location Only'
         ]);
 
         Membership::create([
             'name' => 'Medium',
-            'price' => '200',
-            'description' => 'Medium membership package'
+            'price' => '199',
+            'description' => 'Full Access to Pantry, Full Access Free Seating Area, Entitled for ONE Personal Desk, Acccess to One Location Only'
         ]);
 
         Membership::create([
             'name' => 'Premium',
-            'price' => '100',
-            'description' => 'Premium membership package'
+            'price' => '299',
+            'description' => 'Full Access to Pantry, Full Access Free Seating Area, Entitled for ONE Personal Desk, Access to All Sharespace Locations'
         ]);
     }
 }
