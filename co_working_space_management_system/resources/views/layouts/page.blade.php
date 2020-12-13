@@ -278,7 +278,7 @@
 
     </nav>
 
-<div class=" items-center xl:container mx-auto">
+<div class="items-center xl:container mx-auto">
 
     @yield('content')
 </div>

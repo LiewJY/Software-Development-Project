@@ -1,8 +1,9 @@
 @extends('layouts.page')
 
 @section('content')
-    <h1 class="text-center font-bold text-5xl mt-8 ">Available Locations</h1>
-    <div class="grid md:grid-cols-3 gap-4">
+    <br>
+    <h1 class="font-serif sm:text-3xl text-2xl font-medium text-center title-font mb-4 text-gray-900 underline">Available Locations</h1>
+    <div class="grid grid-cols-1">
         @livewire('locations')
 
     </div>
