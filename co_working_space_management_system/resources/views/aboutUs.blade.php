@@ -116,7 +116,7 @@
 </section>
 
 <!-- Why Us? -->
-<section class="text-gray-700 body-font bg-gray-500">
+<section class="text-gray-700 body-font bg-gray-300">
   <div class="flex flex-col text-center w-full pt-10">
       <h1 class="font-serif sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900 underline animate-bounce">WHY CHOOSE US?</h1>
   </div>
