@@ -33,3 +33,7 @@ Route::get('/aboutus', function () {
 Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
+
+Route::get('/adminlocation', function () {
+    return view('admin/location');
+})->name('aboutus');

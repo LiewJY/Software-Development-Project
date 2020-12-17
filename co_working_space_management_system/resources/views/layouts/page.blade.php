@@ -19,10 +19,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    @livewireStyles
 </head>
 
 <body class="bg-white">
-
 
     <nav x-data="{ open: false }" class="bg-gray-800">
         <div class="mx-auto px-2 sm:px-6 lg:px-8">
@@ -281,8 +281,11 @@
 <div class="items-center xl:container mx-auto">
 
     @yield('content')
+    
 </div>
 
 </body>
+    
+    @livewireScripts
 
 </html>
