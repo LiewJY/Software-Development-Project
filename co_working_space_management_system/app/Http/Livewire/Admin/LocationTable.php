@@ -18,7 +18,7 @@ class LocationTable extends Component
     public function render()
     {
         return view('livewire.admin.location-table',[
-            'locations' => location::where('name', 'like', '%'.$this->search.'%')->paginate(1),
+            'locations' => location::where('name', 'like', '%'.$this->search.'%')->paginate(25),
         ]);
 
 
