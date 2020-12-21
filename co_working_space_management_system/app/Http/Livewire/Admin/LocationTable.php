@@ -9,6 +9,7 @@ use App\Models\Location;
 class LocationTable extends Component
 {
     use WithPagination;
+    public $locationForm = false;
     public $name, $address, $contactNumber, $description, $locationID;
     public $search = '';
     protected $queryString = ['search'];
@@ -32,6 +33,10 @@ class LocationTable extends Component
             'locations' => location::where('name', 'like', '%' . $this->search . '%')->paginate(25),
         ]);
     }
+    public function add()
+    {
+        $this->locationForm = true;
+    }
 
     /**
      * Create or update location 
@@ -48,10 +53,12 @@ class LocationTable extends Component
             'contact_number' => $this->contactNumber,
             'description' =>  $this->description
         ]);
+        $this->locationForm = false;
+
 
         session()->flash(
             'message',
-            $this->location_id ? 'Location Updated Successfully.' : 'Location Created Successfully.'
+            $this->locationID ? 'Location Updated Successfully.' : 'Location Created Successfully.'
         );
     }
 
@@ -63,6 +70,7 @@ class LocationTable extends Component
      */
     public function edit($id)
     {
+        $this->locationForm = true;
         $location = Location::findOrFail($id);
         $this->locationID = $id;
         $this->name = $location->name;

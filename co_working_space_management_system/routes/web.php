@@ -35,5 +35,9 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/adminlocation', function () {
-    return view('admin/location');
-})->name('aboutus');
+    return view('admin.location');
+})->name('adminlocation');
+
+Route::get('/adminrooms', function () {
+    return view('admin.rooms');
+})->name('adminrooms');
