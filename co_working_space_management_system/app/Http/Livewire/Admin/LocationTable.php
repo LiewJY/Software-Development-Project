@@ -10,6 +10,7 @@ class LocationTable extends Component
 {
     use WithPagination;
     public $locationForm = false;
+    public $deleteConfirmationForm = false;
     public $name, $address, $contactNumber, $description, $locationID;
     public $search = '';
     protected $queryString = ['search'];
@@ -33,9 +34,12 @@ class LocationTable extends Component
             'locations' => location::where('name', 'like', '%' . $this->search . '%')->paginate(25),
         ]);
     }
+
     public function add()
     {
+        $this->reset();
         $this->locationForm = true;
+        
     }
 
     /**
@@ -79,6 +83,13 @@ class LocationTable extends Component
         $this->description = $location->description;
     }
 
+    public function deleteModal($id, $name)
+    {
+        $this->deleteConfirmationForm = true;
+        $this->locationID = $id;
+        $this->name = $name;
+        
+    }
     /**
      * Delete selected location
      *
@@ -88,5 +99,6 @@ class LocationTable extends Component
     public function delete($id)
     {
         Location::where('id', $id)->delete();
+        $this->deleteConfirmationForm = false;
     }
 }
