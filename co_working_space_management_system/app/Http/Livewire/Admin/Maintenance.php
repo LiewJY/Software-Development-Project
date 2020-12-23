@@ -12,6 +12,11 @@ class Maintenance extends Component
 
     protected $employeeID;
 
+    /**
+     * Rules that applied to maintenance
+     *
+     * @var array
+     */
     protected $rules = [
         'description' => ['required', 'max:255', 'string'],
         'status' => ['required', 'boolean']
@@ -22,6 +27,11 @@ class Maintenance extends Component
         return view('livewire.admin.maintenance');
     }
 
+    /**
+     * Update or create new maintainance
+     *
+     * @return void
+     */
     public function store()
     {
         $this->validate();
@@ -31,13 +41,19 @@ class Maintenance extends Component
         Maintenance::updateOrCreate(
             ['id' => $this->locationID],
             [
-                'employee_id' => $this->employeeID,
+                'employee_id' => Auth::user()->id,
                 'description' => $this->description,
                 'status' => $this->status
             ]
         );
     }
 
+    /**
+     * FIll the feilds in the edit modal
+     *
+     * @param  int $id
+     * @return void
+     */
     public function edit($id)
     {
         $maintenance = Maintenance::findorFail($id);
@@ -45,12 +61,17 @@ class Maintenance extends Component
         $this->description = $maintenance->description;
         $this->price = $maintenance->price;
         $this->size =  $maintenance->size;
-    } 
+    }
 
+    /**
+     * Delete the selected maintainance
+     *
+     * @param  int $id
+     * @return void
+     */
     public function delete($id)
     {
         $maintenance = Maintenance::where('id', $id)->firstorfail();
         $maintenance->delete();
     }
-}
 }
