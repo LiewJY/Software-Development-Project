@@ -7,11 +7,11 @@ use Livewire\WithPagination;
 use App\Models\Location;
 
 class LocationTable extends Component
-{   
+{
     use WithPagination;
     public $locationForm = false;
     public $deleteConfirmationForm = false;
-    public $name, $address, $contactNumber, $description, $locationID;
+    public $name, $address, $contact_number, $description, $locationID;
     public $search = '';
     protected $queryString = ['search'];
 
@@ -23,7 +23,7 @@ class LocationTable extends Component
     protected $rules = [
         'name' => ['required'],
         'address' => ['required', 'max:255'],
-        'contactNumber' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
+        'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
         'description' => ['required', 'max:255']
     ];
 
@@ -31,7 +31,7 @@ class LocationTable extends Component
     public function render()
     {
         return view('livewire.admin.location-table', [
-            'locations' => location::where('name', 'like', '%' . $this->search . '%')->paginate(10),
+            'locations' => location::where('name', 'like', '%' . $this->search . '%')->paginate(25),
         ]);
     }
 
@@ -39,7 +39,16 @@ class LocationTable extends Component
     {
         $this->reset();
         $this->locationForm = true;
-        
+    }
+
+    /**
+     * Real time validation
+     *
+     * @return void
+     */
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
     }
 
     /**
@@ -51,12 +60,13 @@ class LocationTable extends Component
     {
         $validatedData = $this->validate();
 
-        Location::updateOrCreate(['id' => $this->locationID], [
-            'name' => $this->name,
-            'address' => $this->address,
-            'contact_number' => $this->contactNumber,
-            'description' =>  $this->description
-        ]);
+        Location::updateOrCreate(
+            ['id' => $this->locationID],
+            $validatedData
+        );
+
+        // Location::create($validatedData);
+
         $this->locationForm = false;
 
         session()->flash(
@@ -87,7 +97,6 @@ class LocationTable extends Component
         $this->deleteConfirmationForm = true;
         $this->locationID = $id;
         $this->name = $name;
-        
     }
     /**
      * Delete selected location
