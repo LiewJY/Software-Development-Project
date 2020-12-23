@@ -4,7 +4,7 @@
         <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name"/>
     </div>
     <div class="w-full flex md:justify-end md:w-1/2">
-        <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Locaiton</x-jet-button>
+        <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Location</x-jet-button>
     </div>
 </div>
 <div class="overflow-x-auto mx-1">
@@ -49,7 +49,7 @@
         </x-slot>
         <form>
             <x-slot name="content">
-                <x-jet-label for="name" value="Locaiton name"/>
+                <x-jet-label for="name" value="Location name"/>
                 <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="name"/>
                 <x-jet-input-error for="name"/>
 
@@ -81,10 +81,10 @@
     <x-jet-dialog-modal wire:model="deleteConfirmationForm">
         <x-slot name="title">
             <h1>Delete Confirmation</h1>
-        </x-slot>
+        </x-slot>v
         <form>
             <x-slot name="content">
-                <p>Are you sure you want to remove the location with the name {{$name}}</p>
+                <p>Are you sure you want to remove the location with the name {{$name}}.</p>
             </x-slot>
             <x-slot name="footer">
                 <x-jet-button wire:click="delete({{$locationID}})">Delete</x-jet-button>

@@ -1,17 +1,20 @@
 <?php
 
 namespace App\Http\Livewire\Admin;
-
+use Livewire\WithPagination;
 use App\Models\Room;
+use App\Models\Location;
 use Livewire\Component;
 
 class Rooms extends Component
 {
 
-    public $haha = false;
-
-
+    use WithPagination;
+    public $roomForm = false;
+    public $deleteConfirmationForm = false;
     public $name, $locationID,  $description, $price, $size, $roomID;
+    public $search = '';
+    protected $queryString = ['search'];
 
     /**
      * validation rules that applied to room
@@ -28,12 +31,21 @@ class Rooms extends Component
 
     public function render()
     {
-        return view('livewire.admin.rooms');
+        return view('livewire.admin.rooms', [
+            'rooms' => room::where('rooms.name', 'like', '%' . $this->search . '%')
+                    ->join('locations' , 'rooms.location_id', '=', 'locations.id')
+                    ->select('rooms.*', 'locations.name as location_name')
+            ->paginate(10),
+        ],[
+            'locations' => location::get()
+        ]);
     }
 
-    public function test()
+    public function add()
     {
-        $this->haha = true;
+        $this->reset();
+        $this->roomForm = true;
+        
     }
 
     /**
@@ -51,6 +63,9 @@ class Rooms extends Component
             ['id' => $this->roomID],
             $validatedData
         );
+
+        $this->roomForm = false;
+
     }
 
     /**
@@ -61,13 +76,22 @@ class Rooms extends Component
      */
     public function edit($id)
     {
+        $this->roomForm = true;
         $room = Room::findorFail($id);
+        $this->roomID =  $id;
         $this->name =  $room->name;
         $this->description = $room->description;
         $this->price = $room->price;
         $this->size =  $room->size;
     }
 
+    public function deleteModal($id, $name)
+    {
+        $this->deleteConfirmationForm = true;
+        $this->locationID = $id;
+        $this->name = $name;
+        
+    }
     /**
      * Delete selected room
      *
@@ -78,5 +102,7 @@ class Rooms extends Component
     {
         $room = Room::where('id', $id)->firstorfail();
         $room->delete();
+        $this->deleteConfirmationForm = false;
+
     }
 }
