@@ -7,7 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Location;
 
 class LocationTable extends Component
-{
+{   
     use WithPagination;
     public $locationForm = false;
     public $deleteConfirmationForm = false;
@@ -21,10 +21,10 @@ class LocationTable extends Component
      * @var array
      */
     protected $rules = [
-        'name' => 'required',
-        'address' => 'required|max:255',
-        'contactNumber' => 'required|regex:/^(01)[0-46-9]*[0-9]{7,8}$/',
-        'description' => 'required|max:255'
+        'name' => ['required'],
+        'address' => ['required', 'max:255'],
+        'contactNumber' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
+        'description' => ['required', 'max:255']
     ];
 
 
@@ -49,7 +49,7 @@ class LocationTable extends Component
      */
     public function store()
     {
-        $this->validate();
+        $validatedData = $this->validate();
 
         Location::updateOrCreate(['id' => $this->locationID], [
             'name' => $this->name,
@@ -58,7 +58,6 @@ class LocationTable extends Component
             'description' =>  $this->description
         ]);
         $this->locationForm = false;
-
 
         session()->flash(
             'message',
