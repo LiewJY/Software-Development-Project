@@ -29,8 +29,6 @@
                     <td class="border border-black">{{$room ->description}}</td>
                     <td class="border border-black">{{$room ->price}}</td>
                     <td class="border border-black">{{$room ->size}}</td>
-                    <td class="border border-black">{{$room ->id}}</td>
-
                     <td class="border border-black  py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
                             <x-jet-button class="mx-2" wire:click="edit({{$room ->id}})">Edit</x-jet-button>
@@ -81,24 +79,26 @@
                     <x-jet-input id="size" type="text" class="mt-1 block w-full" wire:model.lazy="size" />
                     <x-jet-input-error for="size" />
 
-                    <x-jet-label for="" value="Time Slot" />
+                    <x-jet-label for="slot" value="Time Slot"/>
                     <div class="flex flex-row flex-wrap">
-                        <div class="flex items-start">
-                            <div class="flex items-center h-5 pr-2">
-                                <input id="slot" name="solt" type="checkbox" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                        @foreach($slots as $slot)
+                            <div class="flex items-start">
+                                <div class="flex items-center h-5 pl-3">
+                                    <input id="slot" name="slot" type="checkbox" value="{{$slot ->id}}"  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                </div>
+                                <div class="ml-3 text-sm">
+                                    <label for="slot" class="font-medium text-gray-700">{{$slot ->start_time}} -- {{$slot ->end_time}}</label>
+                                </div>
                             </div>
-                            <div class="ml-3 text-sm">
-                                <label for="slot" class="font-medium text-gray-700">slot </label>
-                            </div>
-                        </div>
+                        @endforeach
                     </div>
-                    
+
                 </x-slot>
                 <x-slot name="footer">
                     @if($roomID)
-                    <x-jet-button wire:click="store">Save</x-jet-button>
+                        <x-jet-button wire:click="store">Save</x-jet-button>
                     @else
-                    <x-jet-button wire:click="store">Add</x-jet-button>
+                        <x-jet-button wire:click="store">Add</x-jet-button>
                     @endif
                     <x-jet-button wire:click="$toggle('roomForm')">Cancel</x-jet-button>
 
@@ -107,19 +107,19 @@
             </form>
         </x-jet-dialog-modal>
 
-            <x-jet-dialog-modal wire:model="deleteConfirmationForm">
-                <x-slot name="title">
-                    <h1>Delete Confirmation</h1>
+        <x-jet-dialog-modal wire:model="deleteConfirmationForm">
+            <x-slot name="title">
+                <h1>Delete Confirmation</h1>
+            </x-slot>
+            <form>
+                <x-slot name="content">
+                    <p>Are you sure you want to remove the room with the name {{$name}} at {{$location_name}}.</p>
                 </x-slot>
-                <form>
-                    <x-slot name="content">
-                        <p>Are you sure you want to remove the room with the name {{$name}} at {{$location_name}}.</p>
-                    </x-slot>
-                    <x-slot name="footer">
-                        <x-jet-button wire:click="delete({{$roomID}})">Delete</x-jet-button>
-                        <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
-                    </x-slot>
-                </form>
-            </x-jet-dialog-modal>
+                <x-slot name="footer">
+                    <x-jet-button wire:click="delete({{$roomID}})">Delete</x-jet-button>
+                    <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
+                </x-slot>
+            </form>
+        </x-jet-dialog-modal>
 
     </div>

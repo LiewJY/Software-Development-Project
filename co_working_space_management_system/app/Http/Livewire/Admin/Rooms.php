@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Admin;
 
 use Livewire\WithPagination;
 use App\Models\Room;
+use App\Models\Slot;
 use App\Models\Location;
 use Livewire\Component;
 
@@ -46,8 +47,10 @@ class Rooms extends Component
                 ->select('rooms.*', 'locations.name as location_name')
                 ->paginate(10),
         ], [
-            'locations' => location::get()
+            'locations' => location::get(),
+            'slots' => slot::get()
         ]);
+
     }
 
     /**
