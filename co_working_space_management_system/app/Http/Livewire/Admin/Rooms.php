@@ -13,7 +13,7 @@ class Rooms extends Component
     use WithPagination;
     public $roomForm = false;
     public $deleteConfirmationForm = false;
-    public $name, $location_id,  $description, $price, $size, $roomID;
+    public $name, $location_id,  $description, $price, $size, $roomID, $location_name;
     public $search = '';
     protected $queryString = ['search'];
 
@@ -101,11 +101,13 @@ class Rooms extends Component
         $this->size =  $room->size;
     }
 
-    public function deleteModal($id, $name)
+    public function deleteModal($id, $name, $location_name)
     {
         $this->deleteConfirmationForm = true;
-        $this->locationID = $id;
+        $room = Room::findorFail($id);
+        $this->roomID = $id;
         $this->name = $name;
+        $this->location_name = $location_name;
     }
     /**
      * Delete selected room
