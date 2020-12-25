@@ -47,9 +47,10 @@
         <x-jet-dialog-modal wire:model="roomForm">
             <x-slot name="title">
                 @if($roomID)
-                    <h1>Edit Room</h1>
+                <h1>Edit Room</h1>
+
                 @else
-                    <h1>Add Room</h1>
+                <h1>Add Room</h1>
                 @endif
             </x-slot>
             <form>
@@ -58,7 +59,7 @@
                     <select id="locationID" wire:model.lazy="location_id" name="locationID" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="default">Select a location</option>
                         @foreach($locations as $location)
-                            <option value="{{$location->id}}">{{$location->name}}</option>
+                        <option value="{{$location->id}}">{{$location->name}}</option>
                         @endforeach
                     </select>
                     <x-jet-input-error for="location_id" />
@@ -79,32 +80,39 @@
                     <x-jet-input id="size" type="text" class="mt-1 block w-full" wire:model.lazy="size" />
                     <x-jet-input-error for="size" />
 
-                    <x-jet-label for="slot" value="Time Slot"/>
+                    <x-jet-label for="slot" value="Time Slot" />
                     <div class="flex flex-row flex-wrap">
                         @foreach($slots as $slot)
-                            <div class="flex items-start">
-                                <div class="flex items-center h-5 pl-3">
-                                    <input id="slot" name="slot" type="checkbox" value="{{$slot ->id}}"  class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
-                                </div>
-                                <div class="ml-3 text-sm">
-                                    <label for="slot" class="font-medium text-gray-700">{{$slot ->start_time}} -- {{$slot ->end_time}}</label>
-                                </div>
+
+
+
+                        <div class="flex items-start">
+                            <div class="flex items-center h-5 pl-3">
+                                <input id="slot" name="slot" type="checkbox" wire:model="time" value="{{$slot ->id}}" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                             </div>
+                            <div class="ml-3 text-sm">
+                                <label for="slot" class="font-medium text-gray-700">{{$slot ->start_time}} -- {{$slot ->end_time}}</label>
+                            </div>
+
+                        </div>
+
                         @endforeach
+                        <x-jet-input-error for="time" />
                     </div>
 
                 </x-slot>
                 <x-slot name="footer">
                     @if($roomID)
-                        <x-jet-button wire:click="store">Save</x-jet-button>
+                    <x-jet-button wire:click="store">Save</x-jet-button>
                     @else
-                        <x-jet-button wire:click="store">Add</x-jet-button>
+                    <x-jet-button wire:click="store">Add</x-jet-button>
                     @endif
                     <x-jet-button wire:click="$toggle('roomForm')">Cancel</x-jet-button>
 
 
                 </x-slot>
             </form>
+
         </x-jet-dialog-modal>
 
         <x-jet-dialog-modal wire:model="deleteConfirmationForm">

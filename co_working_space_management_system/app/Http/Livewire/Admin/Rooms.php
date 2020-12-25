@@ -12,6 +12,7 @@ class Rooms extends Component
 {
 
     use WithPagination;
+    public $time = [];
     public $roomForm = false;
     public $deleteConfirmationForm = false;
     public $name, $location_id,  $description, $price, $size, $roomID, $location_name;
@@ -28,14 +29,21 @@ class Rooms extends Component
         'description' => ['required', 'string', 'max:255', 'min:10'],
         'price' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
         'size' => ['required', 'numeric'],
-        'location_id' => ['required', 'numeric']
+        'location_id' => ['required', 'numeric'],
+        'time' => ['required', 'nullable']
     ];
-
+    
+    /**
+     * Custome error messages
+     *
+     * @var array
+     */
     protected $messages = [
         'location_id.required' => 'Please select a location.',
         'location_id.numeric' => 'Please select a location.',
         'price.regex' => 'Please use the format xxx.xx',
-        'size.numeric' => "Please input a valid number."
+        'size.numeric' => "Please input a valid number.",
+        'time.required' => "Please select one or many time slot for the room"
     ];
 
 
@@ -50,7 +58,6 @@ class Rooms extends Component
             'locations' => location::get(),
             'slots' => slot::get()
         ]);
-
     }
 
     /**
@@ -78,10 +85,16 @@ class Rooms extends Component
     {
         $validatedData = $this->validate();
 
-        Room::updateOrCreate(
+        $room = Room::updateOrCreate(
             ['id' => $this->roomID],
             $validatedData
         );
+
+        $slots = $this->time;
+
+        foreach ($slots as $slot) {
+            $room->slots()->attach($slot);
+        }
 
         $this->roomForm = false;
     }
@@ -94,6 +107,7 @@ class Rooms extends Component
      */
     public function edit($id)
     {
+        $current = [];
         $this->roomForm = true;
         $room = Room::findorFail($id);
         $this->location_id = $room->location_id;
@@ -102,6 +116,10 @@ class Rooms extends Component
         $this->description = $room->description;
         $this->price = $room->price;
         $this->size =  $room->size;
+        foreach ($room->slots as $slot) {
+            array_push($current, $slot->id);
+        }
+        $this->time = $current;
     }
 
     public function deleteModal($id, $name, $location_name)
@@ -112,6 +130,7 @@ class Rooms extends Component
         $this->name = $name;
         $this->location_name = $location_name;
     }
+    
     /**
      * Delete selected room
      *
@@ -121,7 +140,9 @@ class Rooms extends Component
     public function delete($id)
     {
         $room = Room::where('id', $id)->firstorfail();
+        $room->slots()->detach();
         $room->delete();
+
         $this->deleteConfirmationForm = false;
     }
 }
