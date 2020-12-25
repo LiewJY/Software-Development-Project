@@ -15,7 +15,7 @@ class Staff extends Component
     public $employeeForm = false;
     public $employeeAddForm = false;
     public $deleteConEmployeeForm = false;
-    public $username, $email, $password, $roles, $firstName, $lastName, $address, $contactNumber, $employeeID;
+    public $username, $email, $password, $roles, $first_name, $last_name, $address, $contact_number, $employeeID;
     public $search = '';
     protected $queryString = ['search'];
 
@@ -25,13 +25,17 @@ class Staff extends Component
      * @var array
      */
     protected $rules = [
-        'username' => 'required' | 'string' | 'min:6' | 'max:255' | 'unique:users',
+        'username' => ['required', 'string', 'min:6', 'max:255', 'unique:users'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'roles' => ['required'],
-        'firstName' => ['required', 'string', 'max:255'],
-        'lastName' => ['required', 'string', 'max:255'],
+        // 'roles' => ['required'],
+        'first_name' => ['required', 'string', 'max:255'],
+        'last_name' => ['required', 'string', 'max:255'],
         'address' => ['required', 'string', 'max:255'],
-        'contactNumber' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/']
+        'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/' ],
+        'password'  => [
+            'required',
+            'min:8',
+        ]
     ];
 
 
@@ -46,25 +50,24 @@ class Staff extends Component
     {
         $this->reset();
         $this->employeeAddForm = true;
-        
     }
 
-   /**
+    /**
      * Creating or updating existing employee data
      *
      * @return void
      */
     public function store()
     {
-        $this->validate([
-            'password'  => $this->passwordRules()
-        ]);
+        $this->validate();
 
-        $userID = Employee::where('id', $this->employeeID)->first();
-
-        if ($userID) {
+        if ($this->employeeID) {
+            $userID = Employee::where('id', $this->employeeID)->first();
             $this->userID = $userID->user_id;
+        } else {
+            $this->userID = NULL;
         }
+
 
         $user = User::updateorCreate(['id' => $this->userID], [
             'username' => $this->username,
@@ -74,13 +77,15 @@ class Staff extends Component
         ]);
 
         $employee = Employee::updateorCreate(['user_id' => $this->userID], [
-            'first_name' => $this->firstName,
-            'last_name' => $this->lastName,
+            'first_name' => $this->first_name,
+            'last_name' => $this->last_name,
             'address' => $this->address,
-            'contact_number' => $this->contactNumber,
+            'contact_number' => $this->contact_number,
         ]);
 
         $user->employee()->save($employee);
+
+        $this->employeeForm = false;
     }
 
     /**
@@ -90,13 +95,14 @@ class Staff extends Component
      * @return void
      */
     public function edit($id)
-    {   
+    {
         $this->employeeForm = true;
         $employee = Employee::findorFail($id);
-        $this->firstName =  $employee->first_name;
-        $this->lastName = $employee->last_name;
+        $this->employeeID = $id;
+        $this->first_name =  $employee->first_name;
+        $this->last_name = $employee->last_name;
         $this->address = $employee->address;
-        $this->contactNumber =  $employee->contact_number;
+        $this->contact_number =  $employee->contact_number;
     }
 
     public function deleteModal($id, $first_name)
@@ -104,7 +110,6 @@ class Staff extends Component
         $this->deleteConEmployeeForm = true;
         $this->employeeID = $id;
         $this->first_name = $first_name;
-        
     }
     /**
      * Delete selected employee
@@ -116,5 +121,15 @@ class Staff extends Component
     {
         $employee =  Employee::where('id', $id)->firstorfail();
         User::where('id', $employee->user_id)->firstorfail()->delete();
+    }
+    
+    /**
+     * Real time validation
+     *
+     * @return void
+     */
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
     }
 }
