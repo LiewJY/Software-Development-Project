@@ -22,7 +22,7 @@
     </div>
 
     <!-- Table -->
-    <div class="lg:w-1/2 md:w-1/2 flex flex-col md:ml-auto w-full md:py-5 mt-5 md:mt-0">
+    <div class="lg:w-1/2 md:w-1/2 flex flex-col md:ml-auto w-full md:py-5 mt-5 md:mt-0 border px-3 rounded-lg bg-gray-300">
       <h2 class="font-serif text-gray-900 text-lg mb-1 font-semibold title-font underline font-bold text-center">Details</h2>
       <p class="leading-relaxed mb-0 text-gray-600 font-semibold">Further inquires, please contact us at:</p>
       <p class="leading-relaxed mb-0 text-gray-600 font-semibold">Phone: <a class="text-indigo-500 leading-relaxed hover:underline" href="tel:+03-8996 1000">03-8996 1000</a></p>
