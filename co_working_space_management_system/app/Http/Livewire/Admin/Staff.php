@@ -86,6 +86,7 @@ class Staff extends Component
         $user->employee()->save($employee);
 
         $this->employeeForm = false;
+        $this->employeeAddForm = false;
     }
 
     /**

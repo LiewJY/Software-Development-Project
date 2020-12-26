@@ -287,6 +287,5 @@
 </body>
     
     @livewireScripts
-    @livewireChartsScripts
 
 </html>

@@ -43,4 +43,7 @@
             :area-chart-model="$areaChartModel"
         />
     </div>
+    @livewireChartsScripts
+
 </div>
+

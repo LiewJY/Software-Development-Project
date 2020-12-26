@@ -53,20 +53,20 @@
             <form>
                 <x-slot name="content">
                     <x-jet-label for="firstName" value="First name" />
-                    <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="first_name" />
+                    <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="first_name"/>
                     <x-jet-input-error for="firstName" />
 
                     <x-jet-label for="lastName" value="Last name" />
-                    <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.lazy="last_name" />
+                    <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.lazy="last_name"/>
                     <x-jet-input-error for="lastName" />
 
                     <x-jet-label for="address" value="Address" />
-                    <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address" />
+                    <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address"/>
                     <x-jet-input-error for="address" />
 
-                    <x-jet-label for="contactNumber" value="Contact Number" />
-                    <x-jet-input id="contactNumber" type="text" class="mt-1 block w-full" wire:model.lazy="contactNumber" />
-                    <x-jet-input-error for="contactNumber" />
+                    <x-jet-label for="contact_number" value="Contact Number" />
+                    <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number"/>
+                    <x-jet-input-error for="contact_number" />
                 </x-slot>
                 <x-slot name="footer">
                     <x-jet-button wire:click="store">Save</x-jet-button>
@@ -98,12 +98,12 @@
                     <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address" />
                     <x-jet-input-error for="address" />
 
-                    <x-jet-label for="contactNumber" value="Contact Number" />
-                    <x-jet-input id="contactNumber" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
-                    <x-jet-input-error for="contact_numberz" />
+                    <x-jet-label for="contact_number" value="Contact Number" />
+                    <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
+                    <x-jet-input-error for="contact_number" />
 
                     <x-jet-label for="username" value="Username" />
-                    <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.lazy="username" />
+                    <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.lazy="username"/>
                     <x-jet-input-error for="username" />
 
                     <x-jet-label for="email" value="Email" />
@@ -111,7 +111,7 @@
                     <x-jet-input-error for="email" />
 
                     <x-jet-label for="password" value="Password" />
-                    <x-jet-input id="password" type="text" class="mt-1 block w-full" wire:model.lazy="password" />
+                    <x-jet-input id="password" type="text" class="mt-1 block w-full" wire:model.lazy="password"/>
                     <x-jet-input-error for="password" />
                 </x-slot>
                 <x-slot name="footer">
