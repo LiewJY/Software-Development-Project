@@ -37,3 +37,11 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/adminlocation', function () {
     return view('admin/location');
 })->name('aboutus');
+
+Route::get('/adminmaintenance', function () {
+    return view('admin/maintenance');
+})->name('maintenance');
+
+Route::get('/adminmembership-plans', function () {
+    return view('admin/membership-plans');
+})->name('membership-plans');
