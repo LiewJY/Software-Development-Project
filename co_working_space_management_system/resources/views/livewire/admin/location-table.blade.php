@@ -4,7 +4,7 @@
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
         </div>
         <div class="w-full flex md:justify-end md:w-1/2">
-            <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Locatio</x-jet-button>
+            <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Location</x-jet-button>
         </div>
     </div>
     <div class="overflow-x-auto mx-1">

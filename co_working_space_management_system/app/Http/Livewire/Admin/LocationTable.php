@@ -88,7 +88,7 @@ class LocationTable extends Component
         $this->locationID = $id;
         $this->name = $location->name;
         $this->address = $location->address;
-        $this->contactNumber = $location->contact_number;
+        $this->contact_number = $location->contact_number;
         $this->description = $location->description;
     }
 
