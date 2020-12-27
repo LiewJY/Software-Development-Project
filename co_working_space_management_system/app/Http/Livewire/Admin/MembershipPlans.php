@@ -22,9 +22,8 @@ class MembershipPlans extends Component
      */
     protected $rules = [
         'name' => ['required', 'string', 'max:55'],
-        'description' => ['requried', 'string', 'max:255', 'min:10'],
-        'price' => ['required', 'reges:\d+\.\d{1,2}', 'not_in:0'],
-        'size' => ['required', 'numeric']
+        'price' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
+        'description' => ['required', 'string', 'max:255', 'min:10']
     ];
 
 
@@ -52,6 +51,8 @@ class MembershipPlans extends Component
             ['id' => $this->membershipID],
             $validatedData
         );
+        $this->membershipForm = false;
+
     }
 
     /**
@@ -64,10 +65,10 @@ class MembershipPlans extends Component
     {
         $this->membershipForm = true;
         $membership = Membership::findorFail($id);
+        $this->membershipID = $id;
         $this->name =  $membership->name;
         $this->description = $membership->description;
         $this->price = $membership->price;
-        $this->size =  $membership->size;
         
     }
 

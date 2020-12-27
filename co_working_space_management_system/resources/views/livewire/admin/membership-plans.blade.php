@@ -41,9 +41,9 @@
      <x-jet-dialog-modal wire:model="membershipForm" >
         <x-slot name="title">
                 @if($membershipID)
-                    <h1>Edit Membership Form</h1>
+                    <h1>Edit Membership</h1>
                 @else
-                    <h1>Add Membership Form</h1>
+                    <h1>Add Membership</h1>
                 @endif
         </x-slot>
         <form>
