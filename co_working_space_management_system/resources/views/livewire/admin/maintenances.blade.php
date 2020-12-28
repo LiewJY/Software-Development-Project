@@ -25,7 +25,7 @@
                 <tr>
                     <td class="border border-black">{{$maintenance ->location_name}}</td>
                     <td class="border border-black">{{$maintenance ->room_name}}</td>
-                    <td class="border border-black">{{$maintenance ->employee_name}}</td>
+                    <td class="border border-black">{{$maintenance ->employee_first_name}}</td>
                     <td class="border border-black">{{$maintenance ->description}}</td>
                     <td class="border border-black">
                         @if($maintenance ->status === 1)
@@ -45,12 +45,12 @@
                 </tr>               
             @endforeach
         </tbody>
+
     </table>
     {{$maintenances->links()}}
-
      <x-jet-dialog-modal wire:model="maintenanceForm" >
         <x-slot name="title">
-                @if($room_id)
+                @if($maintenance_id)
                     <h1>Edit Maintenance</h1>
                 @else
                     <h1>Add Maintenance</h1>
@@ -58,12 +58,18 @@
         </x-slot>
         <form>
             <x-slot name="content">
-                <x-jet-label for="room_id" value="Room ID"/>
-                <x-jet-input id="room_id" type="text" class="mt-1 block w-full" wire:model.lazy="room_id"/>
+                <x-jet-label for="room_id" value="Room Name"/>
+                <select id="room_id" wire:model.lazy="room_id" name="room_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="default">Select a Room</option>
+                    @foreach($rooms as $room)
+                        <option value="{{$room->id}}">{{$room->name}}, {{$room->location_name}}</option>
+                    @endforeach
+                </select>
                 <x-jet-input-error for="room_id"/>
 
-                <x-jet-label for="employee_id" value="Employee ID"/>
-                <x-jet-input id="employee_id" type="text" class="mt-1 block w-full" wire:model.lazy="employee_id"/>
+
+                <x-jet-label for="employee_name" value="Employee Name"/>
+                <x-jet-input disabled id="employee_name" type="text" class="mt-1 block w-full" wire:model.lazy="employee_name"/>
                 <x-jet-input-error for="employee_id"/>
 
                 <x-jet-label for="description" value="Description" />
@@ -71,13 +77,15 @@
                 <x-jet-input-error for="description"/>
 
                 <x-jet-label for="status" value="Status" />
-                    <select id="status" wire:model.lazy="status" name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                    <option value="{{$maintenance ->status}}">Ongoing</option>
-                    <option value="{{$maintenance ->status}}">Completed</option>
-                    </select>
+                <select id="status" wire:model.lazy="status" name="status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <option value="default">Select a status</option>
+                    <option value="0">Ongoing</option>
+                    <option value="1">Completed</option>
+                </select>
+
             </x-slot>
             <x-slot name="footer">
-                @if($room_id)
+                @if($maintenance_id)
                     <x-jet-button wire:click="store">Save</x-jet-button>
                 @else
                     <x-jet-button wire:click="store">Add</x-jet-button>
@@ -95,10 +103,10 @@
         </x-slot>
         <form>
             <x-slot name="content">
-                <p>Are you sure you want to remove the maintenance form with the room id {{$room_id}}</p>
+                <p>Are you sure you want to remove this maintenance record of {{$name}}</p>
             </x-slot>
             <x-slot name="footer">
-                <x-jet-button wire:click="delete({{$room_id}})">Delete</x-jet-button>
+                <x-jet-button wire:click="delete({{$maintenance_id}})">Delete</x-jet-button>
                 <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
             </x-slot>
         </form>
