@@ -15,6 +15,7 @@
 
         <!-- Scripts -->
         <script src="{{ mix('js/app.js') }}" defer></script>
+        <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
     </head>
     <body>
         <div class="font-sans text-gray-900 antialiased">

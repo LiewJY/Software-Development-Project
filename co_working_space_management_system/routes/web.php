@@ -3,6 +3,7 @@
 use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChartController;
 
 /*
 |--------------------------------------------------------------------------
@@ -37,9 +38,16 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/adminlocation', function () {
-    return view('admin.location');
-})->name('adminlocation');
 
-Route::get('/adminrooms', function () {
-    return view('admin.rooms');
-})->name('adminrooms');
+    return view('admin/location');
+})->name('location');
+
+Route::get('/adminreport', function () {
+    return view('admin.businessReport');
+})->name('business-report');
+
+Route::get('/adminstaff', function () {
+    return view('admin/staff');
+})->name('Staff');
+
+// Route::get('/adminreport', [ChartController::class,'index'])->name('admin');
