@@ -17,7 +17,7 @@ class Membership extends Model
     protected $fillable = [
         'name',
         'price',
-        'descritption'
+        'description'
     ];
     
     /**

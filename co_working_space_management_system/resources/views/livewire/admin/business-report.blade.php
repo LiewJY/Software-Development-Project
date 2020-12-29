@@ -1,3 +1,4 @@
+
 <div class="container mx-auto space-y-4 p-4 sm:p-0">
     <ul class="flex flex-col sm:flex-row sm:space-x-8 sm:items-center">
         <li>
@@ -46,4 +47,3 @@
     @livewireChartsScripts
 
 </div>
-

@@ -14,7 +14,7 @@ class Maintenance extends Model
      *
      * @var array
      */
-    protected $fiilable = [
+    protected $fillable = [
         'room_id',
         'employee_id',
         'description',

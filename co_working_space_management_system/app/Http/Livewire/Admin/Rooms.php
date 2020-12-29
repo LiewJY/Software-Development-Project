@@ -2,15 +2,13 @@
 
 namespace App\Http\Livewire\Admin;
 
+
 use App\Models\Room;
 use Livewire\Component;
 
 class Rooms extends Component
 {
-
     public $haha = false;
-
-
     public $name, $locationID,  $description, $price, $size, $roomID;
 
     /**
@@ -24,7 +22,6 @@ class Rooms extends Component
         'price' => ['required', 'reges:\d+\.\d{1,2}', 'not_in:0'],
         'size' => ['required', 'numeric']
     ];
-
 
     public function render()
     {
@@ -79,4 +76,5 @@ class Rooms extends Component
         $room = Room::where('id', $id)->firstorfail();
         $room->delete();
     }
+
 }

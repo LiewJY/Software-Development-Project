@@ -38,9 +38,16 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 })->name('dashboard');
 
 Route::get('/adminlocation', function () {
-
     return view('admin/location');
 })->name('location');
+
+Route::get('/adminmaintenance', function () {
+    return view('admin/maintenance');
+})->name('maintenance');
+
+Route::get('/adminmembership-plans', function () {
+    return view('admin/membership-plans');
+})->name('membership-plans');
 
 Route::get('/adminreport', function () {
     return view('admin.businessReport');
@@ -49,5 +56,3 @@ Route::get('/adminreport', function () {
 Route::get('/adminstaff', function () {
     return view('admin/staff');
 })->name('Staff');
-
-// Route::get('/adminreport', [ChartController::class,'index'])->name('admin');

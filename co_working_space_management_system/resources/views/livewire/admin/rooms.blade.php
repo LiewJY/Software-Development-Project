@@ -4,8 +4,6 @@
 {{ __('Delete') }}
 </x-jet-button>
 
-
-
  <x-jet-dialog-modal wire:model="haha">
         <x-slot name="title">
             {{ __('Delete Page') }}
@@ -25,4 +23,5 @@
             </x-jet-danger-button>
         </x-slot>
     </x-jet-dialog-modal>
+
 </div>

@@ -2,12 +2,19 @@
 
 namespace App\Http\Livewire\Admin;
 
-use App\Models\Membership;
 use Livewire\Component;
+use Livewire\WithPagination;
+use App\Models\Membership;
 
 class MembershipPlans extends Component
-{
-    public $membershipID, $name, $description, $price, $size;
+{   
+    use WithPagination;
+    public $search = '';
+    protected $queryString = ['search'];
+    public $name, $price, $description, $membershipID;
+    public $membershipForm = false;
+    public $deleteConfirmationForm = false;
+
 
     /**
      * Validation rules that applied to membership
@@ -16,15 +23,23 @@ class MembershipPlans extends Component
      */
     protected $rules = [
         'name' => ['required', 'string', 'max:55'],
-        'description' => ['requried', 'string', 'max:255', 'min:10'],
-        'price' => ['required', 'reges:\d+\.\d{1,2}', 'not_in:0'],
-        'size' => ['required', 'numeric']
+        'price' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
+        'description' => ['required', 'string', 'max:255', 'min:10']
     ];
 
 
     public function render()
     {
-        return view('livewire.admin.membership-plans');
+        return view('livewire.admin.membership-plans', [
+            'membershipplans' => Membership::where('name', 'like', '%' . $this->search . '%')->paginate(25),
+        ]);
+    }
+  
+    public function add()
+    {
+        $this->reset();
+        $this->membershipForm = true;
+        
     }
 
     /**
@@ -39,6 +54,8 @@ class MembershipPlans extends Component
             ['id' => $this->membershipID],
             $validatedData
         );
+
+        $this->membershipForm = false
     }
 
     /**
@@ -49,11 +66,12 @@ class MembershipPlans extends Component
      */
     public function edit($id)
     {
+        $this->membershipForm = true;
         $membership = Membership::findorFail($id);
+        $this->membershipID = $id;
         $this->name =  $membership->name;
         $this->description = $membership->description;
         $this->price = $membership->price;
-        $this->size =  $membership->size;
     }
 
     /**
@@ -62,9 +80,18 @@ class MembershipPlans extends Component
      * @param  int $id
      * @return void
      */
-    public function delete($id)
+     public function delete($id)
     {
         $membership = Membership::where('id', $id)->firstorfail();
         $membership->delete();
+        $this->deleteConfirmationForm = false;
+    }
+  
+  public function deleteModal($id, $name)
+    {
+        $this->deleteConfirmationForm = true;
+        $this->membershipID = $id;
+        $this->name = $name;    
     }
 }
+

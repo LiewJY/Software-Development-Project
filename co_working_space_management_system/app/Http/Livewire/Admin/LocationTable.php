@@ -11,6 +11,7 @@ class LocationTable extends Component
     use WithPagination;
     public $locationForm = false;
     public $deleteConfirmationForm = false;
+
     public $name, $address, $contactNumber, $description, $locationID;
     public $search = '';
     protected $queryString = ['search'];
@@ -20,7 +21,7 @@ class LocationTable extends Component
      *
      * @var array
      */
-    protected $rules = [
+    protected $rules = 
         'name' => ['required'],
         'address' => ['required', 'max:255'],
         'contactNumber' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
@@ -34,6 +35,7 @@ class LocationTable extends Component
             'locations' => location::where('name', 'like', '%' . $this->search . '%')->paginate(25),
         ]);
     }
+
 
     public function add()
     {
@@ -49,7 +51,7 @@ class LocationTable extends Component
      */
     public function store()
     {
-        $validatedData = $this->validate();
+        $this->validate();
 
         Location::updateOrCreate(['id' => $this->locationID], [
             'name' => $this->name,
@@ -57,6 +59,7 @@ class LocationTable extends Component
             'contact_number' => $this->contactNumber,
             'description' =>  $this->description
         ]);
+
         $this->locationForm = false;
 
         session()->flash(
@@ -73,6 +76,7 @@ class LocationTable extends Component
      */
     public function edit($id)
     {
+
         $this->locationForm = true;
         $location = Location::findOrFail($id);
         $this->locationID = $id;
@@ -82,6 +86,7 @@ class LocationTable extends Component
         $this->description = $location->description;
     }
 
+
     public function deleteModal($id, $name)
     {
         $this->deleteConfirmationForm = true;
@@ -89,6 +94,7 @@ class LocationTable extends Component
         $this->name = $name;
         
     }
+
     /**
      * Delete selected location
      *
