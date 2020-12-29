@@ -67,22 +67,22 @@
                         </div>
                         @elseif(Auth::user()->roles == 0)
                         <div class="flex space-x-4">
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('Staff') }}" :active="request()->routeIs('Staff')">
                                 {{ __('Staff') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('maintenance') }}" :active="request()->routeIs('maintenance')">
                                 {{ __('Maintenance') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
                                 {{ __('Membership Plans') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('business-report') }}" :active="request()->routeIs('business-report')">
                                 {{ __('Business Report') }}
                             </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
                                 {{ __('Locations') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('adminrooms') }}" :active="request()->routeIs('adminrooms')">
                                 {{ __('Rooms') }}
                             </x-jet-nav-link>
                         </div>
@@ -127,7 +127,7 @@
 
                 @guest
                 {{-- put login and register here --}}
-                <div  class="absolute right-0 flex items-center pr-2 hidden lg:block sm:ml-6">
+                <div class="absolute right-0 flex items-center pr-2 hidden lg:block sm:ml-6">
                     <x-jet-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
                         {{ __('Login') }}
                     </x-jet-nav-link>
@@ -194,98 +194,98 @@
             <div class="pt-2 pb-3 space-y-1">
                 @guest
 
-                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Home') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
-                        {{ __('Locations') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
-                        {{ __('Membership Plans') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
-                        {{ __('Contact Us') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
-                        {{ __('About Us') }}
-                    </x-jet-responsive-nav-link>
-                    <hr>
-                    <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
-                        {{ __('Login') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
-                        {{ __('Register') }}
-                    </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Home') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                    {{ __('Locations') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                    {{ __('Membership Plans') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                    {{ __('Contact Us') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                    {{ __('About Us') }}
+                </x-jet-responsive-nav-link>
+                <hr>
+                <x-jet-responsive-nav-link href="{{ route('login') }}" :active="request()->routeIs('login')">
+                    {{ __('Login') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('register') }}" :active="request()->routeIs('register')">
+                    {{ __('Register') }}
+                </x-jet-responsive-nav-link>
 
                 @elseif(Auth::user()->roles == 0)
 
-                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Staff') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
-                        {{ __('Maintenance') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
-                        {{ __('Membership Plans') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
-                        {{ __('Business Report') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
-                        {{ __('Locations') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('adminrooms') }}" :active="request()->routeIs('adminrooms')">
-                        {{ __('Rooms') }}
-                    </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('Staff') }}" :active="request()->routeIs('Staff')">
+                    {{ __('Staff') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('maintenance') }}" :active="request()->routeIs('maintenance')">
+                    {{ __('Maintenance') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
+                    {{ __('Membership Plans') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('business-report') }}" :active="request()->routeIs('business-report')">
+                    {{ __('Business Report') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
+                    {{ __('Locations') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('adminrooms') }}" :active="request()->routeIs('adminrooms')">
+                    {{ __('Rooms') }}
+                </x-jet-responsive-nav-link>
 
                 @elseif(Auth::user()->roles == 1)
 
-                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Reservations') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
-                        {{ __('Customer') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
-                        {{ __('Maintenance') }}
-                    </x-jet-responsive-nav-link>
-                    
+                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Reservations') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                    {{ __('Customer') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                    {{ __('Maintenance') }}
+                </x-jet-responsive-nav-link>
+
                 @elseif(Auth::user()->roles == 2)
 
-                    <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
-                        {{ __('Home') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
-                        {{ __('Locations') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
-                        {{ __('Membership Plans') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
-                        {{ __('Bookings') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
-                        {{ __('Contact Us') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
-                        {{ __('About Us') }}
-                    </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                    {{ __('Home') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                    {{ __('Locations') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                    {{ __('Membership Plans') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                    {{ __('Bookings') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
+                    {{ __('Contact Us') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                    {{ __('About Us') }}
+                </x-jet-responsive-nav-link>
 
                 @endguest
             </div>
-            
+
         </div>
 
     </nav>
 
-<div class="items-center xl:container mx-auto">
+    <div class="items-center xl:container mx-auto">
 
-    @yield('content')
-    
-</div>
+        @yield('content')
+
+    </div>
 
 </body>
-    
-    @livewireScripts
+
+@livewireScripts
 
 </html>
