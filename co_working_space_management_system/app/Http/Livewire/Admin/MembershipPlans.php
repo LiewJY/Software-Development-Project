@@ -1,10 +1,10 @@
 <?php
 
 namespace App\Http\Livewire\Admin;
+
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Membership;
-
 
 class MembershipPlans extends Component
 {   
@@ -14,6 +14,7 @@ class MembershipPlans extends Component
     public $name, $price, $description, $membershipID;
     public $membershipForm = false;
     public $deleteConfirmationForm = false;
+
 
     /**
      * Validation rules that applied to membership
@@ -33,12 +34,14 @@ class MembershipPlans extends Component
             'membershipplans' => Membership::where('name', 'like', '%' . $this->search . '%')->paginate(25),
         ]);
     }
+  
     public function add()
     {
         $this->reset();
         $this->membershipForm = true;
         
     }
+
     /**
      * Create or update existing membership plan
      *
@@ -51,8 +54,8 @@ class MembershipPlans extends Component
             ['id' => $this->membershipID],
             $validatedData
         );
-        $this->membershipForm = false;
 
+        $this->membershipForm = false
     }
 
     /**
@@ -69,7 +72,6 @@ class MembershipPlans extends Component
         $this->name =  $membership->name;
         $this->description = $membership->description;
         $this->price = $membership->price;
-        
     }
 
     /**
@@ -78,17 +80,18 @@ class MembershipPlans extends Component
      * @param  int $id
      * @return void
      */
-    public function deleteModal($id, $name)
-    {
-        $this->deleteConfirmationForm = true;
-        $this->membershipID = $id;
-        $this->name = $name;
-        
-    }
      public function delete($id)
     {
         $membership = Membership::where('id', $id)->firstorfail();
         $membership->delete();
         $this->deleteConfirmationForm = false;
     }
+  
+  public function deleteModal($id, $name)
+    {
+        $this->deleteConfirmationForm = true;
+        $this->membershipID = $id;
+        $this->name = $name;    
+    }
 }
+
