@@ -11,8 +11,7 @@ class LocationTable extends Component
     use WithPagination;
     public $locationForm = false;
     public $deleteConfirmationForm = false;
-
-    public $name, $address, $contactNumber, $description, $locationID;
+    public $name, $address, $contact_number, $description, $locationID;
     public $search = '';
     protected $queryString = ['search'];
 
@@ -25,7 +24,7 @@ class LocationTable extends Component
     [
         'name' => ['required'],
         'address' => ['required', 'max:255'],
-        'contactNumber' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
+        'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
         'description' => ['required', 'max:255']
     ];
 
@@ -45,20 +44,30 @@ class LocationTable extends Component
     }
 
     /**
+     * Real time validation
+     *
+     * @return void
+     */
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+    /**
      * Create or update location 
      *
      * @return void
      */
     public function store()
     {
-        $this->validate();
+       $validatedData = $this->validate();
 
-        Location::updateOrCreate(['id' => $this->locationID], [
-            'name' => $this->name,
-            'address' => $this->address,
-            'contact_number' => $this->contactNumber,
-            'description' =>  $this->description
-        ]);
+        Location::updateOrCreate(
+            ['id' => $this->locationID],
+            $validatedData
+        );
+
+        // Location::create($validatedData);
 
         $this->locationForm = false;
 
@@ -82,7 +91,7 @@ class LocationTable extends Component
         $this->locationID = $id;
         $this->name = $location->name;
         $this->address = $location->address;
-        $this->contactNumber = $location->contact_number;
+        $this->contact_number = $location->contact_number;
         $this->description = $location->description;
     }
 

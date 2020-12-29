@@ -21,14 +21,14 @@
             <tbody>
                 @foreach ($locations as $location)
                 <tr>
-                    <td class="border border-black">{{$location ->name}}</td>
-                    <td class="border border-black">{{$location ->address}}</td>
-                    <td class="border border-black">{{$location ->contact_number}}</td>
-                    <td class="border border-black">{{$location ->description}}</td>
+                    <td class="border border-black">{{$location->name}}</td>
+                    <td class="border border-black">{{$location->address}}</td>
+                    <td class="border border-black">{{$location->contact_number}}</td>
+                    <td class="border border-black">{{$location->description}}</td>
                     <td class="border border-black  py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
-                            <x-jet-button class="mx-2" wire:click="edit({{$location ->id}})">Edit</x-jet-button>
-                            <x-jet-button class="mx-2" wire:click="deleteModal({{$location ->id}}, '{{$location ->name}}')">Delete</x-jet-button>
+                            <x-jet-button class="mx-2" wire:click="edit({{$location->id}})">Edit</x-jet-button>
+                            <x-jet-button class="mx-2" wire:click="deleteModal({{$location->id}}, '{{$location->name}}')">Delete</x-jet-button>
                         </div>
                     </td>
 
@@ -37,7 +37,6 @@
                 @endforeach
             </tbody>
         </table>
-
         {{$locations->links()}}
 
         <x-jet-dialog-modal wire:model="locationForm">
@@ -50,27 +49,27 @@
             </x-slot>
             <form>
                 <x-slot name="content">
-                    <x-jet-label for="name" value="Locaiton name" />
-                    <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.defer="name" />
+                    <x-jet-label for="name" value="Location name" />
+                    <x-jet-input id="name" type="text" class="mt-1 block w-full" wire:model.lazy="name" />
                     <x-jet-input-error for="name" />
 
                     <x-jet-label for="address" value="Address" />
-                    <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="address" />
+                    <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address" />
                     <x-jet-input-error for="address" />
 
-                    <x-jet-label for="contactNumber" value="Contact Number" />
-                    <x-jet-input id="contactNumber" type="text" class="mt-1 block w-full" wire:model.defer="contactNumber" />
-                    <x-jet-input-error for="contactNumber" />
+                    <x-jet-label for="contact_number" value="Contact Number" />
+                    <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
+                    <x-jet-input-error for="contact_number" />
 
                     <x-jet-label for="description" value="Description" />
-                    <x-jet-input id="description" type="text" class="mt-1 block w-full" wire:model.defer="description" />
+                    <x-jet-input id="description" type="text" class="mt-1 block w-full" wire:model.lazy="description" />
                     <x-jet-input-error for="description" />
                 </x-slot>
                 <x-slot name="footer">
                     @if($locationID)
-                    <x-jet-button wire:click="store">Save</x-jet-button>
+                    <x-jet-button wire:click.prevent="store">Save</x-jet-button>
                     @else
-                    <x-jet-button wire:click="store">Add</x-jet-button>
+                    <x-jet-button wire:click.prevent="store">Add</x-jet-button>
                     @endif
                     <x-jet-button wire:click="$toggle('locationForm')">Cancel</x-jet-button>
 
