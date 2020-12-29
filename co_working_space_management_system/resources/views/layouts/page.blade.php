@@ -79,7 +79,7 @@
                             <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
                                 {{ __('Business Report') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
                                 {{ __('Locations') }}
                             </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
@@ -231,10 +231,10 @@
                     <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
                         {{ __('Business Report') }}
                     </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                    <x-jet-responsive-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
                         {{ __('Locations') }}
                     </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
+                    <x-jet-responsive-nav-link href="{{ route('adminrooms') }}" :active="request()->routeIs('adminrooms')">
                         {{ __('Rooms') }}
                     </x-jet-responsive-nav-link>
 
