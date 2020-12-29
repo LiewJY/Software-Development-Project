@@ -7,7 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Membership;
 
 class MembershipPlans extends Component
-{   
+{
     use WithPagination;
     public $search = '';
     protected $queryString = ['search'];
@@ -34,12 +34,11 @@ class MembershipPlans extends Component
             'membershipplans' => Membership::where('name', 'like', '%' . $this->search . '%')->paginate(25),
         ]);
     }
-  
+
     public function add()
     {
         $this->reset();
         $this->membershipForm = true;
-        
     }
 
     /**
@@ -55,7 +54,7 @@ class MembershipPlans extends Component
             $validatedData
         );
 
-        $this->membershipForm = false
+        $this->membershipForm = false;
     }
 
     /**
@@ -80,18 +79,17 @@ class MembershipPlans extends Component
      * @param  int $id
      * @return void
      */
-     public function delete($id)
+    public function delete($id)
     {
         $membership = Membership::where('id', $id)->firstorfail();
         $membership->delete();
         $this->deleteConfirmationForm = false;
     }
-  
-  public function deleteModal($id, $name)
+
+    public function deleteModal($id, $name)
     {
         $this->deleteConfirmationForm = true;
         $this->membershipID = $id;
-        $this->name = $name;    
+        $this->name = $name;
     }
 }
-

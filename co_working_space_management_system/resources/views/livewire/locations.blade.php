@@ -3,7 +3,7 @@
 <div class="grid md:grid-cols-8 grid-cols-1 rounded-2xl bg-gray-200 mx-2 my-2">
     <div class="relative bg-gray-200 rounded-2xl col-span-5">
         <div class="bg-cover bg-center text-white py-0 px-0 object-fill">
-            <x-image.image1 class="sm:rounded-t-2xl md:rounded-none md:rounded-l-2xl"/>
+            <x-image.image1 class="sm:rounded-t-2xl md:rounded-none md:rounded-l-2xl" />
         </div>
     </div>
     <div class="p-8 col-span-3">
@@ -18,6 +18,3 @@
 </div>
 
 @endforeach
-
-
-

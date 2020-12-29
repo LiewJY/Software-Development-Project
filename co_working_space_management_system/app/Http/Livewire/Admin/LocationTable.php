@@ -7,7 +7,7 @@ use Livewire\WithPagination;
 use App\Models\Location;
 
 class LocationTable extends Component
-{   
+{
     use WithPagination;
     public $locationForm = false;
     public $deleteConfirmationForm = false;
@@ -21,7 +21,8 @@ class LocationTable extends Component
      *
      * @var array
      */
-    protected $rules = 
+    protected $rules =
+    [
         'name' => ['required'],
         'address' => ['required', 'max:255'],
         'contactNumber' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
@@ -41,7 +42,6 @@ class LocationTable extends Component
     {
         $this->reset();
         $this->locationForm = true;
-        
     }
 
     /**
@@ -92,7 +92,6 @@ class LocationTable extends Component
         $this->deleteConfirmationForm = true;
         $this->locationID = $id;
         $this->name = $name;
-        
     }
 
     /**
