@@ -30,9 +30,9 @@ class Rooms extends Component
         'price' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
         'size' => ['required', 'numeric'],
         'location_id' => ['required', 'numeric'],
-        'time' => ['required', 'nullable']
+        'time' => ['required', 'nullable'],
     ];
-    
+
     /**
      * Custome error messages
      *
@@ -90,11 +90,10 @@ class Rooms extends Component
             $validatedData
         );
 
-        $slots = $this->time;
 
-        foreach ($slots as $slot) {
-            $room->slots()->attach($slot);
-        }
+        $slot = array_unique($this->time);
+
+        $room->slots()->sync($slot);
 
         $this->roomForm = false;
     }
@@ -107,8 +106,6 @@ class Rooms extends Component
      */
     public function edit($id)
     {
-        $current = [];
-        $this->roomForm = true;
         $room = Room::findorFail($id);
         $this->location_id = $room->location_id;
         $this->roomID =  $id;
@@ -116,21 +113,19 @@ class Rooms extends Component
         $this->description = $room->description;
         $this->price = $room->price;
         $this->size =  $room->size;
-        foreach ($room->slots as $slot) {
-            array_push($current, $slot->id);
-        }
-        $this->time = $current;
+        $this->time = $room->slots->pluck('id');
+        $this->roomForm = true;
     }
 
     public function deleteModal($id, $name, $location_name)
     {
         $this->deleteConfirmationForm = true;
-        $room = Room::findorFail($id);
+        // $room = Room::findorFail($id);
         $this->roomID = $id;
         $this->name = $name;
         $this->location_name = $location_name;
     }
-    
+
     /**
      * Delete selected room
      *
@@ -142,7 +137,33 @@ class Rooms extends Component
         $room = Room::where('id', $id)->firstorfail();
         $room->slots()->detach();
         $room->delete();
-
         $this->deleteConfirmationForm = false;
+    }
+
+    /**
+     * To ensure all the room slots are coorect according to slots that are selected
+     *
+     * @param  int $roomID
+     * @param  int $slotID
+     * @return void
+     */
+    public function timeClicked($roomID, $slotID)
+    {
+
+        if ($roomID) {
+            $test = [];
+            array_push($test, $slotID);
+            $room = Room::findorFail($roomID);
+            $database = $room->slots->pluck('id')->toArray();
+
+            if (in_array($slotID, $database) && in_array($slotID, $this->time)) {
+                $clean1 = array_diff($this->time, $test);
+                $clean2 = array_diff($test, $this->time);
+                $final_output = array_merge($clean1, $clean2);
+                $this->time = $final_output;
+            } else {
+                array_push($this->time, $slotID);
+            }
+        }
     }
 }

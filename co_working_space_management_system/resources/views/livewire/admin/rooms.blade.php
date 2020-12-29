@@ -81,14 +81,14 @@
                     <x-jet-input-error for="size" />
 
                     <x-jet-label for="slot" value="Time Slot" />
+
                     <div class="flex flex-row flex-wrap">
-                        @foreach($slots as $slot)
 
-
+                        @foreach($slots as $slot )
 
                         <div class="flex items-start">
                             <div class="flex items-center h-5 pl-3">
-                                <input id="slot" name="slot" type="checkbox" wire:model="time" value="{{$slot ->id}}" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
+                                <input name="{{$slot->id}}" wire:click.lazy="timeClicked({{$roomID}} , {{$slot->id}})" id="{{$slot->id}}" type="checkbox" wire:model.lazy="time" value="{{$slot->id}}" class="focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded">
                             </div>
                             <div class="ml-3 text-sm">
                                 <label for="slot" class="font-medium text-gray-700">{{$slot ->start_time}} -- {{$slot ->end_time}}</label>
