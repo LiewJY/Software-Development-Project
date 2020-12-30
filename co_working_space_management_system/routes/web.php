@@ -40,23 +40,24 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 Route::get('/adminlocation', function () {
     return view('admin.location');
 })->name('adminlocation');
-
+//ok
 Route::get('/adminmaintenance', function () {
     return view('admin.maintenance');
 })->name('maintenance');
-
+//ok
 Route::get('/adminmembership-plans', function () {
     return view('admin.membership-plans');
 })->name('membership-plans');
-
+//ok
 Route::get('/adminreport', function () {
     return view('admin.businessReport');
 })->name('business-report');
-
+//ok need to have data to check
 Route::get('/adminstaff', function () {
     return view('admin.staff');
 })->name('Staff');
-
+//
 Route::get('/adminrooms', function () {
     return view('admin.rooms');
 })->name('adminrooms');
+//ok
