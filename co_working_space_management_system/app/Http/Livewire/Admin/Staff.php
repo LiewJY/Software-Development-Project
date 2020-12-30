@@ -32,11 +32,8 @@ class Staff extends Component
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'address' => ['required', 'string', 'max:255'],
-        'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/' ],
-        'password'  => [
-            'required',
-            'min:8',
-        ]
+        'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
+        'password'  => ['required', 'min:8',]
     ];
 
 
@@ -44,10 +41,10 @@ class Staff extends Component
     {
         return view('livewire.admin.staff', [
             'employees' => employee::where('employees.first_name', 'like', '%' . $this->search . '%')
-            ->orWhere('employees.last_name', 'like', '%' . $this->search . '%')
-            ->join('users', 'employees.user_id', '=', 'users.id')
-            ->select('employees.*', 'users.roles', 'users.username', 'users.email')
-            ->paginate(10),
+                ->orWhere('employees.last_name', 'like', '%' . $this->search . '%')
+                ->join('users', 'employees.user_id', '=', 'users.id')
+                ->select('employees.*', 'users.roles', 'users.username', 'users.email')
+                ->paginate(10),
         ]);
     }
 
@@ -108,7 +105,6 @@ class Staff extends Component
         $this->last_name = $employee->last_name;
         $this->address = $employee->address;
         $this->contact_number =  $employee->contact_number;
-
     }
 
     public function deleteModal($id, $first_name)
@@ -127,8 +123,9 @@ class Staff extends Component
     {
         $employee =  Employee::where('id', $id)->firstorfail();
         User::where('id', $employee->user_id)->firstorfail()->delete();
+        $this->deleteConEmployeeForm = false;
     }
-    
+
     /**
      * Real time validation
      *
@@ -138,5 +135,4 @@ class Staff extends Component
     {
         $this->validateOnly($propertyName);
     }
-
 }
