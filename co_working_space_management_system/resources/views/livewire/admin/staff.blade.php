@@ -7,37 +7,44 @@
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
         </div>
-        <div class="w-full flex md:justify-end md:w-1/2">
+        <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
             <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Employee</x-jet-button>
         </div>
     </div>
+    <br>
 
     <!-- Table -->
     <div class="overflow-x-auto mx-1">
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>
                 <tr>
-                    <th class="border border-black">Name</th>
-                    <th class="border border-black">Address</th>
-                    <th class="border border-black">Contact Number</th>
-                    <th class="border border-black">Username</th>
-                    <th class="border border-black">Role</th>
-
-
-                    <th class="border border-black">Actions</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Name</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Address</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Contact Number</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Username</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Role</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($employees as $employee)
                 <tr>
-                    <td class="border border-black">{{$employee ->last_name}} {{$employee ->first_name}}</td>
-                    <td class="border border-black">{{$employee ->address}}</td>
-                    <td class="border border-black">{{$employee ->contact_number}}</td>
-                    <td class="border border-black">{{$employee ->username}}</td>
-                    <td class="border border-black">{{$employee ->roles}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$employee ->last_name}} {{$employee ->first_name}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$employee ->address}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$employee ->contact_number}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$employee ->username}}</td>
+                    <td class="border border-gray-400 bg-gray-100">
+                        @if($employee ->roles === 0)
+                            Admin
+                        @elseif($employee ->roles === 1)
+                            Staff 
+                        @else
+                            {{$employee ->roles}}
+                        @endif
+                    </td>
 
 
-                    <td class="border border-black  py-1.5">
+                    <td class="border border-gray-400  bg-gray-100 py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
                             <x-jet-button class="mx-2" wire:click="edit({{$employee->id}})">Edit</x-jet-button>
                             <x-jet-button class="mx-2" wire:click="deleteModal({{$employee ->id}}, '{{$employee ->first_name}}')">Delete</x-jet-button>
@@ -49,6 +56,7 @@
                 @endforeach
             </tbody>
         </table>
+        <br>
         {{$employees->links()}}
 
         <!-- Edit Modal -->
@@ -168,3 +176,4 @@
             </form>
         </x-jet-dialog-modal>
     </div>
+</div>

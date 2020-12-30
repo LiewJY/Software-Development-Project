@@ -3,29 +3,31 @@
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
         </div>
-        <div class="w-full flex md:justify-end md:w-1/2">
+        <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
             <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Location</x-jet-button>
         </div>
     </div>
+    <br>
+
     <div class="overflow-x-auto mx-1">
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>
                 <tr>
-                    <th class="border border-black">Name</th>
-                    <th class="border border-black">Address</th>
-                    <th class="border border-black">Contact Number</th>
-                    <th class="border border-black">Description</th>
-                    <th class="border border-black">Actions</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Name</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Address</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Contact Number</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Description</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($locations as $location)
                 <tr>
-                    <td class="border border-black">{{$location->name}}</td>
-                    <td class="border border-black">{{$location->address}}</td>
-                    <td class="border border-black">{{$location->contact_number}}</td>
-                    <td class="border border-black">{{$location->description}}</td>
-                    <td class="border border-black  py-1.5">
+                    <td class="border border-gray-400 bg-gray-100">{{$location->name}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$location->address}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$location->contact_number}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$location->description}}</td>
+                    <td class="border border-gray-400  bg-gray-100 py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
                             <x-jet-button class="mx-2" wire:click="edit({{$location->id}})">Edit</x-jet-button>
                             <x-jet-button class="mx-2" wire:click="deleteModal({{$location->id}}, '{{$location->name}}')">Delete</x-jet-button>
@@ -37,6 +39,7 @@
                 @endforeach
             </tbody>
         </table>
+        <br>
         {{$locations->links()}}
 
         <x-jet-dialog-modal wire:model="locationForm">
@@ -93,3 +96,4 @@
             </form>
         </x-jet-dialog-modal>
     </div>
+</div>

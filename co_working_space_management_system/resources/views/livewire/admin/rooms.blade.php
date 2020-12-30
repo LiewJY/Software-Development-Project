@@ -3,33 +3,34 @@
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
         </div>
-        <div class="w-full flex md:justify-end md:w-1/2">
+        <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
             <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Rooms</x-jet-button>
         </div>
     </div>
+    <br>
 
     <div class="overflow-x-auto mx-1">
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>
                 <tr>
-                    <th class="border border-black">Location Name</th>
-                    <th class="border border-black">Room Name</th>
-                    <th class="border border-black">Description</th>
-                    <th class="border border-black">Price</th>
-                    <th class="border border-black">Size</th>
-                    <th class="border border-black">Actions</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Location Name</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Room Name</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Description</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Price</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Size</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
 
                 </tr>
             </thead>
             <tbody>
                 @foreach ($rooms as $room)
                 <tr>
-                    <td class="border border-black">{{$room ->location_name}}</td>
-                    <td class="border border-black">{{$room ->name}}</td>
-                    <td class="border border-black">{{$room ->description}}</td>
-                    <td class="border border-black">{{$room ->price}}</td>
-                    <td class="border border-black">{{$room ->size}}</td>
-                    <td class="border border-black  py-1.5">
+                    <td class="border border-gray-400 bg-gray-100">{{$room ->location_name}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$room ->name}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$room ->description}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$room ->price}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$room ->size}}</td>
+                    <td class="border border-gray-400  bg-gray-100 py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
                             <x-jet-button class="mx-2" wire:click="edit({{$room ->id}})">Edit</x-jet-button>
                             <x-jet-button class="mx-2" wire:click="deleteModal({{$room ->id}}, '{{$room ->name}}', '{{$room ->location_name}}')">Delete</x-jet-button>
@@ -131,3 +132,4 @@
         </x-jet-dialog-modal>
 
     </div>
+</div>
