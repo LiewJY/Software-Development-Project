@@ -17,24 +17,30 @@
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>
                 <tr>
-                    <th class="border border-black">First Name</th>
-                    <th class="border border-black">Last Name</th>
+                    <th class="border border-black">Name</th>
                     <th class="border border-black">Address</th>
                     <th class="border border-black">Contact Number</th>
+                    <th class="border border-black">Username</th>
+                    <th class="border border-black">Role</th>
+
+
                     <th class="border border-black">Actions</th>
                 </tr>
             </thead>
             <tbody>
                 @foreach ($employees as $employee)
                 <tr>
-                    <td class="border border-black">{{$employee ->first_name}}</td>
-                    <td class="border border-black">{{$employee ->last_name}}</td>
+                    <td class="border border-black">{{$employee ->last_name}} {{$employee ->first_name}}</td>
                     <td class="border border-black">{{$employee ->address}}</td>
                     <td class="border border-black">{{$employee ->contact_number}}</td>
+                    <td class="border border-black">{{$employee ->username}}</td>
+                    <td class="border border-black">{{$employee ->roles}}</td>
+
+
                     <td class="border border-black  py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
                             <x-jet-button class="mx-2" wire:click="edit({{$employee->id}})">Edit</x-jet-button>
-                            <x-jet-button class="mx-2" wire:click="deleteModal({{$employee ->id}}, '{{$employee ->firstName}}')">Delete</x-jet-button>
+                            <x-jet-button class="mx-2" wire:click="deleteModal({{$employee ->id}}, '{{$employee ->first_name}}')">Delete</x-jet-button>
                         </div>
                     </td>
 
@@ -46,7 +52,7 @@
         {{$employees->links()}}
 
         <!-- Edit Modal -->
-        <x-jet-dialog-modal wire:model="employeeForm">
+        {{-- <x-jet-dialog-modal wire:model="employeeForm">
             <x-slot name="title">
                 <h1>Edit Employee</h1>
             </x-slot>
@@ -73,12 +79,16 @@
                     <x-jet-button wire:click="$toggle('employeeForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>
-        </x-jet-dialog-modal>
+        </x-jet-dialog-modal> --}}
 
         <!-- Add Modal -->
-        <x-jet-dialog-modal wire:model="employeeAddForm">
+        <x-jet-dialog-modal wire:model="employeeForm">
             <x-slot name="title">
-                <h1>Add Employee</h1>
+                @if($employeeID)
+                    <h1>Edit Employee</h1>
+                @else
+                    <h1>Add Employee</h1>
+                @endif
             </x-slot>
             <form>
                 <x-slot name="content">
@@ -102,21 +112,42 @@
                     <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
                     <x-jet-input-error for="contact_number" />
 
-                    <x-jet-label for="username" value="Username" />
-                    <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.lazy="username"/>
-                    <x-jet-input-error for="username" />
+                    @if($employeeID)
 
-                    <x-jet-label for="email" value="Email" />
-                    <x-jet-input id="email" type="text" class="mt-1 block w-full" wire:model.lazy="email" />
-                    <x-jet-input-error for="email" />
+                    @else
+                        <div class="flex justify-between gap-3">
+                            <span class="w-1/2">
+                                <x-jet-label for="username" value="Username" />
+                                <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.lazy="username"/>
+                                <x-jet-input-error for="username" />
+                            </span>
+                            <span class="w-1/2">
+                                <x-jet-label for="roles" value="Role" />     
+                                <select id="roles" wire:model.lazy="roles" name="roles" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="default">Select a role</option>
+                                    <option value="0">Admin</option>
+                                    <option value="1">Employee</option>
+                                </select>
+                                <x-jet-input-error for="roles" />
+                            </span>
+                        </div>
+                        <x-jet-label for="email" value="Email" />
+                        <x-jet-input id="email" type="text" class="mt-1 block w-full" wire:model.lazy="email" />
+                        <x-jet-input-error for="email" />
 
-                    <x-jet-label for="password" value="Password" />
-                    <x-jet-input id="password" type="text" class="mt-1 block w-full" wire:model.lazy="password"/>
-                    <x-jet-input-error for="password" />
+                        <x-jet-label for="password" value="Password" />
+                        <x-jet-input id="password" type="password" class="mt-1 block w-full" wire:model.lazy="password"/>
+                        <x-jet-input-error for="password" />
+
+                    @endif
                 </x-slot>
                 <x-slot name="footer">
-                    <x-jet-button wire:click="store">Add</x-jet-button>
-                    <x-jet-button wire:click="$toggle('employeeAddForm')">Cancel</x-jet-button>
+                    @if($employeeID)
+                        <x-jet-button wire:click="store">Save</x-jet-button>
+                    @else
+                        <x-jet-button wire:click="store">Add</x-jet-button>
+                    @endif
+                    <x-jet-button wire:click="$toggle('employeeForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>
         </x-jet-dialog-modal>

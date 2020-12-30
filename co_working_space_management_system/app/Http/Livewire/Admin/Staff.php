@@ -13,7 +13,7 @@ class Staff extends Component
     use WithPagination;
     use PasswordValidationRules;
     public $employeeForm = false;
-    public $employeeAddForm = false;
+    //public $employeeAddForm = false;
     public $deleteConEmployeeForm = false;
     public $username, $email, $password, $roles, $first_name, $last_name, $address, $contact_number, $employeeID;
     public $search = '';
@@ -28,7 +28,7 @@ class Staff extends Component
     protected $rules = [
         'username' => ['required', 'string', 'min:6', 'max:255', 'unique:users'],
         'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        // 'roles' => ['required'],
+        'roles' => ['required'],
         'first_name' => ['required', 'string', 'max:255'],
         'last_name' => ['required', 'string', 'max:255'],
         'address' => ['required', 'string', 'max:255'],
@@ -43,14 +43,18 @@ class Staff extends Component
     public function render()
     {
         return view('livewire.admin.staff', [
-            'employees' => employee::where('first_name', 'like', '%' . $this->search . '%')->paginate(10),
+            'employees' => employee::where('employees.first_name', 'like', '%' . $this->search . '%')
+            ->orWhere('employees.last_name', 'like', '%' . $this->search . '%')
+            ->join('users', 'employees.user_id', '=', 'users.id')
+            ->select('employees.*', 'users.roles', 'users.username', 'users.email')
+            ->paginate(10),
         ]);
     }
 
     public function add()
     {
         $this->reset();
-        $this->employeeAddForm = true;
+        $this->employeeForm = true;
     }
 
     /**
@@ -74,7 +78,7 @@ class Staff extends Component
             'username' => $this->username,
             'email' => $this->email,
             'password' => bcrypt($this->password),
-            'roles' => $this->roles
+            'roles' => $this->roles,
         ]);
 
         $employee = Employee::updateorCreate(['user_id' => $this->userID], [
@@ -87,7 +91,6 @@ class Staff extends Component
         $user->employee()->save($employee);
 
         $this->employeeForm = false;
-        $this->employeeAddForm = false;
     }
 
     /**
@@ -105,6 +108,7 @@ class Staff extends Component
         $this->last_name = $employee->last_name;
         $this->address = $employee->address;
         $this->contact_number =  $employee->contact_number;
+
     }
 
     public function deleteModal($id, $first_name)

@@ -25,7 +25,7 @@
                 <tr>
                     <td class="border border-black">{{$maintenance ->location_name}}</td>
                     <td class="border border-black">{{$maintenance ->room_name}}</td>
-                    <td class="border border-black">{{$maintenance ->employee_first_name}}</td>
+                    <td class="border border-black">{{$maintenance ->employee_last_name}} {{$maintenance ->employee_first_name}}</td>
                     <td class="border border-black">{{$maintenance ->description}}</td>
                     <td class="border border-black">
                         @if($maintenance ->status === 1)
@@ -82,6 +82,8 @@
                     <option value="0">Ongoing</option>
                     <option value="1">Completed</option>
                 </select>
+                <x-jet-input-error for="status"/>
+
 
             </x-slot>
             <x-slot name="footer">

@@ -37,7 +37,7 @@ class Maintenances extends Component
             ->join('rooms', 'maintenances.room_id', '=', 'rooms.id')
             ->join('locations', 'rooms.location_id', '=', 'locations.id')
             ->join('employees', 'maintenances.employee_id', '=', 'employees.id')
-            ->select('maintenances.*', 'rooms.name as room_name', 'locations.name as location_name', 'locations.id as location_id', 'employees.first_name as employee_first_name')
+            ->select('maintenances.*', 'rooms.name as room_name', 'locations.name as location_name', 'locations.id as location_id', 'employees.first_name as employee_first_name', 'employees.last_name as employee_last_name')
             ->paginate(10)
         ], [
             'rooms' => room::join('locations', 'rooms.location_id', '=', 'locations.id')
@@ -52,7 +52,7 @@ class Maintenances extends Component
         $this->reset();
         $this->user = Auth::user()->id;
         $employee_info = Employee::where('user_id', $this->user)->select('employees.*')->first();
-        $this->employee_name = $employee_info['first_name'].' '. $employee_info['last_name'];
+        $this->employee_name = $employee_info['last_name'].' '. $employee_info['first_name'];
         $this->employee_id = $employee_info->id;
         $this->maintenanceForm = true;
     }
