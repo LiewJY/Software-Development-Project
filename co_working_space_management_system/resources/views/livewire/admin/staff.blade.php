@@ -100,18 +100,34 @@
             </x-slot>
             <form>
                 <x-slot name="content">
-                    <div class="flex justify-between gap-3">
-                        <span class="w-1/2">
-                            <x-jet-label for="firstName" value="First name" />
-                            <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="first_name" />
-                            <x-jet-input-error for="first_name" />
-                        </span>
-                        <span class="w-1/2">
-                            <x-jet-label for="lastName" value="Last name" />
-                            <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.lazy="last_name" />
-                            <x-jet-input-error for="last_name" />
-                        </span>
-                    </div>
+                    @if($employeeID)
+                        <div class="flex justify-between gap-3">
+                            <span class="w-1/2">
+                                <x-jet-label for="firstName" value="First name" />
+                                <x-jet-input id="firstName" readonly type="text" class="mt-1 block w-full" wire:model.lazy="first_name" />
+                                <x-jet-input-error for="first_name" />
+                            </span>
+                            <span class="w-1/2">
+                                <x-jet-label for="lastName" value="Last name" />
+                                <x-jet-input id="lastName" readonly type="text" class="mt-1 block w-full" wire:model.lazy="last_name" />
+                                <x-jet-input-error for="last_name" />
+                            </span>
+                        </div>
+                    @else
+                        <div class="flex justify-between gap-3">
+                            <span class="w-1/2">
+                                <x-jet-label for="firstName" value="First name" />
+                                <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="first_name" />
+                                <x-jet-input-error for="first_name" />
+                            </span>
+                            <span class="w-1/2">
+                                <x-jet-label for="lastName" value="Last name" />
+                                <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.lazy="last_name" />
+                                <x-jet-input-error for="last_name" />
+                            </span>
+                        </div>
+                    @endif
+
                     <x-jet-label for="address" value="Address" />
                     <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address" />
                     <x-jet-input-error for="address" />
@@ -119,31 +135,56 @@
                     <x-jet-label for="contact_number" value="Contact Number" />
                     <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
                     <x-jet-input-error for="contact_number" />
+                   
+                   
+                    @if($employeeID)
+                        <div class="flex justify-between gap-3">
+                            <span class="w-1/2">
+                                <x-jet-label for="username" value="Username" />
+                                <x-jet-input id="username" readonly type="text" class="mt-1 block w-full" wire:model.lazy="username" />
+                                <x-jet-input-error for="username" />
+                            </span>
+                            <span class="w-1/2">
+                                <x-jet-label for="roles" value="Role" />
+                                <select id="roles" disabled="true" wire:model.lazy="roles" name="roles" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="default">Select a role</option>
+                                    <option value="0">Admin</option>
+                                    <option value="1">Staff</option>
+                                </select>
+                                <x-jet-input-error for="roles" />
+                            </span>
+                        </div>
+                        <x-jet-label for="email" value="Email" />
+                        <x-jet-input id="email" readonly type="text" class="mt-1 block w-full" wire:model.lazy="email" />
+                        <x-jet-input-error for="email" />
+
+                    @else
+                        <div class="flex justify-between gap-3">
+                            <span class="w-1/2">
+                                <x-jet-label for="username" value="Username" />
+                                <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.lazy="username" />
+                                <x-jet-input-error for="username" />
+                            </span>
+                            <span class="w-1/2">
+                                <x-jet-label for="roles" value="Role" />
+                                <select id="roles" wire:model.lazy="roles" name="roles" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                    <option value="default">Select a role</option>
+                                    <option value="0">Admin</option>
+                                    <option value="1">Staff</option>
+                                </select>
+                                <x-jet-input-error for="roles" />
+                            </span>
+                        </div>
+                        <x-jet-label for="email" value="Email" />
+                        <x-jet-input id="email" type="text" class="mt-1 block w-full" wire:model.lazy="email" />
+                        <x-jet-input-error for="email" />
+
+                        <x-jet-label for="password" value="Password" />
+                        <x-jet-input id="password" type="password" class="mt-1 block w-full" wire:model.lazy="password" />
+                        <x-jet-input-error for="password" />
+                    @endif
 
 
-                    <div class="flex justify-between gap-3">
-                        <span class="w-1/2">
-                            <x-jet-label for="username" value="Username" />
-                            <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.lazy="username" />
-                            <x-jet-input-error for="username" />
-                        </span>
-                        <span class="w-1/2">
-                            <x-jet-label for="roles" value="Role" />
-                            <select id="roles" wire:model.lazy="roles" name="roles" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                                <option value="default">Select a role</option>
-                                <option value="0">Admin</option>
-                                <option value="1">Staff</option>
-                            </select>
-                            <x-jet-input-error for="roles" />
-                        </span>
-                    </div>
-                    <x-jet-label for="email" value="Email" />
-                    <x-jet-input id="email" type="text" class="mt-1 block w-full" wire:model.lazy="email" />
-                    <x-jet-input-error for="email" />
-
-                    <x-jet-label for="password" value="Password" />
-                    <x-jet-input id="password" type="password" class="mt-1 block w-full" wire:model.lazy="password" />
-                    <x-jet-input-error for="password" />
                 </x-slot>
                 <x-slot name="footer">
                     @if($employeeID)
