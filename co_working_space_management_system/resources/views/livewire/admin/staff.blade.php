@@ -22,6 +22,7 @@
                     <th class="border border-gray-700 text-white bg-gray-700">Address</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Contact Number</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Username</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Email</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Role</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
                 </tr>
@@ -33,6 +34,7 @@
                     <td class="border border-gray-400 bg-gray-100">{{$employee ->address}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$employee ->contact_number}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$employee ->username}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$employee ->email}}</td>
                     <td class="border border-gray-400 bg-gray-100">
                         @if($employee ->roles === 0)
                             Admin
@@ -42,9 +44,7 @@
                             {{$employee ->roles}}
                         @endif
                     </td>
-
-
-                    <td class="border border-gray-400  bg-gray-100 py-1.5">
+                    <td class="border border-gray-400 bg-gray-100 py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
                             <x-jet-button class="mx-2" wire:click="edit({{$employee->id}})">Edit</x-jet-button>
                             <x-jet-button class="mx-2" wire:click="deleteModal({{$employee ->id}}, '{{$employee ->first_name}}')">Delete</x-jet-button>
@@ -120,9 +120,7 @@
                     <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
                     <x-jet-input-error for="contact_number" />
 
-                    @if($employeeID)
 
-                    @else
                         <div class="flex justify-between gap-3">
                             <span class="w-1/2">
                                 <x-jet-label for="username" value="Username" />
@@ -134,7 +132,7 @@
                                 <select id="roles" wire:model.lazy="roles" name="roles" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                                     <option value="default">Select a role</option>
                                     <option value="0">Admin</option>
-                                    <option value="1">Employee</option>
+                                    <option value="1">Staff</option>
                                 </select>
                                 <x-jet-input-error for="roles" />
                             </span>
@@ -146,8 +144,6 @@
                         <x-jet-label for="password" value="Password" />
                         <x-jet-input id="password" type="password" class="mt-1 block w-full" wire:model.lazy="password"/>
                         <x-jet-input-error for="password" />
-
-                    @endif
                 </x-slot>
                 <x-slot name="footer">
                     @if($employeeID)

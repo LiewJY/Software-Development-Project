@@ -15,7 +15,7 @@ class Staff extends Component
     public $employeeForm = false;
     //public $employeeAddForm = false;
     public $deleteConEmployeeForm = false;
-    public $username, $email, $password, $roles, $first_name, $last_name, $address, $contact_number, $employeeID;
+    public $username, $email, $password, $roles, $first_name, $last_name, $address, $contact_number, $employeeID, $users_id;
     public $search = '';
     protected $queryString = ['search'];
 
@@ -105,6 +105,13 @@ class Staff extends Component
         $this->last_name = $employee->last_name;
         $this->address = $employee->address;
         $this->contact_number =  $employee->contact_number;
+        $this->users_id = $employee->user_id;
+        $user = user::where('id', $this->users_id)->select('users.*')->first();
+        $this->username = $user->username;
+        $this->roles = $user->roles;
+        $this->email = $user->email;
+        //$this->password = $user->password;
+
     }
 
     public function deleteModal($id, $first_name)
