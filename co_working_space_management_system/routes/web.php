@@ -61,3 +61,6 @@ Route::get('/adminrooms', function () {
     return view('admin.rooms');
 })->name('adminrooms');
 //ok
+Route::get('/employeecustomer', function () {
+    return view('employee.customer');
+})->name('employeecustomer');
