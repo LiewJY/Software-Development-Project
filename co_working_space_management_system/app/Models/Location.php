@@ -37,4 +37,24 @@ class Location extends Model
     {
         return $this->hasMany('App\Models\Room');
     }
+
+    /**
+     * Get all of the maintenances for the location.
+     *
+     * @return void
+     */
+    public function maintenances()
+    {
+        return $this->hasManyThrough(Maintenance::class, Room::class);
+    }
+
+    /**
+     * Get the count of maintenance of the location.
+     *
+     * @return void
+     */
+    public function maintenanceCount()
+    {
+        return $this->maintenances()->where('status', 0)->count();
+    }
 }
