@@ -1,5 +1,4 @@
 <div>
-<<<<<<< HEAD
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
@@ -30,6 +29,3 @@
             </div>
         </div>
 </div>
-=======
-dfddddsfdfds</div>
->>>>>>> 0c328eecb438bcf9bd9904606d62e23b76ac5f9a
