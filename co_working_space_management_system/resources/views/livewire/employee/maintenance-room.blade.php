@@ -1,4 +1,5 @@
 <div>
+<<<<<<< HEAD
     <h1 class="font-serif sm:text-2xl text-xl font-bold title-font mb-4 text-gray-900 underline mx-3">Location: {{$location->name}}</h1>
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
@@ -107,3 +108,7 @@
         </x-jet-dialog-modal>
     </div>
 </div>
+=======
+    {{-- To attain knowledge, add things every day; To attain wisdom, subtract things every day --}}
+</div>
+>>>>>>> 0c328eecb438bcf9bd9904606d62e23b76ac5f9a
