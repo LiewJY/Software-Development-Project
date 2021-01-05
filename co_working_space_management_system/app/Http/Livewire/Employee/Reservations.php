@@ -9,141 +9,114 @@ use App\Models\Customer;
 use App\Models\RoomSlot;
 use App\Models\Room;
 use App\Models\Slot;
-use App\Models\Payment;
-
+use App\Models\ReservationPayment;
 
 class Reservations extends Component
 {
     use WithPagination;
     public $ReservationForm = false;
     public $deleteConfirmationForm = false;
-    public $customer_id, $room_id, $room_slot_id, $payment_id, $reservation_date, $payment_status, $reservationID, $name, $customer_name;
+    public $room_id, $room_slot_id, $payment_id, $reservation_date, $payment_status, $name, $customer_name;
     public $search = '';
     protected $queryString = ['search'];
 
-    protected $rules = [
-        'customer_id' => ['required', 'string', 'max:255'],
-        'room_id' => ['required', 'string'],
-        'room_slot_id' => ['required', 'string'],
-        'payment_id' => ['required', 'string'],
-        'reservation_date' => ['required'],
-        'payment_status' => ['required'],
-    ];
+    public $selectedLocation, $selectedDate, $selectedRoom, $selectedSlot = null;
+    public $locations, $rooms, $slots;
+    public $customer_id, $reservationID;
 
+
+    /**
+     * Return blade view
+     *
+     * @return void
+     */
     public function render()
     {
-        return view('livewire.employee.reservations', [
-            'reservations' => reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
-            ->join('customers', 'reservations.customer_id', '=', 'customers.id')
-            ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-            ->join('slots', 'reservations.room_slot_id', '=', 'slots.id')
-            ->join('payments', 'reservations.payment_id', '=', 'payments.id')
-            ->select('reservations.*', 'customers.last_name as customer_last_name', 'customers.first_name as customer_first_name','rooms.name as room_name', 'slots.start_time as slot_start','slots.end_time as slot_end', 'payments.amount as payments_amount')
-            ->paginate(10)
-        ], [
-            'customers' => Customer::select('customers.first_name as first_name', 'customers.last_name as last_name')
-            ->get(),
-            'rooms' => Room::select('rooms.name as room_name')
-            ->get(),
-            'slots' => Slot::select('slots.start_time as slot_start', 'slots.end_time as slot_end')
-            ->get() 
-        ]); 
-    }
+        return view(
+            'livewire.employee.reservations',
+            [
+                'customers' => Customer::all(),
 
-
-    public function add()
-    {
-        $this->reset();
-        $this->ReservationForm = true;
-    }
-
-    public function store()
-    {
-       $validatedData = $this->validate();
-
-       $customers = Customer::updateOrCreate([
-            'customer_name'=> $this->first_name,
-            'customer_name'=> $this->last_name
-        ]);
-
-        $reserves = Reservation::updateOrCreate([
-            'reservation_date' => $this->reservation_date,
-            'payment_status'=> $this->payment_status
-        ]);
-
-        $room = Room::updateOrCreate([
-            'room_id'=> $this->room_name
-        ]);
-
-        $payments = Payment::updateOrCreate([
-            'payment_id'=> $this->payment_amount
-        ]);
-        
-        $this->ReservationForm = false;
-
-        session()->flash(
-            'message',
-            $this->reservationID ? 'Reservation Updated Successfully.' : 'Reservation Created Successfully.'
+                'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
+                    ->join('customers', 'reservations.customer_id', '=', 'customers.id')
+                    ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                    ->join('slots', 'reservations.room_slot_id', '=', 'slots.id')
+                    ->join('payments', 'reservations.payment_id', '=', 'payments.id')
+                    ->select('reservations.*', 'customers.last_name as customer_last_name', 'customers.first_name as customer_first_name', 'rooms.name as room_name', 'slots.start_time as slot_start', 'slots.end_time as slot_end', 'payments.amount as payments_amount')
+                    ->paginate(10)
+            ]
         );
     }
 
-    public function update()
-    {
-        $validatedData = $this->validate([
-            'customers' => ['required'],
-            'rooms' => ['required'],
-            'slots' => ['required'],
-        ]);
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    protected $rules = [
+        'selectedLocation' => ['required'],
+        'selectedDate' => ['required', 'date_format:Y/m/d'],
+        'selectedRoom' => ['required'],
+        'selectedSlot' => ['required'],
+        'customer_id' => ['required'],
+    ];
 
-        $reserves = Reservation::findorFail($this->reservationID);
-        $reserves->update($validatedData);
-
-
-        $this->employeeForm = false;
-    }
 
     /**
-     * Pass reservation id and it will fill the feilds with data from database
+     * Update or create reservation
      *
-     * @param  int $id
      * @return void
      */
+    public function store()
+    {
+
+        $this->validate();
+
+        if (!is_null($this->reservationID)) {
+            $reservation = Reservation::find($this->reservationID);
+            $id = $reservation->reservationpayment->pluck('id');
+        } else {
+            $id = NULL;
+        }
+
+        $payment = ReservationPayment::updateOrCreate(['id' => $id], [
+            'customer_id' => $this->customer_id,
+            'amount' => $this->amount,
+        ]);
+
+        $reservation = Reservation::updateOrCreate(['id' => $this->reservation_ID], [
+            'room_id' => $this->selectedRoom,
+            'slot_id' => $this->selectedSlot,
+            'reservation_date' => $this->selectedDate,
+        ]);
+
+        $payment->reservation()->save($reservation);
+        $this->ReservationForm = false;
+    }
+
     public function edit($id)
     {
         $this->ReservationForm = true;
-        $reservation = Reservation::findOrFail($id);
         $this->reservationID = $id;
+        $reservation = Reservation::where('id', $id)->firstorfail();
+        $customer = ReservationPayment::where('id', $reservation->reservationpayment->pluck('id'))->first();
 
         $res_info = Reservation::join('payments', 'reservations.payment_id', '=', 'payments.id')
-        ->join('customers', 'customers.id', '=', 'reservations.customer_id')
-        ->where('reservations.id', '=', $this->reservationID)
-        ->first();
+            ->join('customers', 'customers.id', '=', 'reservations.customer_id')
+            ->where('reservations.id', '=', $this->reservationID)
+            ->first();
 
-        $this->customer_name = $res_info['last_name'].' '. $res_info['first_name'];
+        $this->customer_name = $customer->customer->first_name . ' ' . $customer->customer->last_name;
         $this->room_id = $res_info->name;
-        $this->room_slot_id = $res_info['start_time'].' '. $res_info['end_name'];
+        $this->room_slot_id = $res_info['start_time'] . ' ' . $res_info['end_name'];
         $this->payment_id = $res_info->amount;
         $this->reservation_date = $res_info->reservation_date;
         $this->payment_status = $res_info->payment_status;
         $this->customer_id = $res_info->customer_id;
     }
 
-
-    public function deleteModal($id)
-    {
-        $this->deleteConfirmationForm = true;
-        $reservation = Reservation::findorFail($id);
-        $this->reservationID = $id;
-        $reserves = Reservation::join('customers', 'reservations.customer_id', '=', 'customers.id')
-        ->join('rooms','reservations.room_id','=','rooms.id')
-        ->where('reservations.id', '=', $this->reservationID)
-        ->select('reservations.*', 'rooms.*' , 'customers.*')
-        ->first();
-        $this->name = $reserves['first_name']. ' ' .$reserves['last_name']. ', ' .$reserves['name'];
-    }
-
     /**
-     * Delete selected reservation
+     * cancle selected reservations
      *
      * @param  int $id
      * @return void
@@ -151,7 +124,65 @@ class Reservations extends Component
     public function delete($id)
     {
         $reservation = Reservation::where('id', $id)->firstorfail();
-        $reservation->delete();
+        ReservationPayment::where('id', $reservation->reservation_payment_id)->firstorfail()->delete();
         $this->deleteConfirmationForm = false;
+    }
+
+
+    /**
+     * Delete modal 
+     *
+     * @param  int $id
+     * @return void
+     */
+    public function deleteModal($id)
+    {
+        $this->deleteConfirmationForm = true;
+        $reservation = Reservation::findorFail($id);
+        $this->reservationID = $id;
+        $reserves = Reservation::join('customers', 'reservations.customer_id', '=', 'customers.id')
+            ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+            ->where('reservations.id', '=', $this->reservationID)
+            ->select('reservations.*', 'rooms.*', 'customers.*')
+            ->first();
+        $this->name = $reserves['first_name'] . ' ' . $reserves['last_name'] . ', ' . $reserves['name'];
+    }
+
+    /**
+     * Reset component properties when adding a new reservation.
+     *
+     * @return void
+     */
+    public function add()
+    {
+        $this->reset();
+        $this->ReservationForm = true;
+    }
+
+    /**
+     * Load rooms based on selected date
+     *
+     * @return void
+     */
+    public function updatedSelectedDate()
+    {
+        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+        $this->selectedRoom = NULL;
+    }
+
+    /**
+     * Load available slots based on selected room
+     *
+     * @param  mixed $room
+     * @return void
+     */
+    public function updatedSelectedRoom($room)
+    {
+        if (!is_null($room)) {
+            $reserved = Reservation::where('reservation_date', $this->selectedDate)->pluck('room_id')->toArray();
+            $room = Room::find($this->selectedRoom);
+            $roomSlots = $room->slots->pluck('id')->toArray();
+            $this->slots = array_diff($roomSlots, $reserved);
+        }
     }
 }

@@ -4,7 +4,6 @@ namespace App\Http\Livewire\Employee;
 
 use Livewire\Component;
 use App\Models\Location;
-use App\Models\Room;
 use Livewire\WithPagination;
 
 

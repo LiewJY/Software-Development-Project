@@ -8,8 +8,6 @@ use App\Models\Room;
 use App\Models\Location;
 use App\Models\Maintenance;
 use App\Models\Employee;
-
-
 use Illuminate\Support\Facades\Auth;
 
 class MaintenanceRoom extends Component
@@ -22,6 +20,11 @@ class MaintenanceRoom extends Component
     public $search = '';
     protected $queryString = ['search'];
 
+    /**
+     * validation rules
+     *
+     * @var array
+     */
     protected $rules = [
         'room_id' => ['required'],
         'employee_id' => ['required'],
@@ -52,6 +55,11 @@ class MaintenanceRoom extends Component
     }
 
 
+    /**
+     * Reset properties values
+     *
+     * @return void
+     */
     public function add()
     {
         $this->reset('room_id', 'employee_id', 'description', 'status', 'maintenance_id', 'employee_name', 'name');
@@ -63,6 +71,11 @@ class MaintenanceRoom extends Component
         $this->status = 0;
     }
 
+    /**
+     * Update or create maintenance
+     *
+     * @return void
+     */
     public function store()
     {
         $validatedData = $this->validate();
@@ -76,6 +89,12 @@ class MaintenanceRoom extends Component
     }
 
 
+    /**
+     * Edit form 
+     *
+     * @param  int $id
+     * @return void
+     */
     public function edit($id)
     {
         $this->maintenanceForm = true;
@@ -83,14 +102,18 @@ class MaintenanceRoom extends Component
         $this->maintenance_id = $id;
         $this->room_id = $maintenance->room_id;
         $this->room_name = $maintenance->room->name;
-        $this->user = Auth::user()->id;
-        $employee_info = Employee::where('user_id', $this->user)->select('employees.*')->first();
-        $this->employee_name = $employee_info['first_name'] . ' ' . $employee_info['last_name'];
-        $this->employee_id = $employee_info->id;
         $this->description = $maintenance->description;
         $this->status = $maintenance->status;
+        $this->employee_name = $maintenance->employee->first_name . ' ' . $maintenance->employee->last_name;
+        $this->employee_id = Employee::where('user_id', Auth::user()->id)->first()->id;
     }
 
+    /**
+     * Mark maintenance as complete
+     *
+     * @param  int $id
+     * @return void
+     */
     public function markAsComplete($id)
     {
         $this->completeConfirmationForm = true;
@@ -98,9 +121,7 @@ class MaintenanceRoom extends Component
         $this->room_name = $maintenance->room->name;
         $this->maintenance_id = $id;
         $this->room_id = $maintenance->room_id;
-        $this->user = Auth::user()->id;
-        $employee_info = Employee::where('user_id', $this->user)->select('employees.*')->first();
-        $this->employee_id = $employee_info->id;
+        $this->employee_id = Employee::where('user_id', Auth::user()->id)->first()->id;
         $this->description = $maintenance->description;
         $this->status = 1;
     }

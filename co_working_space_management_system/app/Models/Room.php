@@ -58,4 +58,14 @@ class Room extends Model
     {
         return $this->belongsToMany(Slot::class);
     }
+
+    /**
+     * Get the room reservation
+     *
+     * @return void
+     */
+    public function reservations()
+    {
+        return $this->hasMany(Reservation::class);
+    }
 }
