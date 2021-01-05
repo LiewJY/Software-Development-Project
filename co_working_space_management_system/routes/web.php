@@ -61,6 +61,19 @@ Route::get('/adminrooms', function () {
     return view('admin.rooms');
 })->name('adminrooms');
 //ok
+
 Route::get('/employeecustomer', function () {
     return view('employee.customer');
 })->name('employeecustomer');
+
+Route::get('/reservation', function () {
+    return view('employee.reservation');
+})->name('reservation');
+
+Route::get('/employeemaintenance', function () {
+    return view('employee.maintenance');
+})->name('maintenance');
+
+Route::get('/employeemaintenance/location{id}', function ($id) {
+    return view('employee.maintenanceRoom', compact('id'));
+})->name('employeeroom');
