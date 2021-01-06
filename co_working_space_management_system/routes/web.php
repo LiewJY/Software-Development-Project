@@ -56,7 +56,7 @@ Route::get('/adminreport', function () {
 Route::get('/adminstaff', function () {
     return view('admin.staff');
 })->name('Staff');
-//
+//ok
 Route::get('/adminrooms', function () {
     return view('admin.rooms');
 })->name('adminrooms');
@@ -65,11 +65,10 @@ Route::get('/adminrooms', function () {
 Route::get('/employeecustomer', function () {
     return view('employee.customer');
 })->name('employeecustomer');
-
+//ok
 Route::get('/reservation', function () {
     return view('employee.reservation');
 })->name('reservation');
-
 Route::get('/employeemaintenance', function () {
     return view('employee.maintenance');
 })->name('maintenance');

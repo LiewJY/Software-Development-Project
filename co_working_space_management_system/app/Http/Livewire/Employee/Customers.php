@@ -14,7 +14,6 @@ class Customers extends Component
     protected $queryString = ['search'];
     public $username, $roles, $first_name, $last_name, $address, $contact_number, $customerID, $users_id, $email, $password;
     public $customerForm = false;
-    public $deleteConfirmationForm = false;
 
     /**
      * Validation rules
@@ -43,6 +42,7 @@ class Customers extends Component
     {
         $this->reset();
         $this->customerForm = true;
+        $this->roles = 0;
     }
 
     /**
