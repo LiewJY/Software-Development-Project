@@ -62,7 +62,8 @@ class MaintenanceRoom extends Component
      */
     public function add()
     {
-        $this->reset('room_id', 'employee_id', 'description', 'status', 'maintenance_id', 'employee_name', 'name');
+        $this->reset('maintenance_id');
+        $this->reset('maintenance_id', 'room_id', 'employee_id', 'description', 'status', 'employee_name', 'name');
         $this->user = Auth::user()->id;
         $employee_info = Employee::where('user_id', $this->user)->select('employees.*')->first();
         $this->employee_name = $employee_info['last_name'] . ' ' . $employee_info['first_name'];

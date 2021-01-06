@@ -72,7 +72,7 @@ Route::get('/reservation', function () {
 Route::get('/employeemaintenance', function () {
     return view('employee.maintenance');
 })->name('maintenance');
-
+//ok
 Route::get('/employeemaintenance/location{id}', function ($id) {
     return view('employee.maintenanceRoom', compact('id'));
 })->name('employeeroom');
