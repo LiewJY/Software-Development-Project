@@ -19,125 +19,115 @@
                         <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Payment Amount</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Payment Status</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
+                        {{-- <th class="border border-gray-700 text-white bg-gray-700">Actions</th> --}}
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($reservations as $reservation)
                     <tr>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->customer_first_name}} {{$reservation->customer_last_name}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->room_name}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->slot_start}} - {{$reservation->slot_end}}</td>
-                        <td class="border border-gray-400 bg-gray-100">RM {{$reservation->payments_amount}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$reservation->first_name}} {{$reservation->last_name}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$reservation->start_time}} - {{$reservation->end_time}}</td>
+                        <td class="border border-gray-400 bg-gray-100">RM {{$reservation->amount}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_date}}</td>
-                        <td class="border border-gray-400 bg-gray-100">
-                            @if($reservation ->payment_status === 1)
-                            Paid
-                            @else
-                            Overdue
-                            @endif
-                        </td>
-                        <td class="border border-gray-400  bg-gray-100 py-1.5">
+
+                        {{-- not sure what to put in extra details sp i left it blank first --}}
+
+                        {{-- <td class="border border-gray-400  bg-gray-100 py-1.5">
                             <div class="border-none flex flex-row flex-nowrap justify-center">
                                 <x-jet-button class="mx-2" wire:click="edit({{$reservation->id}})">Edit</x-jet-button>
                                 <x-jet-button class="mx-2" wire:click="deleteModal({{$reservation->id}})">Delete</x-jet-button>
                             </div>
-                        </td>
+                        </td> --}}
                     </tr>
                     @endforeach
                 </tbody>
             </table>
             <br>
-            {{$reservations->links()}}
 
             <x-jet-dialog-modal wire:model="ReservationForm">
                 <x-slot name="title">
-                    @if($reservationID)
-                    <h1>Edit Reservation</h1>
-                    @else
                     <h1>Add Reservation</h1>
-                    @endif
                 </x-slot>
                 <form>
+                    <x-jet-label for="customer_id" value="Customer" />
                     <x-slot name="content">
-                        <x-jet-label for="customer_name" value="Customer" />
-                        @if($reservationID)
-                        <x-jet-input id="customer_name" readonly type="text" class="mt-1 block w-full" wire:model.lazy="customer_name" />
-                        @else
-                        <select id="customer_name" wire:model.lazy="customer_id" name="customer_name" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <select id="customer_id" wire:model.lazy="customer_id" name="customer_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option value="default">-- Select a Customer --</option>
                             @foreach($customers as $customer)
                             <option value="{{$customer->id}}">{{$customer->first_name}} {{$customer->last_name}}</option>
                             @endforeach
                         </select>
+                        <x-jet-input-error for="customer_id" />
 
+                        <x-jet-label for="selectedLocation" value="Location" />
+                        <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="default">-- Select a Location --</option>
+                            @foreach($location as $loc)
+                            <option value="{{$loc->id}}">{{$loc->name}}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="selectedLocation" />
+
+                        @if (!is_null($selectedLocation))
+                            <x-jet-label for="selectedDate" value="Date" />
+                            <x-jet-input placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />
+                            <x-jet-input-error for="selectedDate" />
                         @endif
-                        <x-jet-input-error for="customer_name" />
-
-                        <x-jet-label for="room_id" value="Room" />
-                        @if($reservationID)
-                        <select id="room_id" wire:model.lazy="room_id" name="room_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            @foreach($rooms as $room)
-                            <option value="{{$room->id}}">{{$room->name}}</option>
-                            @endforeach
-                        </select>
-                        @else
-                        <select id="room_id" name="room_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm" wire:model.lazy="room_id">
-                            <option value="default">-- Select a Room --</option>
-                            @foreach($rooms as $room)
-                            <option value="{{$room->id}}">{{$room->name}}</option>
-                            @endforeach
-                        </select>
+                        
+                        @if (!is_null($selectedDate))
+                            <x-jet-label for="selectedRoom" value="Room" />
+                            <select id="selectedRoom" wire:model.lazy="selectedRoom" name="selectedRoom" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="default">-- Select a Room --</option>
+                                @foreach($rooms as $room)
+                                <option value="{{$room->id}}">{{$room->name}}, {{$room->size}}pax</option>
+                                @endforeach
+                            </select>
+                            <x-jet-input-error for="selectedRoom" />
                         @endif
-                        <x-jet-input-error for="room_id" />
 
-                        <x-jet-label for="room_slot_id" value="Room Slot" />
-                        @if($reservationID)
-                        <select id="room_slot_id" wire:model.defer="room_slot_id" name="room_slot_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            @foreach($slots as $slot)
-                            <option value="{{$slot->id}}">{{$slot->start_time}} - {{$slot->end_time}}</option>
-                            @endforeach
-                        </select>
-                        @else
-                        <select id="room_slot_id" wire:model.defer="room_slot_id" name="room_slot_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="">-- Select a Room Slot --</option>
-                            @foreach($slots as $slot)
-                            <option value="{{$slot->id}}">{{$slot->start_time}} - {{$slot->end_time}}</option>
-                            @endforeach
-                        </select>
+                        @if (!is_null($selectedRoom))
+                            <x-jet-label for="price" value="Price" />
+                            <x-jet-input id="price" readonly type="text" class="mt-1 block w-full" wire:model.lazy="price" />
+                            
+                            <x-jet-label for="selectedSlot" value="Slot" />
+                            {{-- @foreach($slots as $test)
+                            
+                            {{$test}} {{$test->start_time}}
+                            @endforeach --}}
+                            <select id="selectedSlot" wire:model.lazy="selectedSlot" name="selectedSlot" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                                <option value="default">-- Select a Slot --</option>
+                                @foreach($slots as $slot)
+                                <option value="{{$slot}}">{{$slot}}</option>
+                                @endforeach
+                            </select>
+                            <x-jet-input-error for="selectedSlot"/>
                         @endif
-                        <x-jet-input-error for="room_slot_id" />
 
-                        <x-jet-label for="payment_id" value="Payment Amount" />
-                        <x-jet-input id="payment_id" type="text" class="mt-1 block w-full" wire:model.defer="payment_id" />
-                        <x-jet-input-error for="payment_id" />
+                        @if (!is_null($selectedSlot))
+                            <x-jet-label for="amount" value="Payment amount" />
+                            <x-jet-input  id="amount" type="text" class="mt-1 block w-full" wire:model.lazy="amount"/>
+                            <x-jet-input-error for="amount"/>
 
-                        <x-jet-label for="reservation_date" value="Reservation Date" />
-                        <x-jet-input id="reservation_date" type="text" class="mt-1 block w-full" wire:model.lazy="reservation_date" />
-                        <x-jet-input-error for="reservation_date" />
+                            <x-jet-label for="balance" value="Balance" />
+                            <x-jet-input  id="balance" readonly type="text" class="mt-1 block w-full" wire:model.lazy="balance" />
+                        @endif
 
-                        <x-jet-label for="payment_status" value="Payment Status" />
-                        <select id="payment_status" wire:model.defer="payment_status" name="payment_status" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="default">Select a status</option>
-                            <option value="0">Overdue</option>
-                            <option value="1">Paid</option>
-                        </select>
+
                     </x-slot>
                     <x-slot name="footer">
-                        @if($reservationID)
-                        <x-jet-button wire:click.prevent="store">Save</x-jet-button>
-                        @else
                         <x-jet-button wire:click.prevent="store">Add</x-jet-button>
-                        @endif
                         <x-jet-button wire:click="$toggle('ReservationForm')">Cancel</x-jet-button>
-
-
                     </x-slot>
                 </form>
             </x-jet-dialog-modal>
-
-            <x-jet-dialog-modal wire:model="deleteConfirmationForm">
+{{-- <script>
+$('.selectedDate').datepicker({
+    format: 'yyyy/mm/dd',
+    startDate: '-3d'
+});
+</script> --}}
+            {{-- <x-jet-dialog-modal wire:model="deleteConfirmationForm">
                 <x-slot name="title">
                     <h1>Delete Confirmation</h1>
                 </x-slot>
@@ -150,7 +140,7 @@
                         <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
                     </x-slot>
                 </form>
-            </x-jet-dialog-modal>
+            </x-jet-dialog-modal> --}}
         </div>
     </div>
 

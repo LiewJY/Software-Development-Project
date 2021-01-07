@@ -69,6 +69,7 @@ Route::get('/employeecustomer', function () {
 Route::get('/reservation', function () {
     return view('employee.reservation');
 })->name('reservation');
+//
 Route::get('/employeemaintenance', function () {
     return view('employee.maintenance');
 })->name('maintenance');
@@ -76,3 +77,4 @@ Route::get('/employeemaintenance', function () {
 Route::get('/employeemaintenance/location{id}', function ($id) {
     return view('employee.maintenanceRoom', compact('id'));
 })->name('employeeroom');
+//ok
