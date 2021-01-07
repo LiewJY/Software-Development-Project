@@ -19,13 +19,13 @@
                         <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Payment Amount</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
-                        {{-- <th class="border border-gray-700 text-white bg-gray-700">Actions</th> --}}
+                        <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     @foreach ($reservations as $reservation)
                     <tr>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->first_name}} {{$reservation->last_name}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_id}} {{$reservation->first_name}} {{$reservation->last_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->start_time}} - {{$reservation->end_time}}</td>
                         <td class="border border-gray-400 bg-gray-100">RM {{$reservation->amount}}</td>
@@ -33,13 +33,13 @@
 
                         {{-- not sure what to put in extra details sp i left it blank first --}}
 
-                        {{-- <td class="border border-gray-400  bg-gray-100 py-1.5">
+                        <td class="border border-gray-400  bg-gray-100 py-1.5">
                             <div class="border-none flex flex-row flex-nowrap justify-center">
-                                <x-jet-button class="mx-2" wire:click="edit({{$reservation->id}})">Edit</x-jet-button>
-                        <x-jet-button class="mx-2" wire:click="deleteModal({{$reservation->id}})">Delete</x-jet-button>
-        </div>
-        </td> --}}
-        </tr>
+                                {{-- <x-jet-button class="mx-2" wire:click="edit({{$reservation->id}})">Edit</x-jet-button> --}}
+                                 <x-jet-button class="mx-2" wire:click="deleteModal({{$reservation->reservation_id}})">Cancel Reservation</x-jet-button>
+                            </div>
+                        </td>
+                    </tr>
         @endforeach
         </tbody>
         </table>
@@ -91,10 +91,6 @@
                     <x-jet-input id="price" readonly type="text" class="mt-1 block w-full" wire:model.lazy="price" />
 
                     <x-jet-label for="selectedSlot" value="Slot" />
-                    {{-- @foreach($slots as $test)
-                            
-                            {{$test}} {{$test->start_time}}
-                    @endforeach --}}
                     <select id="selectedSlot" wire:model.lazy="selectedSlot" name="selectedSlot" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="default">-- Select a Slot --</option>
                         @foreach($slots as $slot)
@@ -123,26 +119,25 @@
                 </x-slot>
             </form>
         </x-jet-dialog-modal>
-        {{-- <script>
-$('.selectedDate').datepicker({
-    format: 'yyyy/mm/dd',
-    startDate: '-3d'
-});
-</script> --}}
-        {{-- <x-jet-dialog-modal wire:model="deleteConfirmationForm">
-                <x-slot name="title">
-                    <h1>Delete Confirmation</h1>
+
+        <x-jet-dialog-modal wire:model="deleteConfirmationForm">
+            <x-slot name="title">
+                <h1>Delete Confirmation</h1>
+            </x-slot>
+            <form>
+                <x-slot name="content">
+                    <p>Are you sure you want to remove the reservation record for:</p>
+                    <p>Customer Name: {{$name}}</p>
+                    <p>Room : {{$room}}</p>
+                    <p>Date : {{$date}}</p>
+                    <p class="font-bold	">Please return amount of {{$return}} to customer upon cancellation.</p>
                 </x-slot>
-                <form>
-                    <x-slot name="content">
-                        <p>Are you sure you want to remove the reservation record for {{$name}} {{$reservationID}}</p>
-        </x-slot>
-        <x-slot name="footer">
-            <x-jet-button wire:click="delete({{$reservationID}})">Delete</x-jet-button>
-            <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
-        </x-slot>
-        </form>
-        </x-jet-dialog-modal> --}}
+                <x-slot name="footer">
+                    <x-jet-button wire:click="delete({{$reservationID}})">Cancel Reservation</x-jet-button>
+                    <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
+                </x-slot>
+            </form>
+        </x-jet-dialog-modal>
     </div>
 </div>
 

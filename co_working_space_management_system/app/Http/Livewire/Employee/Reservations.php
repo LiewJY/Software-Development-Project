@@ -8,7 +8,6 @@ use App\Models\Reservation;
 use App\Models\Customer;
 use App\Models\Location;
 use App\Models\Room;
-
 use App\Models\ReservationPayment;
 use App\Models\Slot;
 
@@ -41,6 +40,7 @@ class Reservations extends Component
                     ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
                     ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
                     ->join('slots', 'reservations.slot_id', '=', 'slots.id')
+                    ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
                     ->paginate(10)
             ],
             [
@@ -162,4 +162,37 @@ class Reservations extends Component
     {
         $this->balance = $amount - $this->price;
     }
+    public $name, $room, $date, $return;
+    
+    /**
+     * show the delete modal
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function deleteModal($id)
+    {
+        $this->deleteConfirmationForm = true;
+        $reservation = Reservation::findorFail($id);
+        $this->reservationID = $id;
+        $name = $reservation->reservationpayment->customer;
+        $this->name = $name['first_name']. ' ' .$name['last_name'];
+        $this->room = $reservation->room->name;
+        $this->date = $reservation->reservation_date;
+        $this->return = $reservation->reservationpayment->amount;
+    }
+
+    /**
+     * Delete selected reservation
+     *
+     * @param  int $id
+     * @return void
+     */
+    public function delete($id)
+    {
+        $reservation = Reservation::where('id', $id)->firstorfail();
+        $reservation->delete();
+        $this->deleteConfirmationForm = false;
+    }  
+
 }
