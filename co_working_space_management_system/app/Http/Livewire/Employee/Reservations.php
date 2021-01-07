@@ -10,13 +10,13 @@ use App\Models\Location;
 use App\Models\Room;
 
 use App\Models\ReservationPayment;
+use App\Models\Slot;
 
 class Reservations extends Component
 {
     use WithPagination;
     public $ReservationForm = false;
     public $deleteConfirmationForm = false;
-    //public $room_id, $room_slot_id, $payment_id, $reservation_date, $payment_status, $name, $customer_name;
     public $search = '';
     protected $queryString = ['search'];
 
@@ -36,15 +36,16 @@ class Reservations extends Component
             'livewire.employee.reservations',
             [
                 'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
-                ->where('customers.first_name', 'like', '%' . $this->search . '%')
-                ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
-                ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
-                ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-                ->join('slots', 'reservations.slot_id', '=', 'slots.id')
-                ->paginate(10)
-            ], [
+                    ->where('customers.first_name', 'like', '%' . $this->search . '%')
+                    ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
+                    ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
+                    ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                    ->join('slots', 'reservations.slot_id', '=', 'slots.id')
+                    ->paginate(10)
+            ],
+            [
                 'customers' => Customer::all(),
-                'location' =>Location::all(),
+                'location' => Location::all(),
             ]
         );
     }
@@ -56,13 +57,35 @@ class Reservations extends Component
      */
     protected $rules = [
         'selectedLocation' => ['required'],
-        'selectedDate' => ['required', 'date_format:Y/m/d'],
+        'selectedDate' => ['required'],
         'selectedRoom' => ['required'],
         'selectedSlot' => ['required'],
         'customer_id' => ['required'],
-        'amount' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0']
-
+        'amount' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
+        'balance' => ['required', 'regex:/^\d+\.\d{1,2}/']
     ];
+
+    /**
+     * Custominze error message
+     *
+     * @var array
+     */
+    protected $messages = [
+        'balance.regex' => 'Balance could not be in negetive value.',
+        'amount.regex' => 'Please enter a valid amount.',
+        'amount.not_in' => 'Please enter a valid amount.'
+    ];
+
+    /**
+     * Live validation
+     *
+     * @param  mixed $propertyName
+     * @return void
+     */
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
 
 
     /**
@@ -72,22 +95,14 @@ class Reservations extends Component
      */
     public function store()
     {
-
         $this->validate();
 
-        if (!is_null($this->reservationID)) {
-            $reservation = Reservation::find($this->reservationID);
-            $id = $reservation->reservationpayment->pluck('id');
-        } else {
-            $id = NULL;
-        }
-
-        $payment = ReservationPayment::updateOrCreate(['id' => $id], [
+        $payment = ReservationPayment::create([
             'customer_id' => $this->customer_id,
             'amount' => $this->amount,
         ]);
 
-        $reservation = Reservation::updateOrCreate(['id' => $this->reservation_ID], [
+        $reservation = Reservation::create([
             'room_id' => $this->selectedRoom,
             'slot_id' => $this->selectedSlot,
             'reservation_date' => $this->selectedDate,
@@ -128,11 +143,23 @@ class Reservations extends Component
     public function updatedSelectedRoom($room)
     {
         if (!is_null($room)) {
-            $reserved = Reservation::where('reservation_date', $this->selectedDate)->pluck('room_id')->toArray();
+            $reserved = Reservation::where('reservation_date', $this->selectedDate)->pluck('slot_id')->toArray();
             $room = Room::find($this->selectedRoom);
             $roomSlots = $room->slots->pluck('id')->toArray();
-            $this->slots = array_diff($roomSlots, $reserved);
+            $array = array_diff($roomSlots, $reserved);
+            $this->slots = Slot::select('*')->whereIn('id', $array)->get();
             $this->price = $room->price;
         }
+    }
+
+    /**
+     * Update balance
+     *
+     * @param  int $amount
+     * @return void
+     */
+    public function updatedAmount($amount)
+    {
+        $this->balance = $amount - $this->price;
     }
 }
