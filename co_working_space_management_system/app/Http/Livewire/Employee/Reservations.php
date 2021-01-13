@@ -62,7 +62,7 @@ class Reservations extends Component
         'selectedSlot' => ['required'],
         'customer_id' => ['required'],
         'amount' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
-        'balance' => ['required', 'regex:/^\d+\.\d{1,2}/']
+        'balance' => ['required', 'int']
     ];
 
     /**
@@ -163,7 +163,7 @@ class Reservations extends Component
         $this->balance = $amount - $this->price;
     }
     public $name, $room, $date, $return;
-    
+
     /**
      * show the delete modal
      *
@@ -176,7 +176,7 @@ class Reservations extends Component
         $reservation = Reservation::findorFail($id);
         $this->reservationID = $id;
         $name = $reservation->reservationpayment->customer;
-        $this->name = $name['first_name']. ' ' .$name['last_name'];
+        $this->name = $name['first_name'] . ' ' . $name['last_name'];
         $this->room = $reservation->room->name;
         $this->date = $reservation->reservation_date;
         $this->return = $reservation->reservationpayment->amount;
@@ -193,6 +193,5 @@ class Reservations extends Component
         $reservation = Reservation::where('id', $id)->firstorfail();
         $reservation->delete();
         $this->deleteConfirmationForm = false;
-    }  
-
+    }
 }
