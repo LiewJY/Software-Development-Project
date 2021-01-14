@@ -12,4 +12,9 @@ class MembershipPlans extends Component
         $memberships = Membership::all();
         return view('livewire.membership-plans', ['memberships' => $memberships]);
     }
+
+    public function membership($plans)
+    {
+        return redirect()->route('membershipPlans', ['id' => $plans]);
+    }
 }
