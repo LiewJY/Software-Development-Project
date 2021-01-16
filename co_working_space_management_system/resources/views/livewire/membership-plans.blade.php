@@ -1,3 +1,4 @@
+<div class="grid md:grid-cols-3 gap-4">
 @foreach($memberships as $membership)
   <div class="flex flext-start flex-row">
     <div class="flex flex-col flex-nowrap bg-gray-800 rounded-xl w-full overflow-hidden my-10 mx-2 border-2  border-gray-800">
@@ -22,14 +23,9 @@
         @endforeach
 
           <div class="flex justify-center">
-            <x-jet-button class="py-3 w-full flex items-center bg-white justify-center rounded-none">Join Now</x-jet-button>
+            <x-jet-button class="py-3 w-full flex items-center bg-white justify-center rounded-none" wire:click="membership({{$membership->id}})">Join Now</x-jet-button>
           </div>
       </div>
   </div>
 @endforeach
-
-
-
-        
-
-        
+</div>

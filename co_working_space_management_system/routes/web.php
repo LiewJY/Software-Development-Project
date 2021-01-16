@@ -78,3 +78,10 @@ Route::get('/employeemaintenance/location{id}', function ($id) {
     return view('employee.maintenanceRoom', compact('id'));
 })->name('employeeroom');
 //ok
+Route::get('/membershipplans/plans{id}', function ($id) {
+    return view('customer.membershipPlans', compact('id'));
+})->name('membershipPlans');
+
+Route::get('/locations/details{id}', function ($id) {
+    return view('customer.locationDetails', compact('id'));
+})->name('locationDetails');

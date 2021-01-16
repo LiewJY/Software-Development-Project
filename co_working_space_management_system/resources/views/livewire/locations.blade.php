@@ -1,3 +1,4 @@
+<div class="grid grid-cols-1">
 @foreach($locations as $location)
 
 <div class="grid md:grid-cols-8 grid-cols-1 rounded-2xl bg-gray-200 mx-2 my-2">
@@ -14,7 +15,9 @@
         <br>
         <p class="block mt-1 text-lg leading-tight font-medium text-black">Contact Number</p>
         <p class="text-gray-900 text-sm mt-1">{{$location->contact_number}}</p>
+        <a class="text-indigo-500 inline-flex items-center font-semibold hover:text-indigo-700 cursor-pointer underline" wire:click="locations({{$location->id}})">Learn More -></a>
     </div>
 </div>
 
 @endforeach
+</div>
