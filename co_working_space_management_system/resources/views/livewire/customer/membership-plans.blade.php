@@ -8,15 +8,15 @@
 </div>
 
 <div class="container px-5 py-3 mx-auto flex flex-col">
-<!-- Content Staff -->
-    <div class="flex flex-wrap -m-12 my-5">
-      <div class="p-12 md:w-1/2 flex flex-col items-start border border-gray-300 bg-gray-100 rounded-lg">
+<!-- Content -->
+    <div class="flex flex-wrap mx-1 my-5">
+      <div class="p-12 lg:w-1/2 w-full flex flex-col items-start border border-gray-300 bg-gray-100 rounded-lg">
         <h2 class="sm:text-3xl text-2xl title-font font-bold text-gray-900 mt-4 mb-4">Pricing</h2>
-        <div class="flex justify-between gap-3">
-            <span class="inline-block py-1 px-3">
+        <div class="flex justify-between">
+            <span class="inline-block py-1 px-1">
                 {{$membership->name}} Membership Plan
             </span>
-            <span class="inline-block ml-10 py-1 px-3 rounded-full bg-gray-900 text-white text-sm font-medium tracking-widest">
+            <span class="inline-block ml-10 py-1 px-3 rounded-full bg-gray-900 text-white text-sm font-medium tracking-widest text-center items-center">
                 RM {{$membership->price}} /Month
             </span>
         </div>
@@ -39,10 +39,64 @@
         </div>
         @endforeach
       </div>
-      <div class="p-12 md:w-1/2 flex flex-col items-start border border-gray-300 bg-gray-100 rounded-lg">
+      <div class="p-12 lg:w-1/2 w-full flex flex-col items-start border border-gray-300 bg-gray-100 rounded-lg mt-2 lg:mt-0">
+        <form class="w-full">
+          <x-jet-label for="card_type" value="Card Type"/>
+          <select id="card_type"  wire:model.lazy="card_type" name="card_type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+            <option value="default">Select a Card</option>
+            <option value="">Visa</option>
+            <option value="">Master</option>
+          </select>
+          <x-jet-input-error for="card_type"/> 
+
+          <x-jet-label for="card_number" value="Card Number"/>
+          <x-jet-input readonly id="card_number" type="text" class="mt-1 block w-full" wire:model.lazy="card_number"/>
+          <x-jet-input-error for="card_number"/>
+
+          <x-jet-label for="exp_date" value="Expire Date"/>
+          <div class="flex justify-between gap-3">
+            <span class="w-1/2">
+                <x-jet-label for="month" value="Month" />
+                <x-jet-input id="month" readonly type="text" class="mt-1 block w-full" wire:model.lazy="month" />
+                <x-jet-input-error for="month" />
+            </span>
+            <span class="w-1/2">
+                <x-jet-label for="year" value="Year" />
+                <x-jet-input id="year" readonly type="text" class="mt-1 block w-full" wire:model.lazy="year" />
+                <x-jet-input-error for="year" />
+            </span>
+          </div>
+          <x-jet-label for="card_cvc" value="Card CVV2/CVC2/4DBC"/>
+          <x-jet-input readonly id="card_cvc" type="text" class="mt-1 block w-1/4" wire:model.lazy="card_cvc"/>
+          <x-jet-input-error for="card_cvc"/>
+
+
+          <div class="py-4 bg-gray-100 text-left">
+            <x-jet-button wire:click="">Clear</x-jet-button>
+            {{-- this need to be type = "button" or not the form willl submit and not show popup --}}
+            <x-jet-button type="button" wire:click="subscriptionConfirmationModal('{{$membership->name}}',  {{$membership->price}})">Pay</x-jet-button>
+          </div>
+        </form>
+
+        
         
       </div>
     </div>
   </div>
   @endforeach
+    <!-- Delete Modal -->
+  <x-jet-dialog-modal wire:model="subscriptionConfirmation">
+      <x-slot name="title">
+          <h1>Delete Confirmation</h1>
+      </x-slot>
+      <form>
+          <x-slot name="content">
+            <p>You are going to subscribe to the {{$plan_name}} Plan for ONE MONTH with price of RM {{$plan_cost}}.</p>
+          </x-slot>
+          <x-slot name="footer">
+            <x-jet-button wire:click="">Subscribe</x-jet-button>
+            <x-jet-button wire:click="">Cancel</x-jet-button>
+          </x-slot>
+      </form>
+  </x-jet-dialog-modal>
 </div>
