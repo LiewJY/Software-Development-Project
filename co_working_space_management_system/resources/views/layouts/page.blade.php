@@ -73,6 +73,9 @@
                             <x-jet-nav-link href="{{ route('maintenance') }}" :active="request()->routeIs('maintenance')">
                                 {{ __('Maintenance') }}
                             </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('adminreservation') }}" :active="request()->routeIs('adminreservation')">
+                                {{ __('Reservations') }}
+                            </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
                                 {{ __('Membership Plans') }}
                             </x-jet-nav-link>

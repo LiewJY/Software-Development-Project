@@ -61,6 +61,10 @@ Route::get('/adminrooms', function () {
     return view('admin.rooms');
 })->name('adminrooms');
 //ok
+Route::get('/adminreservation', function () {
+    return view('admin.reservation');
+})->name('adminreservation');
+//ok
 
 Route::get('/employeecustomer', function () {
     return view('employee.customer');
@@ -69,7 +73,7 @@ Route::get('/employeecustomer', function () {
 Route::get('/reservation', function () {
     return view('employee.reservation');
 })->name('reservation');
-//
+//ok
 Route::get('/employeemaintenance', function () {
     return view('employee.maintenance');
 })->name('maintenance');
