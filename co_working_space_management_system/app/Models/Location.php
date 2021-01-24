@@ -57,4 +57,13 @@ class Location extends Model
     {
         return $this->maintenances()->where('status', 0)->count();
     }
+    /**
+     * Get the count of room of the location.
+     *
+     * @return void
+     */
+    public function roomCount()
+    {
+        return $this->rooms()->count();
+    }
 }

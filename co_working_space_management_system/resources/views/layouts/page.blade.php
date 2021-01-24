@@ -91,13 +91,13 @@
                         </div>
                         @elseif(Auth::user()->roles == 1)
                         <div class="flex space-x-4">
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('reservation') }}" :active="request()->routeIs('reservation')">
                                 {{ __('Reservations') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('employeecustomer') }}" :active="request()->routeIs('employeecustomer')">
                                 {{ __('Customer') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('employeemaintenance') }}" :active="request()->routeIs('employeemaintenance')">
                                 {{ __('Maintenance') }}
                             </x-jet-nav-link>
                         </div>

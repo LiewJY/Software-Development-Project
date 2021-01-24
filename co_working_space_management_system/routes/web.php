@@ -16,6 +16,7 @@ use App\Http\Controllers\ChartController;
 |
 */
 
+//GENERAL
 Route::get('/', function () {
     return view('index');
 })->name('index');
@@ -37,6 +38,7 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
     return view('dashboard');
 })->name('dashboard');
 
+//ADMIN
 Route::get('/adminlocation', function () {
     return view('admin.location');
 })->name('adminlocation');
@@ -66,6 +68,7 @@ Route::get('/adminreservation', function () {
 })->name('adminreservation');
 //ok
 
+//EMPLOYEE
 Route::get('/employeecustomer', function () {
     return view('employee.customer');
 })->name('employeecustomer');
@@ -74,14 +77,21 @@ Route::get('/reservation', function () {
     return view('employee.reservation');
 })->name('reservation');
 //ok
+Route::get('/test', function () {
+    return view('employee.reservationLocation');
+})->name('reservationlocation');
+
+
 Route::get('/employeemaintenance', function () {
     return view('employee.maintenance');
-})->name('maintenance');
+})->name('employeemaintenance');
 //ok
 Route::get('/employeemaintenance/location{id}', function ($id) {
     return view('employee.maintenanceRoom', compact('id'));
 })->name('employeeroom');
 //ok
+
+//CUSTOMER
 Route::get('/membershipplans/plans{id}', function ($id) {
     return view('customer.membershipPlans', compact('id'));
 })->name('membershipPlans');
@@ -89,3 +99,4 @@ Route::get('/membershipplans/plans{id}', function ($id) {
 Route::get('/locations/details{id}', function ($id) {
     return view('customer.locationDetails', compact('id'));
 })->name('locationDetails');
+
