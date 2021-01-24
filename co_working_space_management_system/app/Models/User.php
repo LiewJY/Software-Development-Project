@@ -80,4 +80,8 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Customer');
     }
+
+    public function membership_payments() {
+        return $this->hasMany(MembershipPayment::class);
+    }
 }

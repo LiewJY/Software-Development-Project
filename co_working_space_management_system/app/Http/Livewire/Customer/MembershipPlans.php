@@ -4,6 +4,9 @@ namespace App\Http\Livewire\Customer;
 
 use Livewire\Component;
 use App\Models\Membership;
+use App\Models\MembershipPayment;
+use App\Models\User;
+use Illuminate\Support\Facades\Auth;
 
 class MembershipPlans extends Component
 {
@@ -25,9 +28,9 @@ class MembershipPlans extends Component
 
     public function render()
     {
-        return view('livewire.customer.membership-plans',[
+        return view('livewire.customer.membership-plans', [
             'membershipplans' => Membership::all()
-            ->where('id', '=', $this->plans_id)
+                ->where('id', '=', $this->plans_id)
         ]);
     }
 
@@ -36,7 +39,22 @@ class MembershipPlans extends Component
         $this->subscriptionConfirmation = true;
         $this->plan_name = $plan_name;
         $this->plan_cost = $plan_cost;
-
     }
 
+    public function subscribe()
+    {
+
+        $user = User::find(Auth::user()->id);
+        $payment = $user->membership_payments->first()->membership_id;
+
+        if ($payment == $this->plans_id) {
+            session()->flash('message', 'Subscription for the plan is still active.');
+        } else {
+            MembershipPayment::create([
+                'membership_id' => $this->plans_id,
+                'user_id' => Auth::user()->id
+            ]);
+        }
+
+    }
 }

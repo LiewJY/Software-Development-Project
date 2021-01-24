@@ -13,9 +13,9 @@ class AddCustomerMembershipToCustomersTable extends Migration
      */
     public function up()
     {
-        Schema::table('customers', function (Blueprint $table) {
-            $table->foreignId('customer_membership_id')->nullable()->constrained();
-        });
+        // Schema::table('customers', function (Blueprint $table) {
+        //     $table->foreignId('customer_membership_id')->nullable()->constrained();
+        // });
     }
 
     /**

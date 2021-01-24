@@ -16,6 +16,12 @@ class MembershipSeeder extends Seeder
     {
 
         Membership::create([
+            'name' => 'Free',
+            'price' => '0',
+            'description' => 'No acces, Basically cannot do anything unless subcribe'
+        ]);
+
+        Membership::create([
             'name' => 'Basic',
             'price' => '99',
             'description' => 'Full Access to Pantry,Full Access Free Seating Area, Acccess to One Location Only'

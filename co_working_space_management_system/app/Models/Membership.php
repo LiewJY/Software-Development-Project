@@ -19,11 +19,16 @@ class Membership extends Model
         'price',
         'description'
     ];
-    
+
     /**
      * Disable timestamp on membership table
      *
      * @var bool
      */
     public $timestamps = false;
+
+    public function membership_payments()
+    {
+        return $this->hasMany(MembershipPayment::class);
+    }
 }
