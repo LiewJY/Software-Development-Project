@@ -1,5 +1,7 @@
 <div>
+
     <div>
+        <h1 class="font-serif sm:text-2xl text-xl font-bold title-font mb-4 text-gray-900 underline mx-3">Location: {{$loc_name}}</h1>
         <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
             <div class="w-full md:w-1/2">
                 <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
@@ -17,7 +19,8 @@
                         <th class="border border-gray-700 text-white bg-gray-700">Customer</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Room</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Payment Amount</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Price</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Paid Amount</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
                     </tr>
@@ -28,9 +31,11 @@
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->first_name}} {{$reservation->last_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->start_time}} - {{$reservation->end_time}}</td>
+                        {{-- show price of that room the customer booked --}}
+                        <td class="border border-gray-400 bg-gray-100">RM {{$reservation->room->price}}</td>
+                        {{-- show amount that the customer paid --}}
                         <td class="border border-gray-400 bg-gray-100">RM {{$reservation->amount}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_date}}</td>
-
                         {{-- not sure what to put in extra details sp i left it blank first --}}
 
                         <td class="border border-gray-400  bg-gray-100 py-1.5">
@@ -61,12 +66,16 @@
                     <x-jet-input-error for="customer_id" />
 
                     <x-jet-label for="selectedLocation" value="Location" />
-                    <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <x-jet-input id="selectedLocation" type="hidden"  class="mt-1 block w-full" wire:model.lazy="selectedLocation" />
+                    <x-jet-input id="selectedLocation" type="text" readonly class="mt-1 block w-full" wire:model.lazy="loc_name" />
+
+
+                    {{-- <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="default">-- Select a Location --</option>
                         @foreach($location as $loc)
                         <option value="{{$loc->id}}">{{$loc->name}}</option>
                         @endforeach
-                    </select>
+                    </select> --}}
                     <x-jet-input-error for="selectedLocation" />
 
                     @if (!is_null($selectedLocation))

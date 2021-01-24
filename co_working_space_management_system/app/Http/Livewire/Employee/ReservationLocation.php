@@ -23,7 +23,15 @@ class ReservationLocation extends Component
     public $locations, $rooms, $slots, $price, $amount, $balance;
     public $customer_id, $reservationID;
 
+    public $location, $loc_name, $location_id;
 
+    public function mount($id)
+    {
+        $this->location_id = $id;
+        $this->selectedLocation = $id;
+        $location = Location::findorFail($id);
+        $this->loc_name = $location->name;
+    }
     /**
      * Return blade view
      *
@@ -40,6 +48,7 @@ class ReservationLocation extends Component
                     ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
                     ->join('slots', 'reservations.slot_id', '=', 'slots.id')
                     ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
+                    ->where('rooms.location_id', '=', $this->location_id)
                     ->paginate(10)
             ],
             [
@@ -118,7 +127,7 @@ class ReservationLocation extends Component
      */
     public function add()
     {
-        $this->reset();
+        $this->reset( 'selectedDate', 'selectedRoom', 'selectedSlot', 'locations', 'rooms', 'slots', 'price', 'amount', 'balance', 'customer_id', 'reservationID');
         $this->ReservationForm = true;
     }
 

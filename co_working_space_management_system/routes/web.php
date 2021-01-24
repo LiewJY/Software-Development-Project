@@ -77,8 +77,8 @@ Route::get('/reservation', function () {
     return view('employee.reservation');
 })->name('reservation');
 //ok
-Route::get('/test', function () {
-    return view('employee.reservationLocation');
+Route::get('/reservationlocation/location{id}', function ($id) {
+    return view('employee.reservationLocation', compact('id'));
 })->name('reservationlocation');
 
 
