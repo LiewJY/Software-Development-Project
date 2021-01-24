@@ -17,8 +17,8 @@
                         <th class="border border-gray-700 text-white bg-gray-700">Customer</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Room</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Payment Amount</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Price</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Paid Amount</th>                        <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
                     </tr>
                 </thead>
@@ -28,6 +28,7 @@
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_id}} {{$reservation->first_name}} {{$reservation->last_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->start_time}} - {{$reservation->end_time}}</td>
+                        <td class="border border-gray-400 bg-gray-100">RM {{$reservation->room->price}}</td>
                         <td class="border border-gray-400 bg-gray-100">RM {{$reservation->amount}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_date}}</td>
 
