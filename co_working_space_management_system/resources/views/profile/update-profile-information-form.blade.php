@@ -8,73 +8,59 @@
     </x-slot>
 
     <x-slot name="form">
-        <!-- Profile Photo -->
-        @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-        <div x-data="{photoName: null, photoPreview: null}" class="col-span-6 sm:col-span-4">
-            <!-- Profile Photo File Input -->
-            <input type="file" class="hidden" wire:model="photo" x-ref="photo" x-on:change="
-                                    photoName = $refs.photo.files[0].name;
-                                    const reader = new FileReader();
-                                    reader.onload = (e) => {
-                                        photoPreview = e.target.result;
-                                    };
-                                    reader.readAsDataURL($refs.photo.files[0]);
-                            " />
-
-            <x-jet-label for="photo" value="{{ __('Photo') }}" />
-
-            <!-- Current Profile Photo -->
-            <div class="mt-2" x-show="! photoPreview">
-                <img src="{{ $this->user->profile_photo_url }}" alt="{{ $this->user->name }}" class="rounded-full h-20 w-20 object-cover">
-            </div>
-
-            <!-- New Profile Photo Preview -->
-            <div class="mt-2" x-show="photoPreview">
-                <span class="block rounded-full w-20 h-20" x-bind:style="'background-size: cover; background-repeat: no-repeat; background-position: center center; background-image: url(\'' + photoPreview + '\');'">
-                </span>
-            </div>
-
-            <x-jet-secondary-button class="mt-2 mr-2" type="button" x-on:click.prevent="$refs.photo.click()">
-                {{ __('Select A New Photo') }}
-            </x-jet-secondary-button>
-
-            @if ($this->user->profile_photo_path)
-            <x-jet-secondary-button type="button" class="mt-2" wire:click="deleteProfilePhoto">
-                {{ __('Remove Photo') }}
-            </x-jet-secondary-button>
-            @endif
-
-            <x-jet-input-error for="photo" class="mt-2" />
-        </div>
-        @endif
-
+        @if(Auth::user()->roles == 2)
         {{-- name --}}
         <div class="col-span-6 sm:col-span-2">
-            <x-jet-label for="firstName" value="First name" />
-            <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="first_name" />
+            <x-jet-label for="firstName" value="{{ __('FIrst name') }}" />
+            <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="state.customer.first_name" />
+            <x-jet-input-error for="customer.first_name" />
+        </div>
+        <div class="col-span-6 sm:col-span-2">
+            <x-jet-label for="lastName" value="{{ __('Last Name') }}" />
+            <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.defer="state.customer.last_name" />
+            <x-jet-input-error for="customer.last_name" />
+        </div>
+        {{-- address --}}
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="address" value="{{ __('Address') }}" />
+            <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.customer.address" />
+            <x-jet-input-error for="customer.address" />
+        </div>
+        {{-- contact number --}}
+        <div class="col-span-6 sm:col-span-4">
+            <x-jet-label for="contact_number" value="{{ __('Contact Number') }}" />
+            <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.defer="state.customer.contact_number" />
+            <x-jet-input-error for="customer.contact_number" />
+        </div>
+        @else
+        {{-- name --}}
+        <div class="col-span-6 sm:col-span-2">
+            <x-jet-label for="firstName" value="{{ __('First name') }}" />
+            <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="state.employee.first_name" />
             <x-jet-input-error for="first_name" />
         </div>
         <div class="col-span-6 sm:col-span-2">
-            <x-jet-label for="lastName" value="Last name" />
-            <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.lazy="last_name" />
+            <x-jet-label for="lastName" value="{{ __('Last name') }}" />
+            <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.defer="state.employee.last_name" />
             <x-jet-input-error for="last_name" />
         </div>
         {{-- address --}}
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="address" value="Address" />
-            <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address" />
+            <x-jet-label for="address" value="{{ __('Address') }}" />
+            <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.employee.address" />
             <x-jet-input-error for="address" />
         </div>
         {{-- contact number --}}
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="contact_number" value="Contact Number" />
-            <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
+            <x-jet-label for="contact_number" value="{{ __('Contact Number') }}" />
+            <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.defer="state.employee.contact_number" />
             <x-jet-input-error for="contact_number" />
         </div>
 
+        @endif
         <!-- Username -->
         <div class="col-span-6 sm:col-span-4">
-            <x-jet-label for="username" value="Username" />
+            <x-jet-label for="username" value="{{ __('Username') }}" />
             <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.defer="state.username" autocomplete="username" />
             <x-jet-input-error for="username" class="mt-2" />
         </div>
@@ -96,4 +82,5 @@
             {{ __('Save') }}
         </x-jet-button>
     </x-slot>
+
 </x-jet-form-section>
