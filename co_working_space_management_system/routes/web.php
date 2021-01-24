@@ -4,6 +4,7 @@ use App\Models\Employee;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChartController;
+use Illuminate\Support\Facades\Auth;
 
 /*
 |--------------------------------------------------------------------------
@@ -100,3 +101,11 @@ Route::get('/locations/details{id}', function ($id) {
     return view('customer.locationDetails', compact('id'));
 })->name('locationDetails');
 
+Route::get('/test', function () {
+    $state = [];
+
+        $state = User::with("customer")->find(3)->toArray();
+
+
+    dd($state);
+});

@@ -3,9 +3,6 @@
 namespace App\Http\Livewire\Employee;
 
 use Livewire\Component;
-use Livewire\WithPagination;
-use App\Models\Reservation;
-use App\Models\Customer;
 use App\Models\Location;
 
 
