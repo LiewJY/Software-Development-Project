@@ -84,11 +84,11 @@
     </div>
   </div>
   @endforeach
-  <!-- Delete Modal -->
+  <!-- confirmaiton Modal -->
   <x-jet-dialog-modal wire:model="subscriptionConfirmation">
 
     <x-slot name="title">
-      <h1>Delete Confirmation</h1>
+      <h1>Subscription Confirmation</h1>
     </x-slot>
     <form>
       <x-slot name="content">
@@ -96,7 +96,7 @@
         <p>You are going to subscribe to the {{$plan_name}} Plan for ONE MONTH with price of RM {{$plan_cost}}.</p>
         <div>
           @if (session()->has('message'))
-          <div class="alert alert-success">
+          <div class="alert alert-success text-right">
             {{ session('message') }}
           </div>
           @endif
@@ -104,7 +104,7 @@
       </x-slot>
       <x-slot name="footer">
         <x-jet-button wire:click="subscribe">Subscribe</x-jet-button>
-        <x-jet-button wire:click="">Cancel</x-jet-button>
+        <x-jet-button wire:click="$toggle('subscriptionConfirmation')">Cancel</x-jet-button>
       </x-slot>
     </form>
   </x-jet-dialog-modal>

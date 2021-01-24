@@ -14,13 +14,6 @@ class MembershipSeeder extends Seeder
      */
     public function run()
     {
-
-        Membership::create([
-            'name' => 'Free',
-            'price' => '0',
-            'description' => 'No acces, Basically cannot do anything unless subcribe'
-        ]);
-
         Membership::create([
             'name' => 'Basic',
             'price' => '99',

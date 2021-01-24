@@ -16,7 +16,7 @@ class CreateMembershipPaymentsTable extends Migration
         Schema::create('membership_payments', function (Blueprint $table) {
             $table->id();
             $table->timestamps();
-            $table->foreignId("membership_id")->nullable()->constrained()->default("1")->onDelete("cascade");
+            $table->foreignId("membership_id")->nullable()->constrained()->onDelete("cascade");
             $table->foreignId("user_id")->nullable()->constrained()->onDelete("cascade");
         });
     }
