@@ -7,46 +7,85 @@ use Livewire\WithPagination;
 use App\Models\Reservation;
 use App\Models\Customer;
 use App\Models\Room;
+use App\Models\Location;
+use App\Models\Slot;
 
+
+
+use Illuminate\Support\Facades\Auth;
 
 class Bookings extends Component
 {
     use WithPagination;
-    public $search = '';
-    protected $queryString = ['search'];
-    public $customer_id, $room_id, $payment_id, $reservation_date, $payment_status, $reservationID;
-    public $membershipForm = false;
+   //public $search = '';
+    //protected $queryString = ['search'];
+    //public $customer_id, $room_id, $payment_id, $reservation_date, $payment_status; 
+    public $selectedLocation, $selectedDate, $selectedRoom, $selectedSlot = null;
+    public $locations, $rooms, $slots, $price;
+
+    public $bookingID, $user_id, $customer_name, $customer_id;
+    public $bookingsForm = false;
     public $deleteConfirmationForm = false;
 
     public function render()
     {
         return view('livewire.customer.bookings', [
-            'bookings' => Reservation::where('customers.first_name', 'like', '%' . $this->search . '%')
-            ->join('customers', 'reservations.customer_id', '=', 'customers.id')
+            'bookings' => Reservation::join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
+            ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-            ->select('reservations.*', 'customers.first_name as customer_name')
-            ->paginate(10),
+            ->join('slots', 'reservations.slot_id', '=', 'slots.id')
+            ->join('locations', 'rooms.location_id', '=', 'locations.id')
+            ->select('reservations.id as booking_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*', 'locations.name as locations_name')
+            ->paginate(10)
+        ],
+        [
+            'location' => Location::all(),
             ]);
     }
 
     public function add()
     {
         $this->reset();
-        $this->membershipForm = true;
+        $this->user_id = Auth::user()->id;
+        $customer_info = Customer::where('user_id', $this->user_id)->select('customers.*')->first();
+        $this->customer_name = $customer_info['last_name'].' '. $customer_info['first_name'];
+        $this->customer_id = $customer_info->id;
+        $this->bookingsForm = true;
+
     }
 
-    public function delete($id)
+    /**
+     * Load rooms based on selected date
+     *
+     * @return void
+     */
+    public function updatedSelectedDate()
     {
-        $bookings = Reservation::where('id', $id)->firstorfail();
-        $bookings->delete();
-        $this->deleteConfirmationForm = false;
+        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+        $this->selectedRoom = NULL;
+    }
+
+    /**
+     * Load available slots based on selected room
+     *
+     * @param  mixed $room
+     * @return void
+     */
+    public function updatedSelectedRoom($room)
+    {
+        if (!is_null($room)) {
+            $reserved = Reservation::where('reservation_date', $this->selectedDate)->pluck('slot_id')->toArray();
+            $room = Room::find($this->selectedRoom);
+            $roomSlots = $room->slots->pluck('id')->toArray();
+            $array = array_diff($roomSlots, $reserved);
+            $this->slots = Slot::select('*')->whereIn('id', $array)->get();
+            $this->price = $room->price;
+        }
     }
 
     public function deleteModal($id)
     {
         $this->deleteConfirmationForm = true;
-        $this->reservationID = $id;
-        $booking = Customer::findorFail($id);
-        $this->first_name = $booking ->first_name;
+        $this->bookingID = $id;
     }
 }
