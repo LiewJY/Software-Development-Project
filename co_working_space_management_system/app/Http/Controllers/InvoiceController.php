@@ -22,7 +22,7 @@ class InvoiceController extends Controller
         $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
         
         $invoice = Invoice::make()
-            ->logo(public_path('vendor/invoices/sample-logo.png'))
+            ->logo(public_path('vendor/invoices/download.png'))
             ->name("Membership Invoice")
             ->buyer($customer)
             // ->discountByPercent(10)
