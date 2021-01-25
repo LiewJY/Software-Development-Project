@@ -101,6 +101,10 @@ Route::get('/locations/details{id}', function ($id) {
     return view('customer.locationDetails', compact('id'));
 })->name('locationDetails');
 
+Route::get('/customerbookings', function () {
+    return view('customer.bookings');
+})->name('bookings');
+
 Route::get('/test', function () {
     $state = [];
 
