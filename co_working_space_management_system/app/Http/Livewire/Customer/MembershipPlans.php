@@ -46,7 +46,7 @@ class MembershipPlans extends Component
 
         $user = User::find(Auth::user()->id);
         $payment = $user->membership_payments->first();
-       
+
         if ($payment == null) {
 
             MembershipPayment::create([
@@ -55,9 +55,11 @@ class MembershipPlans extends Component
             ]);
 
             $subscriptionConfirmation = false;
+        } elseif ($payment != null && $payment->updated_at->addDays(30)->isPast()) {
+            MembershipPayment::where('user_id', Auth::user()->id)->update(['membership_id' => $this->plans_id]);
         } else {
             $endDate = $payment->updated_at->addDays(30)->toDateString();
-            session()->flash('message', 'Could not subscribe when you have an active subscription. End at' . $endDate );
+            session()->flash('message', 'Could not subscribe when you have an active subscription. End at' . $endDate);
         }
     }
 }

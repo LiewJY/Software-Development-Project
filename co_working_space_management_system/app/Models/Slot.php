@@ -17,7 +17,7 @@ class Slot extends Model
     public $timestamps = false;
 
     /**
-     * Define many to many relationship on rooms table
+     * Get the slot's rooms
      *
      * @return void
      */

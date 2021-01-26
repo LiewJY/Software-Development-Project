@@ -39,7 +39,8 @@ class ReservationLocation extends Component
      */
     public function render()
     {
-        return view('livewire.employee.reservation-location',
+        return view(
+            'livewire.employee.reservation-location',
             [
                 'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
                     ->where('customers.first_name', 'like', '%' . $this->search . '%')
@@ -58,7 +59,7 @@ class ReservationLocation extends Component
         );
     }
 
-     /**
+    /**
      * Validation rules
      *
      * @var array
@@ -107,7 +108,8 @@ class ReservationLocation extends Component
 
         $payment = ReservationPayment::create([
             'customer_id' => $this->customer_id,
-            'amount' => $this->amount,
+            'amount_paid' => $this->amount,
+            'balance' => $this->balance
         ]);
 
         $reservation = Reservation::create([
@@ -127,7 +129,7 @@ class ReservationLocation extends Component
      */
     public function add()
     {
-        $this->reset( 'selectedDate', 'selectedRoom', 'selectedSlot', 'locations', 'rooms', 'slots', 'price', 'amount', 'balance', 'customer_id', 'reservationID');
+        $this->reset('selectedDate', 'selectedRoom', 'selectedSlot', 'locations', 'rooms', 'slots', 'price', 'amount', 'balance', 'customer_id', 'reservationID');
         $this->ReservationForm = true;
     }
 
@@ -136,7 +138,7 @@ class ReservationLocation extends Component
      *
      * @return void
      */
-    public function updatedSelectedDate()
+    public function updatedSelectedLocation()
     {
         $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
         $this->selectedRoom = NULL;

@@ -29,7 +29,7 @@ class Location extends Model
     public $timestamps = false;
 
     /**
-     * Define one to many relationship to rooms table
+     * Get the location's rooms
      *
      * @return void
      */

@@ -60,9 +60,9 @@ class User extends Authenticatable
     protected $appends = [
         'profile_photo_url',
     ];
-    
+
     /**
-     * Define one to one relationship on employee table
+     * Get the user's employee details
      *
      * @return void
      */
@@ -70,9 +70,9 @@ class User extends Authenticatable
     {
         return $this->hasOne('App\Models\Employee');
     }
-    
+
     /**
-     * Define one to one relationship to customer table
+     * Get the user's customer details
      *
      * @return void
      */
@@ -81,7 +81,13 @@ class User extends Authenticatable
         return $this->hasOne('App\Models\Customer');
     }
 
-    public function membership_payments() {
+    /**
+     * Get the user's membership payments
+     *
+     * @return void
+     */
+    public function membership_payments()
+    {
         return $this->hasMany(MembershipPayment::class);
     }
 }

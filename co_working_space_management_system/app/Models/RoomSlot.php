@@ -8,6 +8,4 @@ use Illuminate\Database\Eloquent\Relations\Pivot;
 class RoomSlot extends Pivot
 {
     use HasFactory;
-
-    
 }

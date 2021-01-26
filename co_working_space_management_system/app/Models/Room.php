@@ -30,7 +30,7 @@ class Room extends Model
     public $timestamps = false;
 
     /**
-     * Define the one to many relationsip to Locations table
+     * Get the location of the room
      *
      * @return void
      */
@@ -40,7 +40,7 @@ class Room extends Model
     }
 
     /**
-     * Define the one to many relationship to maintenances table
+     * Get the maintenances of the room
      *
      * @return void
      */
@@ -50,7 +50,7 @@ class Room extends Model
     }
 
     /**
-     * Define many to many relationship on slots table
+     * Get the slots of the room
      *
      * @return void
      */

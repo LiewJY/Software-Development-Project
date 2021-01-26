@@ -29,7 +29,7 @@ class Employee extends Model
     public $timestamps = false;
 
     /**
-     * To define the one to one relationship on Users table
+     * Get employee's user details
      *
      * @return void
      */
@@ -37,9 +37,9 @@ class Employee extends Model
     {
         return $this->belongsTo('App\Models\User');
     }
-    
+
     /**
-     * To defince the one to many relationship on  maintenances table
+     * Get the maintenances made by the employee
      *
      * @return void
      */

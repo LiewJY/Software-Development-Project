@@ -15,7 +15,7 @@ class ReservationPayment extends Model
      * @var array
      */
     protected  $fillable = [
-        'customer_id', 'amount'
+        'customer_id', 'amount_paid', 'balance'
     ];
 
     /**

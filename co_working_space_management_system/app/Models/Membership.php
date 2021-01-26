@@ -27,6 +27,11 @@ class Membership extends Model
      */
     public $timestamps = false;
 
+    /**
+     * Get the user's membership payment
+     *
+     * @return void
+     */
     public function membership_payments()
     {
         return $this->hasMany(MembershipPayment::class);

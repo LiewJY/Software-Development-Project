@@ -24,7 +24,7 @@ class Customer extends Model
     public $timestamps = false;
 
     /**
-     * Define one to one relationship to user table
+     * Get the user's details
      *
      * @return void
      */
@@ -34,7 +34,7 @@ class Customer extends Model
     }
 
     /**
-     * get the reservation patmnet of the customer
+     * Get the reservation's patmnet of the customer
      *
      * @return void
      */

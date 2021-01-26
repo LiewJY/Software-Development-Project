@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Maintenance extends Model
 {
     use HasFactory;
-    
+
     /**
      * The attributes that are mass assignable
      *
@@ -20,7 +20,7 @@ class Maintenance extends Model
         'description',
         'status'
     ];
-        
+
     /**
      * Disable timestamps on maintenances table
      *
@@ -28,9 +28,9 @@ class Maintenance extends Model
      */
     public $timestamps = false;
 
-        
+
     /**
-     * Define the one to many relationship on Rooms table
+     * Get the room of the maintenance
      *
      * @return void
      */
@@ -38,9 +38,9 @@ class Maintenance extends Model
     {
         return $this->belongsTo('App\Models\Room');
     }
-    
+
     /**
-     * To define the one to many realtionship on employees table
+     * Get the employee's details that made the maintenance
      *
      * @return void
      */

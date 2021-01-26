@@ -2,8 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
-
-use App\Models\Payment;
+use App\Models\ReservationPayment;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
 use Asantibanez\LivewireCharts\Models\LineChartModel;
@@ -46,7 +45,7 @@ class BusinessReport extends Component
 
     public function render()
     {
-        $payment = Payment::whereIn('reference', $this->locations)->get();
+        $payment = ReservationPayment::whereIn('reference', $this->locations)->get();
 
         $columnChartModel = $payment->groupBy('reference')
             ->reduce(function (ColumnChartModel $columnChartModel, $data) {
