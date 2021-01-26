@@ -33,8 +33,11 @@ class Reservations extends Component
     {
         return view('livewire.admin.reservations',
         [
-            'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
-                ->orwhere('customers.first_name', 'like', '%' . $this->search . '%')
+            'reservations' => Reservation::
+                where(function($query){
+                    $query->where('customers.last_name', 'like', '%' . $this->search . '%')
+                    ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
+                })
                 ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
                 ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
                 ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
