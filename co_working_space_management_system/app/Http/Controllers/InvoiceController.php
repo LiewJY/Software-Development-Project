@@ -12,8 +12,9 @@ class InvoiceController extends Controller
 {
     public function show()
     {
+        $test = "aa";
         $customer = new Buyer([
-            'name'          => 'John Doe',
+            'name'          => $test,
             'custom_fields' => [
                 'email' => 'test@example.com',
             ],
@@ -22,7 +23,7 @@ class InvoiceController extends Controller
         $item = (new InvoiceItem())->title('Service 1')->pricePerUnit(2);
         
         $invoice = Invoice::make()
-            ->logo(public_path('vendor/invoices/download.png'))
+            ->logo(public_path('vendor/invoices/download.jpg'))
             ->name("Membership Invoice")
             ->buyer($customer)
             // ->discountByPercent(10)

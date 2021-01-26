@@ -46,93 +46,22 @@
                         <h1>Add Booking</h1>
             </x-slot>
             <form>
-                <x-slot name="content">
-                    <x-jet-label for="customer_name" value="Name" />
-                    <x-jet-input id="customer_name" type="text" readonly class="mt-1 block w-full" wire:model.lazy="customer_name" />
-                    <x-jet-input-error for="customer_name" />
-
-                    {{-- <x-jet-label for="customer_name" value="Name" />
-                    <x-jet-input id="customer_name" type="text" class="mt-1 block w-full" wire:model.lazy="customer_name" />
-                    <x-jet-input-error for="customer_name" /> --}}
-
-
-
-                    <x-jet-label for="selectedDate" value="Date" />
-                    <x-jet-input placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />
-                    <x-jet-input-error for="selectedDate" />
-                    
-                    @if (!is_null($selectedLocation))
-                    <x-jet-label for="selectedLocation" value="Location" />
-                    <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Location --</option>
-                        @foreach($location as $loc)
-                        <option value="{{$loc->id}}">{{$loc->name}}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="selectedLocation" />
-                    
-                    @endif
-
-                    @if (!is_null($selectedDate))
-                    <x-jet-label for="selectedRoom" value="Room" />
-                    <select id="selectedRoom" wire:model.lazy="selectedRoom" name="selectedRoom" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Room --</option>
-                        @foreach($rooms as $room)
-                        <option value="{{$room->id}}">{{$room->name}}, {{$room->size}}pax</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="selectedRoom" />
-                    @endif
-
-                    @if (!is_null($selectedRoom))
-                    <x-jet-label for="price" value="Price" />
-                    <x-jet-input id="price" readonly type="text" class="mt-1 block w-full" wire:model.lazy="price" />
-
-                    <x-jet-label for="selectedSlot" value="Slot" />
-                    <select id="selectedSlot" wire:model.lazy="selectedSlot" name="selectedSlot" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Slot --</option>
-                        @foreach($slots as $slot)
-                        <option value="{{$slot->id}}">{{$slot->start_time}} -- {{$slot->end_time}}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="selectedSlot" />
-                    @endif
-
-                    @if (!is_null($selectedSlot))
-                        <x-jet-label for="card_type" value="Card Type" />
-                        <select id="card_type" wire:model.lazy="card_type" name="card_type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="default">Select a Card</option>
-                            <option value="">Visa</option>
-                            <option value="">Master</option>
-                        </select>
-                        <x-jet-input-error for="card_type" />
-
-                        <x-jet-label for="card_number" value="Card Number" />
-                        <x-jet-input readonly id="card_number" type="text" class="mt-1 block w-full" wire:model.lazy="card_number" />
-                        <x-jet-input-error for="card_number" />
-
-                        <x-jet-label for="exp_date" value="Expire Date" />
-                        <div class="flex justify-between gap-3">
-                            <span class="w-1/2">
-                            <x-jet-label for="month" value="Month" />
-                            <x-jet-input id="month" readonly type="text" class="mt-1 block w-full" wire:model.lazy="month" />
-                            <x-jet-input-error for="month" />
-                            </span>
-                            <span class="w-1/2">
-                            <x-jet-label for="year" value="Year" />
-                            <x-jet-input id="year" readonly type="text" class="mt-1 block w-full" wire:model.lazy="year" />
-                            <x-jet-input-error for="year" />
-                            </span>
-                        </div>
-                        <x-jet-label for="card_cvc" value="Card CVV2/CVC2/4DBC" />
-                        <x-jet-input readonly id="card_cvc" type="text" class="mt-1 block w-1/4" wire:model.lazy="card_cvc" />
-                        <x-jet-input-error for="card_cvc" />
+            <x-slot name="content">
+                        <div class="space-y-32">
+                <div>Content</div>
+                <div>Content</div>
+                <div>Content</div>
+                <div>Content</div>
+                <div>Content</div>
+                <div>Content</div>
+                <div>Content</div>
+                <div>Content</div>
+                <div>Content</div>
+            </div>
+            </x-slot>
 
 
-                    @endif
-                    
 
-                </x-slot>
                 <x-slot name="footer">
                         <x-jet-button wire:click="store">Save</x-jet-button>
                     <x-jet-button wire:click="$toggle('bookingsForm')">Cancel</x-jet-button>
