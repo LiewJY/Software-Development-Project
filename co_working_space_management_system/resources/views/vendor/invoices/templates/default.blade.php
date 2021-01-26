@@ -82,7 +82,7 @@
             }
 
             .mt-5 {
-                margin-top: 3rem !important;
+                margin-top: 1rem !important;
             }
 
             .pr-0,
@@ -129,18 +129,18 @@
     <body>
         {{-- Header --}}
         @if($invoice->logo)
-            <img src="{{ $invoice->getLogo() }}" alt="logo" height="100">
+            <img src="{{ $invoice->getLogo() }}" alt="logo" height="40">
         @endif
         <table class="table mt-5">
             <tbody>
                 <tr>
                     <td class="border-0 pl-0" width="70%">
                         <h4 class="text-uppercase">
-                            <strong>{{ $invoice->name }}</strong>
+                            <strong>{{ $invoice->name}}</strong>
                         </h4>
                     </td>
                     <td class="border-0 pl-0">
-                        <p>{{ __('invoices::invoice.date') }}: <strong>{{ $invoice->getDate() }}</strong></p>
+                        <p>Printed on: <strong>{{ $invoice->getDate()}}</strong></p>
                     </td>
                 </tr>
             </tbody>
@@ -251,7 +251,8 @@ GG
                     @if($invoice->hasItemUnits)
                         <th scope="col" class="text-center border-0">{{ __('invoices::invoice.units') }}</th>
                     @endif
-                    <th scope="col" class="text-center border-0">{{ __('invoices::invoice.quantity') }}</th>
+                    <th scope="col" class="text-center border-0">
+                    </th>
                     <th scope="col" class="text-right border-0">{{ __('invoices::invoice.price') }}</th>
                     @if($invoice->hasItemDiscount)
                         <th scope="col" class="text-right border-0">{{ __('invoices::invoice.discount') }}</th>
@@ -270,9 +271,9 @@ GG
                     @if($invoice->hasItemUnits)
                         <td class="text-center">{{ $item->units }}</td>
                     @endif
-                    <td class="text-center">{{ $item->quantity }}</td>
+                    <td class="text-center"></td>
                     <td class="text-right">
-                        {{ $invoice->formatCurrency($item->price_per_unit) }}
+                       RM {{ $invoice->formatCurrency($item->price_per_unit) }}
                     </td>
                     @if($invoice->hasItemDiscount)
                         <td class="text-right">
@@ -286,7 +287,7 @@ GG
                     @endif
 
                     <td class="text-right pr-0">
-                        {{ $invoice->formatCurrency($item->sub_total_price) }}
+                        RM {{ $invoice->formatCurrency($item->sub_total_price) }}
                     </td>
                 </tr>
                 @endforeach
@@ -340,7 +341,7 @@ GG
                         <td colspan="{{ $invoice->table_columns - 2 }}" class="border-0"></td>
                         <td class="text-right pl-0">{{ __('invoices::invoice.total_amount') }}</td>
                         <td class="text-right pr-0 total-amount">
-                            {{ $invoice->formatCurrency($invoice->total_amount) }}
+                            RM {{ $invoice->formatCurrency($invoice->total_amount) }}
                         </td>
                     </tr>
             </tbody>
@@ -355,9 +356,9 @@ GG
         <p>
             {{ trans('invoices::invoice.amount_in_words') }}: {{ $invoice->getTotalAmountInWords() }}
         </p>
-        <p>
+        {{-- <p>
             {{ trans('invoices::invoice.pay_until') }}: {{ $invoice->getPayUntilDate() }}
-        </p>
+        </p> --}}
 
         <script type="text/php">
             if (isset($pdf) && $PAGE_COUNT > 1) {

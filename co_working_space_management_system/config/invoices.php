@@ -9,7 +9,7 @@ return [
         /**
          * Due date for payment since invoice's date.
          */
-        'pay_until_days' => 7,
+        'pay_until_days' => 0,
     ],
 
     'serial_number' => [
@@ -28,15 +28,15 @@ return [
     ],
 
     'currency' => [
-        'code'                => 'eur',
+        'code'                => 'MYR',
         /**
          * Usually cents
          * Used when spelling out the amount and if your currency has decimals.
          *
          * Example: Amount in words: Eight hundred fifty thousand sixty-eight EUR and fifteen ct.
          */
-        'fraction'            => 'ct.',
-        'symbol'              => '€',
+        'fraction'            => 'cent',
+        'symbol'              => '',
         /**
          * Example: 19.00
          */

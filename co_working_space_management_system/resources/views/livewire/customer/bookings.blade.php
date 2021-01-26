@@ -33,6 +33,8 @@
                         <td class="border border-gray-400 bg-gray-100">
                             <div class="border-none flex flex-row flex-nowrap justify-center">
                                 <x-jet-button class="mx-2" wire:click="deleteModal({{$booking ->booking_id}})">Cancel</x-jet-button>
+                                <x-jet-button class="mx-2" wire:click="print({{$booking->booking_id}})">Print Receipt</x-jet-button>
+
                             </div>
                         </td>
                      </tr>               
@@ -96,7 +98,7 @@
                     @endif
 
                     @if (!is_null($selectedSlot))
-                        <x-jet-label for="card_type" value="Card Type" />
+                        {{-- <x-jet-label for="card_type" value="Card Type" />
                         <select id="card_type" wire:model.lazy="card_type" name="card_type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                             <option value="default">Select a Card</option>
                             <option value="">Visa</option>
@@ -123,7 +125,7 @@
                         </div>
                         <x-jet-label for="card_cvc" value="Card CVV2/CVC2/4DBC" />
                         <x-jet-input readonly id="card_cvc" type="text" class="mt-1 block w-1/4" wire:model.lazy="card_cvc" />
-                        <x-jet-input-error for="card_cvc" />
+                        <x-jet-input-error for="card_cvc" /> --}}
                     @endif
                 </x-slot>
 

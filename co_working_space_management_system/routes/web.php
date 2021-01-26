@@ -109,7 +109,14 @@ Route::get('/customerbookings', function () {
 })->name('bookings');
 
 //for invoice
-Route::get('/invoice', [InvoiceController::class, 'show']);
+// Route::get('/membershipinvoice', [InvoiceController::class, 'member']);
+
+Route::get('/reservationinvoice/{id}', [InvoiceController::class, 'reservation'])
+->name('printreservation');
+//this does not work
+// Route::get('/reservationinvoice/{id}', function ($id) {
+//     return view([InvoiceController::class, 'reservation'], compact('id'));
+// })->name('printreservation');
 
 
 Route::get('/test', function () {

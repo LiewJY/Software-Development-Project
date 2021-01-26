@@ -26,7 +26,7 @@
                 <tbody>
                     @foreach ($reservations as $reservation)
                     <tr>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_id}} {{$reservation->first_name}} {{$reservation->last_name}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$reservation->first_name}} {{$reservation->last_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_date}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$reservation->start_time}} - {{$reservation->end_time}}</td>
@@ -38,7 +38,8 @@
                         <td class="border border-gray-400  bg-gray-100 py-1.5">
                             <div class="border-none flex flex-row flex-nowrap justify-center">
                                 {{-- <x-jet-button class="mx-2" wire:click="edit({{$reservation->id}})">Edit</x-jet-button> --}}
-                                 <x-jet-button class="mx-2" wire:click="deleteModal({{$reservation->reservation_id}})">Cancel Reservation</x-jet-button>
+                                <x-jet-button class="mx-2" wire:click="deleteModal({{$reservation->reservation_id}})">Cancel Reservation</x-jet-button>
+                                <x-jet-button class="mx-2" wire:click="print({{$reservation->reservation_id}})">Print Receipt</x-jet-button>
                             </div>
                         </td>
                     </tr>
@@ -106,13 +107,14 @@
                     @endif
 
                     @if (!is_null($selectedSlot))
-                    <x-jet-label for="amount" value="Payment amount" />
+
+                    {{-- <x-jet-label for="amount" value="Payment amount" />
                     <x-jet-input id="amount" type="text" class="mt-1 block w-full" wire:model.debounce.200ms="amount" />
                     <x-jet-input-error for="amount" />
 
                     <x-jet-label for="balance" value="Balance" />
                     <x-jet-input id="balance" readonly type="text" class="mt-1 block w-full" wire:model="balance" />
-                    <x-jet-input-error for="balance" />
+                    <x-jet-input-error for="balance" /> --}}
 
                     @endif
 
@@ -135,7 +137,7 @@
                     <p>Customer Name: {{$name}}</p>
                     <p>Room : {{$room}}</p>
                     <p>Date : {{$date}}</p>
-                    <p class="font-bold	">Please return amount of {{$return}} to customer upon cancellation.</p>
+                    {{-- <p class="font-bold	">Please return amount of {{$return}} to customer upon cancellation.</p> --}}
                 </x-slot>
                 <x-slot name="footer">
                     <x-jet-button wire:click="delete({{$reservationID}})">Cancel Reservation</x-jet-button>

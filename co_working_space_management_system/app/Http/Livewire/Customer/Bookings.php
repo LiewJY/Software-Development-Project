@@ -29,6 +29,10 @@ class Bookings extends Component
 
     public function render()
     {
+        $this->user_id = Auth::user()->id;
+        $customer_info = Customer::where('user_id', $this->user_id)->select('customers.*')->first();
+        $this->customer_id = $customer_info->id;
+
         return view('livewire.customer.bookings', [
             'bookings' => Reservation::join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
             ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
@@ -36,6 +40,7 @@ class Bookings extends Component
             ->join('slots', 'reservations.slot_id', '=', 'slots.id')
             ->join('locations', 'rooms.location_id', '=', 'locations.id')
             ->select('reservations.id as booking_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*', 'locations.name as locations_name')
+            ->where('reservation_payments.customer_id', '=', $this->customer_id)
             ->paginate(10)
         ],
         [
@@ -88,4 +93,16 @@ class Bookings extends Component
         $this->deleteConfirmationForm = true;
         $this->bookingID = $id;
     }
+
+    /**
+     * open receipt
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function print($id)
+    {
+        return redirect()->route('printreservation', ['id' => $id]);
+    }
+
 }
