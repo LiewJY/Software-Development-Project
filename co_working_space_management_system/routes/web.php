@@ -6,6 +6,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ChartController;
 use Illuminate\Support\Facades\Auth;
 
+use App\Http\Controllers\InvoiceController;
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -104,6 +107,17 @@ Route::get('/locations/details{id}', function ($id) {
 Route::get('/customerbookings', function () {
     return view('customer.bookings');
 })->name('bookings');
+
+//for invoice
+// Route::get('/membershipinvoice', [InvoiceController::class, 'member']);
+
+Route::get('/reservationinvoice/{id}', [InvoiceController::class, 'reservation'])
+->name('printreservation');
+//this does not work
+// Route::get('/reservationinvoice/{id}', function ($id) {
+//     return view([InvoiceController::class, 'reservation'], compact('id'));
+// })->name('printreservation');
+
 
 Route::get('/test', function () {
     $state = [];

@@ -43,7 +43,7 @@ class ReservationLocation extends Component
             'livewire.employee.reservation-location',
             [
                 'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
-                    ->where('customers.first_name', 'like', '%' . $this->search . '%')
+                    ->orwhere('customers.first_name', 'like', '%' . $this->search . '%')
                     ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
                     ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
                     ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
@@ -204,4 +204,16 @@ class ReservationLocation extends Component
         $reservation->delete();
         $this->deleteConfirmationForm = false;
     }
+    
+    /**
+     * open receipt
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function print($id)
+    {
+        return redirect()->route('printreservation', ['id' => $id]);
+    }
+
 }

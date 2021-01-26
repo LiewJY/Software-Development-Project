@@ -2,7 +2,6 @@
 
 @php
 $id = $id ?? md5($attributes->wire('model'));
-
 switch ($maxWidth ?? '2xl') {
     case 'sm':
         $maxWidth = 'sm:max-w-sm';
@@ -29,7 +28,6 @@ switch ($maxWidth ?? '2xl') {
         focusables() {
             // All focusable element types...
             let selector = 'a, button, input, textarea, select, details, [tabindex]:not([tabindex=\'-1\'])'
-
             return [...$el.querySelectorAll(selector)]
                 // All non-disabled elements...
                 .filter(el => ! el.hasAttribute('disabled'))
