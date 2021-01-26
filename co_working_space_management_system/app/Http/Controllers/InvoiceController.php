@@ -23,8 +23,8 @@ class InvoiceController extends Controller
             ],
         ]);
         $item = (new InvoiceItem())->title($reservations->room['name'] . ', ' . $reservations->room->location['name'] . ', ' . $reservations['reservation_date'] . ', from ' . $reservations->slot['start_time'] . ' to ' . $reservations->slot['end_time'])
-                ->pricePerUnit($reservations->room->price);
-        
+            ->pricePerUnit($reservations->room->price);
+
         $invoice = Invoice::make()
             ->logo(public_path('vendor/invoices/logo.png'))
             ->name("Reservation Invoice")
@@ -45,8 +45,8 @@ class InvoiceController extends Controller
             ],
         ]);
         $item = (new InvoiceItem())->title($reservations->room['name'] . ', ' . $reservations->room->location['name'] . ', ' . $reservations['reservation_date'] . ', from ' . $reservations->slot['start_time'] . ' to ' . $reservations->slot['end_time'])
-                ->pricePerUnit($reservations->room->price);
-        
+            ->pricePerUnit($reservations->room->price);
+
         $invoice = Invoice::make()
             ->logo(public_path('vendor/invoices/logo.png'))
             ->name("Menbership Invoice")

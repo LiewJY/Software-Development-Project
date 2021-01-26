@@ -57,7 +57,9 @@ class MembershipPlans extends Component
             $subscriptionConfirmation = false;
         } elseif ($payment != null && $payment->updated_at->addDays(30)->isPast()) {
             MembershipPayment::where('user_id', Auth::user()->id)->update(['membership_id' => $this->plans_id]);
+            $subscriptionConfirmation = false;
         } else {
+
             $endDate = $payment->updated_at->addDays(30)->toDateString();
             session()->flash('message', 'Could not subscribe when you have an active subscription. End at' . $endDate);
         }

@@ -16,8 +16,7 @@ class CreateReservationPaymentsTable extends Migration
         Schema::create('reservation_payments', function (Blueprint $table) {
             $table->id();
             $table->foreignId('customer_id')->nullable();
-            $table->decimal('amount_paid');
-            $table->decimal('balance');
+            $table->decimal('amount');
             $table->timestamps();
         });
     }

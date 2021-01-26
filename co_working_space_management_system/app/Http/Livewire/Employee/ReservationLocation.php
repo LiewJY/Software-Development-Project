@@ -10,6 +10,9 @@ use App\Models\Location;
 use App\Models\Room;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
+use App\Models\User;
+use DateTime;
+use Illuminate\Support\Facades\DB;
 
 class ReservationLocation extends Component
 {
@@ -49,7 +52,8 @@ class ReservationLocation extends Component
                     ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
                     ->join('slots', 'reservations.slot_id', '=', 'slots.id')
                     ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
-                    ->where('rooms.location_id', '=', $this->location_id)
+                    ->where('rooms.location_id', "=", $this->location_id)
+                    ->where('reservations.reservation_date', '>', date("y-m-d"))
                     ->paginate(10)
             ],
             [
@@ -66,24 +70,12 @@ class ReservationLocation extends Component
      */
     protected $rules = [
         'selectedLocation' => ['required'],
-        'selectedDate' => ['required'],
+        'selectedDate' => ['required', 'date', "after_or_equal:today"],
         'selectedRoom' => ['required'],
         'selectedSlot' => ['required'],
         'customer_id' => ['required'],
-        'amount' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
-        'balance' => ['required', 'int']
     ];
 
-    /**
-     * Custominze error message
-     *
-     * @var array
-     */
-    protected $messages = [
-        'balance.regex' => 'Balance could not be in negetive value.',
-        'amount.regex' => 'Please enter a valid amount.',
-        'amount.not_in' => 'Please enter a valid amount.'
-    ];
 
     /**
      * Live validation
@@ -108,8 +100,7 @@ class ReservationLocation extends Component
 
         $payment = ReservationPayment::create([
             'customer_id' => $this->customer_id,
-            'amount_paid' => $this->amount,
-            'balance' => $this->balance
+            'amount' => $this->price,
         ]);
 
         $reservation = Reservation::create([
@@ -134,15 +125,21 @@ class ReservationLocation extends Component
     }
 
     /**
-     * Load rooms based on selected date
+     * Check if the customer has any subscription , if yes load the location's room
      *
      * @return void
      */
-    public function updatedSelectedLocation()
+    public function updatedCustomerId()
     {
-        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
-        $this->selectedRoom = NULL;
+        $customer = Customer::find($this->customer_id);
+        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+            session()->flash('error', 'Selected customer does not have any active subscription.');
+        } else {
+            $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+            $this->selectedRoom = NULL;
+        }
     }
+
 
     /**
      * Load available slots based on selected room
@@ -200,11 +197,12 @@ class ReservationLocation extends Component
      */
     public function delete($id)
     {
-        $reservation = Reservation::where('id', $id)->firstorfail();
-        $reservation->delete();
+        $reservation = Reservation::find($id);
+        ReservationPayment::find($reservation->reservation_payment_id)->delete();
+        // $reservation->delete();
         $this->deleteConfirmationForm = false;
     }
-    
+
     /**
      * open receipt
      *
@@ -215,5 +213,4 @@ class ReservationLocation extends Component
     {
         return redirect()->route('printreservation', ['id' => $id]);
     }
-
 }

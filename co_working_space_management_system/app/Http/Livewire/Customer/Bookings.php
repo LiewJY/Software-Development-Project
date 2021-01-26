@@ -8,6 +8,7 @@ use App\Models\Reservation;
 use App\Models\Customer;
 use App\Models\Room;
 use App\Models\Location;
+use App\Models\ReservationPayment;
 use App\Models\Slot;
 
 
@@ -17,7 +18,7 @@ use Illuminate\Support\Facades\Auth;
 class Bookings extends Component
 {
     use WithPagination;
-   //public $search = '';
+    //public $search = '';
     //protected $queryString = ['search'];
     //public $customer_id, $room_id, $payment_id, $reservation_date, $payment_status; 
     public $selectedLocation, $selectedDate, $selectedRoom, $selectedSlot = null;
@@ -27,36 +28,107 @@ class Bookings extends Component
     public $bookingsForm = false;
     public $deleteConfirmationForm = false;
 
+    /**
+     * Validation rules
+     *
+     * @var array
+     */
+    protected $rules = [
+        'selectedLocation' => ['required'],
+        'selectedDate' => ['required', "date", "after_or_equal:today"],
+        'selectedRoom' => ['required'],
+        'selectedSlot' => ['required'],
+        'customer_id' => ['required'],
+    ];
+
+    /**
+     * Live validation
+     *
+     * @param  mixed $propertyName
+     * @return void
+     */
+    public function updated($propertyName)
+    {
+        $this->validateOnly($propertyName);
+    }
+
+
     public function render()
     {
         $this->user_id = Auth::user()->id;
         $customer_info = Customer::where('user_id', $this->user_id)->select('customers.*')->first();
         $this->customer_id = $customer_info->id;
 
-        return view('livewire.customer.bookings', [
-            'bookings' => Reservation::join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
-            ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
-            ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-            ->join('slots', 'reservations.slot_id', '=', 'slots.id')
-            ->join('locations', 'rooms.location_id', '=', 'locations.id')
-            ->select('reservations.id as booking_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*', 'locations.name as locations_name')
-            ->where('reservation_payments.customer_id', '=', $this->customer_id)
-            ->paginate(10)
-        ],
-        [
-            'location' => Location::all(),
-            ]);
+        return view(
+            'livewire.customer.bookings',
+            [
+                'bookings' => Reservation::join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
+                    ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
+                    ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                    ->join('slots', 'reservations.slot_id', '=', 'slots.id')
+                    ->join('locations', 'rooms.location_id', '=', 'locations.id')
+                    ->select('reservations.id as booking_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*', 'locations.name as locations_name')
+                    ->where('reservation_payments.customer_id', '=', $this->customer_id)
+                    ->paginate(10)
+            ],
+            [
+                'location' => Location::all(),
+            ]
+        );
     }
+
+    /**
+     * Update or create reservation
+     *
+     * @return void
+     */
+    public function store()
+    {
+            $this->validate();
+
+            $payment = ReservationPayment::create([
+                'customer_id' => $this->customer_id,
+                'amount' => $this->price
+            ]);
+
+            $reservation = Reservation::create([
+                'room_id' => $this->selectedRoom,
+                'slot_id' => $this->selectedSlot,
+                'reservation_date' => $this->selectedDate,
+            ]);
+
+            $payment->reservation()->save($reservation);
+            $this->bookingsForm = false;
+        
+    }
+
+    /**
+     * Delete selected reservation
+     *
+     * @param  int $id
+     * @return void
+     */
+    public function delete($id)
+    {
+        $reservation = Reservation::find($id);
+        ReservationPayment::find($reservation->reservation_payment_id)->delete();
+        // $reservation->delete();
+        $this->deleteConfirmationForm = false;
+    }
+
 
     public function add()
     {
-        $this->reset();
-        $this->user_id = Auth::user()->id;
-        $customer_info = Customer::where('user_id', $this->user_id)->select('customers.*')->first();
-        $this->customer_name = $customer_info['last_name'].' '. $customer_info['first_name'];
-        $this->customer_id = $customer_info->id;
-        $this->bookingsForm = true;
-
+        if (Auth::user()->membership_payments->first() == null || Auth::user()->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+            session()->flash("error", "You dont have any active subscription. Please subscribe to any available plans before proceeding.");
+        } else {
+            $this->reset();
+            $this->user_id = Auth::user()->id;
+            $customer_info = Customer::where('user_id', $this->user_id)->select('customers.*')->first();
+            $this->customer_name = $customer_info['last_name'] . ' ' . $customer_info['first_name'];
+            $this->customer_id = $customer_info->id;
+            $this->bookingsForm = true;
+        }
     }
 
     /**
@@ -64,7 +136,7 @@ class Bookings extends Component
      *
      * @return void
      */
-    public function updatedSelectedDate()
+    public function updatedSelectedLocation()
     {
         $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
         $this->selectedRoom = NULL;
@@ -104,5 +176,4 @@ class Bookings extends Component
     {
         return redirect()->route('printreservation', ['id' => $id]);
     }
-
 }
