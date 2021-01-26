@@ -2,6 +2,8 @@
     <div>
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
+            <p class="w-full">Upcoming booking</p>
+
             {{-- <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Location"/> --}}
         </div>
         <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">

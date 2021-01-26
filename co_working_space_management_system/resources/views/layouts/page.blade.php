@@ -112,7 +112,7 @@
                             <x-jet-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
                                 {{ __('Membership Plans') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
+                            <x-jet-nav-link href="{{ route('bookings') }}" :active="request()->routeIs('bookings')">
                                 {{ __('Bookings') }}
                             </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
@@ -257,13 +257,13 @@
                             </x-jet-dropdown-link>
                             <div class="border-t border-gray-100"></div>
 
-                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
+                            <x-jet-dropdown-link href="{{ route('bookinghistory') }}">
                                 {{ __('Booking History') }}
                             </x-jet-dropdown-link>
                             <div class="border-t border-gray-100"></div>
 
-                            <x-jet-dropdown-link href="{{ route('profile.show') }}">
-                                {{ __('Payment History') }}
+                            <x-jet-dropdown-link href="{{ route('subscriptionhistory') }}">
+                                {{ __('Subscription History') }}
                             </x-jet-dropdown-link>
                             <div class="border-t border-gray-100"></div>
 
