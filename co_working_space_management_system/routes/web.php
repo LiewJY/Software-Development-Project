@@ -108,10 +108,20 @@ Route::get('/customerbookings', function () {
     return view('customer.bookings');
 })->name('bookings');
 
-//for invoice
-// Route::get('/membershipinvoice', [InvoiceController::class, 'member']);
+Route::get('/customerbookinghistory', function () {
+    return view('customer.bookingHistory');
+})->name('bookinghistory');
 
-Route::get('/reservationinvoice/{id}', [InvoiceController::class, 'reservation'])
+Route::get('/subscriptionhistory', function () {
+    return view('customer.subscriptionhistory');
+})->name('subscriptionhistory');
+//for invoice
+Route::get('/membershipinvoice/{id}', 
+[InvoiceController::class, 'membership'])
+->name('printmembership');
+
+Route::get('/reservationinvoice/{id}', 
+[InvoiceController::class, 'reservation'])
 ->name('printreservation');
 //this does not work
 // Route::get('/reservationinvoice/{id}', function ($id) {
