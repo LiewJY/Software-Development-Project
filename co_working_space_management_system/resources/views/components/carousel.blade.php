@@ -36,7 +36,7 @@
 	<div class="carousel-inner relative overflow-hidden w-full">
 	  <!--Slide 1-->
 		<input class="carousel-open" type="radio" id="carousel-1" name="carousel" aria-hidden="true" hidden="" checked="checked">
-		<div class="carousel-item absolute opacity-0 bg-red-500 pb-0">
+		<div class="carousel-item absolute opacity-0 bg-gray-50 pb-0">
             <div class="relative bg-cover bg-center text-white py-0 px-0 object-fill">
                 {{$first}}
             </div>
@@ -46,7 +46,7 @@
 		
 		<!--Slide 2-->
 		<input class="carousel-open" type="radio" id="carousel-2" name="carousel" aria-hidden="true" hidden="">
-		<div class="carousel-item absolute opacity-0 bg-red-500 pb-0">
+		<div class="carousel-item absolute opacity-0 bg-gray-50 pb-0">
             <div class="relative bg-cover bg-center text-white py-0 px-0 object-fill">
                 {{$second}}
             </div>
@@ -56,7 +56,7 @@
 		
         <!--Slide 3-->
 		<input class="carousel-open" type="radio" id="carousel-3" name="carousel" aria-hidden="true" hidden="">
-		<div class="carousel-item absolute opacity-0 bg-red-500 pb-0">
+		<div class="carousel-item absolute opacity-0 bg-gray-50 pb-0">
             <div class="relative bg-cover bg-center text-white py-0 px-0 object-fill">
                 {{$third}}
             </div>
@@ -67,7 +67,7 @@
 
         <!--Slide 4-->
 		<input class="carousel-open" type="radio" id="carousel-4" name="carousel" aria-hidden="true" hidden="">
-		<div class="carousel-item absolute opacity-0 bg-red-500 pb-0">
+		<div class="carousel-item absolute opacity-0 bg-gray-50 pb-0">
             <div class="relative bg-cover bg-center text-white py-0 px-0 object-fill">
                 {{$forth}}
             </div>

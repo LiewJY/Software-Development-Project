@@ -1,10 +1,10 @@
 <?php
 
-namespace App\View\Components;
+namespace App\View\Components\image;
 
 use Illuminate\View\Component;
 
-class image.image3 extends Component
+class image4 extends Component
 {
     /**
      * Create a new component instance.
@@ -23,6 +23,6 @@ class image.image3 extends Component
      */
     public function render()
     {
-        return view('components.image.image3');
+        return view('components.image.image4');
     }
 }
