@@ -17,13 +17,13 @@ class MembershipSeeder extends Seeder
         Membership::create([
             'name' => 'Basic',
             'price' => '99',
-            'description' => 'Full Access to Pantry,Full Access Free Seating Area, Acccess to One Location Only'
+            'description' => 'Full Access to Pantry,Full Access Free Seating Area, Access to All Sharespace Locations'
         ]);
 
         Membership::create([
             'name' => 'Medium',
             'price' => '199',
-            'description' => 'Full Access to Pantry, Full Access Free Seating Area, Entitled for ONE Personal Desk, Acccess to One Location Only'
+            'description' => 'Full Access to Pantry, Full Access Free Seating Area, Entitled for ONE Personal Desk, Access to All Sharespace Locations'
         ]);
 
         Membership::create([

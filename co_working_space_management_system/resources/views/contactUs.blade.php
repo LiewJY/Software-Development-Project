@@ -5,7 +5,7 @@
     <!-- Title -->
     <div class="container px-5 py-10 mx-auto">
     <div class="flex flex-col text-center w-full mb-12">
-      <h1 class="font-serif sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900 underline animate-bounce">CONTACT US</h1>
+      <h1 class="sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900">Contact Us</h1>
       <p class="lg:w-2/3 mx-auto leading-relaxed text-base font-semibold">
         Come & experience our inviting spaces for yourself as we offer the best workspace solutions for every office need. Ready to move-in office space located in prime locations across the Klang Valley equipped with the finest business amenities for you and your team!
       </p>
@@ -23,12 +23,12 @@
 
     <!-- Table -->
     <div class="lg:w-1/2 md:w-1/2 flex flex-col md:ml-auto w-full md:py-5 mt-5 md:mt-0 border px-3 rounded-lg bg-gray-300">
-      <h2 class="font-serif text-gray-900 text-lg mb-1 font-semibold title-font underline font-bold text-center">Details</h2>
+      <h2 class="text-gray-900 text-lg mb-1 font-semibold title-font underline font-bold text-center">Details</h2>
       <p class="leading-relaxed mb-0 text-gray-600 font-semibold">Further inquires, please contact us at:</p>
       <p class="leading-relaxed mb-0 text-gray-600 font-semibold">Phone: <a class="text-indigo-500 leading-relaxed hover:underline" href="tel:+03-8996 1000">03-8996 1000</a></p>
-      <p class="leading-relaxed mb-5 text-gray-600 font-semibold">Email: <a class="text-indigo-500 leading-relaxed hover:underline" href="ShareSpace@hotmail.com">ShareSpace@hotmail.com</a></p>
+      <p class="leading-relaxed mb-5 text-gray-600 font-semibold">Email: <a class="text-indigo-500 leading-relaxed hover:underline" href="mailto:ShareSpace@hotmail.com">ShareSpace@hotmail.com</a></p>
       <div class="relative mb-4">
-        <h2 class="font-serif text-gray-900 text-lg mb-1 font-medium title-font underline font-bold text-center">Operating Hours</h2>
+        <h2 class=" text-gray-900 text-lg mb-1 font-medium title-font underline font-bold text-center">Operating Hours</h2>
         <table class="table-fixed border-collapse border border-gray-800 border-t-8 border-b-8 border-double">
           <tr>
             <th class="w-1/4 border border-gray-900 border-b-8 border-double border-l-4 border-r-4 font-bold">Day</th>
@@ -72,7 +72,7 @@
     <!-- Gallery -->
   <div class="container px-5 py-5 mx-auto">
     <div class="flex flex-col text-center w-full mb-1">
-      <h1 class="font-serif sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900 underline animate-bounce">GALLERY</h1>
+      <h1 class=" sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900">Gallery</h1>
     </div>
   </div> 
 
@@ -111,9 +111,9 @@
 <section class="text-gray-700 body-font relative bg-gray-200">
 <div class="container mx-auto flex flex-col px-5 py-0 justify-center items-center"> 
   <div class="w-full md:w-2/3 flex flex-col mb-16 items-center text-center">
-      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 font-serif">Want to visit our space?</h1>
+      <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900 ">Want to visit our space?</h1>
       <div class="lg:pl-5 w-full lg:w-1/2">
-        <a href="#" class="transition bg-transparent px-10 py-3 rounded font-bold hover:bg-gray-800 hover:text-gray-100 text-black block w-full text-center border-2 border-gray-900">Explore!</a>
+        <a href="locations" class="transition bg-transparent px-10 py-3 rounded font-bold hover:bg-gray-800 hover:text-gray-100 text-black block w-full text-center border-2 border-gray-900">Explore!</a>
     </div>
       <p class="text-sm mt-2 text-gray-500 mb-8 w-full"></p>
     </div>

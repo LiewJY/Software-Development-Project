@@ -262,11 +262,6 @@
                             </x-jet-dropdown-link>
                             <div class="border-t border-gray-100"></div>
 
-                            <x-jet-dropdown-link href="{{ route('subscriptionhistory') }}">
-                                {{ __('Subscription History') }}
-                            </x-jet-dropdown-link>
-                            <div class="border-t border-gray-100"></div>
-
                             <!-- Authentication -->
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
@@ -290,7 +285,7 @@
             <div class="pt-2 pb-3 space-y-1">
                 @guest
 
-                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                <x-jet-responsive-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
                     {{ __('Home') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
@@ -321,6 +316,9 @@
                 <x-jet-responsive-nav-link href="{{ route('maintenance') }}" :active="request()->routeIs('maintenance')">
                     {{ __('Maintenance') }}
                 </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('adminreservation') }}" :active="request()->routeIs('adminreservation')">
+                    {{ __('Reservations') }}
+                </x-jet-responsive-nav-linkk>
                 <x-jet-responsive-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
                     {{ __('Membership Plans') }}
                 </x-jet-responsive-nav-link>
@@ -333,22 +331,75 @@
                 <x-jet-responsive-nav-link href="{{ route('adminrooms') }}" :active="request()->routeIs('adminrooms')">
                     {{ __('Rooms') }}
                 </x-jet-responsive-nav-link>
+                <hr>
+                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                </button>
+                @else
+                    <div class="px-4 text-white">{{ Auth::user()->employee->first_name}}</div>
+                @endif
+
+                <!-- Account Management -->
+                <div class="block px-4 py-2 text-xs text-gray-400">
+                    {{ __('Manage Account') }}
+                </div>
+                <x-jet-responsive-nav-link href="{{ route('profile.show') }}">
+                    {{ __('Profile') }}
+                </x-jet-responsive-nav-link>
+
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                        this.closest('form').submit();">
+                    {{ __('Logout') }}
+                    </x-jet-responsive-nav-link>
+                </form>
+
 
                 @elseif(Auth::user()->roles == 1)
 
-                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                <x-jet-responsive-nav-link href="{{ route('reservation') }}" :active="request()->routeIs('reservation')">
                     {{ __('Reservations') }}
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
+                <x-jet-responsive-nav-link href="{{ route('employeecustomer') }}" :active="request()->routeIs('employeecustomer')">
                     {{ __('Customer') }}
                 </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
+                <x-jet-responsive-nav-link href="{{ route('employeemaintenance') }}" :active="request()->routeIs('employeemaintenance')">
                     {{ __('Maintenance') }}
                 </x-jet-responsive-nav-link>
+                <hr>
+                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                </button>
+                @else
+                    <div class="px-4 text-white">{{ Auth::user()->employee->first_name}}</div>
+                @endif
+
+                <!-- Account Management -->
+                <div class="block px-4 py-2 text-xs text-gray-400">
+                    {{ __('Manage Account') }}
+                </div>
+                <x-jet-responsive-nav-link href="{{ route('profile.show') }}">
+                    {{ __('Profile') }}
+                </x-jet-responsive-nav-link>
+
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                        this.closest('form').submit();">
+                    {{ __('Logout') }}
+                    </x-jet-responsive-nav-link>
+                </form>
+
+
 
                 @elseif(Auth::user()->roles == 2)
 
-                <x-jet-responsive-nav-link href="{{ route('dashboard') }}" :active="request()->routeIs('dashboard')">
+                <x-jet-responsive-nav-link href="{{ route('index') }}" :active="request()->routeIs('index')">
                     {{ __('Home') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('locations') }}" :active="request()->routeIs('locations')">
@@ -356,6 +407,9 @@
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('membershipplans') }}" :active="request()->routeIs('membershipplans')">
                     {{ __('Membership Plans') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('bookings') }}" :active="request()->routeIs('bookings')">
+                    {{ __('Bookings') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
                     {{ __('Bookings') }}
@@ -366,6 +420,35 @@
                 <x-jet-responsive-nav-link href="{{ route('aboutus') }}" :active="request()->routeIs('aboutus')">
                     {{ __('About Us') }}
                 </x-jet-responsive-nav-link>
+                <hr>
+                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                </button>
+                @else
+                    <div class="px-4 text-white">{{ Auth::user()->customer->first_name}}</div>
+                @endif
+
+                <!-- Account Management -->
+                <div class="block px-4 py-2 text-xs text-gray-400">
+                    {{ __('Manage Account') }}
+                </div>
+                <x-jet-responsive-nav-link href="{{ route('profile.show') }}">
+                    {{ __('Profile') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('bookinghistory') }}">
+                    {{ __('Booking History') }}
+                </x-jet-responsive-nav-link>
+
+                <!-- Authentication -->
+                <form method="POST" action="{{ route('logout') }}">
+                    @csrf
+                    <x-jet-responsive-nav-link href="{{ route('logout') }}" onclick="event.preventDefault();
+                        this.closest('form').submit();">
+                    {{ __('Logout') }}
+                    </x-jet-responsive-nav-link>
+                </form>
+
 
                 @endguest
             </div>

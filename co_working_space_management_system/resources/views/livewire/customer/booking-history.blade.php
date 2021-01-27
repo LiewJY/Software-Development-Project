@@ -2,8 +2,7 @@
     <div>
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
-            <p class="w-full">Past booking</p>
-            {{-- <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Location"/> --}}
+            <h1 class="w-full font-bold text-xl md:text-2xl">Past booking</h1>
         </div>
         <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
             <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Booking</x-jet-button>
@@ -32,7 +31,7 @@
                         <td class="border border-gray-400 bg-gray-100">RM {{$booking->room->price}}</td>
                         <td class="border border-gray-400 bg-gray-100">
                             <div class="border-none flex flex-row flex-nowrap justify-center">
-                                <x-jet-button class="mx-2" wire:click="print({{$booking->booking_id}})">Print Receipt</x-jet-button>
+                                <x-jet-button class="mx-2" wire:click="print({{$booking->booking_id}})">Print Invoice</x-jet-button>
                             </div>
                         </td>
                      </tr>               
