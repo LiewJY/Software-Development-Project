@@ -59,7 +59,7 @@ Route::get('/adminreport', function () {
     return view('admin.businessReport');
 })->name('business-report');
 //ok need to have data to check
-Route::get('/adminstaff', function () {
+Route::get('/adminemployee', function () {
     return view('admin.staff');
 })->name('Staff');
 //ok

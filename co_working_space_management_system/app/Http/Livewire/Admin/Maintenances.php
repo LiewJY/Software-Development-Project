@@ -38,6 +38,8 @@ class Maintenances extends Component
             ->join('locations', 'rooms.location_id', '=', 'locations.id')
             ->join('employees', 'maintenances.employee_id', '=', 'employees.id')
             ->select('maintenances.*', 'rooms.name as room_name', 'locations.name as location_name', 'locations.id as location_id', 'employees.first_name as employee_first_name', 'employees.last_name as employee_last_name')
+            ->orderBy('maintenances.status', 'asc')
+            ->orderBy('rooms.location_id', 'asc')
             ->paginate(10)
         ], [
             'rooms' => room::join('locations', 'rooms.location_id', '=', 'locations.id')

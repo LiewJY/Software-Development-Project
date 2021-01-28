@@ -43,7 +43,7 @@ class Reservations extends Component
                 ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
                 ->join('slots', 'reservations.slot_id', '=', 'slots.id')
                 ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
-                ->where('reservations.reservation_date', '>', date("y-m-d"))
+                ->where('reservations.reservation_date', '>=', date("y-m-d"))
                 ->paginate(10)
         ],
         [

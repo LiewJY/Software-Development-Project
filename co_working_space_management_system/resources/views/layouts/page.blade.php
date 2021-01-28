@@ -68,7 +68,7 @@
                         @elseif(Auth::user()->roles == 0)
                         <div class="flex space-x-4">
                             <x-jet-nav-link href="{{ route('Staff') }}" :active="request()->routeIs('Staff')">
-                                {{ __('Staff') }}
+                                {{ __('Employee') }}
                             </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('maintenance') }}" :active="request()->routeIs('maintenance')">
                                 {{ __('Maintenance') }}
@@ -311,7 +311,7 @@
                 @elseif(Auth::user()->roles == 0)
 
                 <x-jet-responsive-nav-link href="{{ route('Staff') }}" :active="request()->routeIs('Staff')">
-                    {{ __('Staff') }}
+                    {{ __('Employee') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('maintenance') }}" :active="request()->routeIs('maintenance')">
                     {{ __('Maintenance') }}
@@ -409,9 +409,6 @@
                     {{ __('Membership Plans') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('bookings') }}" :active="request()->routeIs('bookings')">
-                    {{ __('Bookings') }}
-                </x-jet-responsive-nav-link>
-                <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
                     {{ __('Bookings') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('contactus') }}" :active="request()->routeIs('contactus')">
