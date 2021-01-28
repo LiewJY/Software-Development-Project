@@ -26,7 +26,7 @@
             </thead>
             <tbody>
                 @foreach ($rooms as $room)
-                <tr>
+                <tr class="text-center">
                     <td class="border border-gray-400 bg-gray-100">{{$room ->location_name}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$room ->name}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$room ->description}}</td>

@@ -36,7 +36,7 @@
                 </thead>
                 <tbody>
                     @foreach ($maintenances as $maintenance)
-                        <tr>
+                        <tr class="text-center">
                             <td class="border border-gray-400 bg-gray-100">{{$maintenance ->location_name}}</td>
                             <td class="border border-gray-400 bg-gray-100">{{$maintenance ->room_name}}</td>
                             <td class="border border-gray-400 bg-gray-100">{{$maintenance ->employee_last_name}} {{$maintenance ->employee_first_name}}</td>

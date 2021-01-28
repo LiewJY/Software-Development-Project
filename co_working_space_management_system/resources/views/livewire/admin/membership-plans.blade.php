@@ -23,15 +23,15 @@
             </thead>
             <tbody>
                 @foreach ($membershipplans as $membershipplan)
-                    <tr>
+                    <tr class="text-center">
                         <td class="border border-gray-400 bg-gray-100">{{$membershipplan ->name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$membershipplan ->price}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$membershipplan ->description}}</td>
                         <td class="border border-gray-400  bg-gray-100 py-1.5">
-                        <div class="border-none flex flex-row flex-nowrap justify-center">
-                        <x-jet-button class="mx-2" wire:click="edit({{$membershipplan ->id}})">Edit</x-jet-button>
-                        <x-jet-button class="mx-2" wire:click="deleteModal({{$membershipplan ->id}}, '{{$membershipplan ->name}}')">Delete</x-jet-button>
-                        </div>
+                            <div class="border-none flex flex-row flex-nowrap justify-center">
+                                <x-jet-button class="mx-2" wire:click="edit({{$membershipplan ->id}})">Edit</x-jet-button>
+                                <x-jet-button class="mx-2" wire:click="deleteModal({{$membershipplan ->id}}, '{{$membershipplan ->name}}')">Delete</x-jet-button>
+                            </div>
                         </td>
 
 

@@ -27,7 +27,7 @@
             @else
 
                 @foreach ($subscriptions as $subscription)
-                    <tr>
+                    <tr >
                         <td class="border border-gray-400 bg-gray-100">{{$subscription->membership->name}}</td>
                         @php
                             $start_at = date('Y-m-d', strtotime($subscription->updated_at));

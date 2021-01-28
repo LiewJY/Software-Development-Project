@@ -36,7 +36,7 @@
             </thead>
             <tbody>
                 @foreach ($reservations as $reservation)
-                <tr>
+                <tr class="text-center">
                     <td class="border border-gray-400 bg-gray-100">{{$reservation->first_name}} {{$reservation->last_name}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_date}}</td>

@@ -24,7 +24,7 @@
             </thead>
             <tbody>
                 @foreach ($locations as $location)
-                <tr>
+                <tr class="text-center">
                     <td class="border border-gray-400 bg-gray-100">{{$location->name}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$location->address}}</td>
                     <td class="border border-gray-400 bg-gray-100">{{$location->contact_number}}</td>

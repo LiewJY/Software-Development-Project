@@ -17,16 +17,38 @@
                     <th class="border border-gray-700 text-white bg-gray-700">Address</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Contact Number</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Email</th>
+                    <th class="border border-gray-700 text-white bg-gray-700">Membership Status</th>
+
 
                 </tr>
             </thead>
             <tbody>
                 @foreach ($customers as $customer)
-                    <tr class=" h-12">
+                    <tr class=" h-12 text-center">
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->first_name}} {{$customer ->last_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->address}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->contact_number}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->email}}</td>
+                        @if ($customer->user->membership_payments->first() == null)
+                            <td class="border border-gray-400 bg-gray-100">
+                                No subscription
+                            </td>
+                            @else
+                            @if ($customer->user->membership_payments->first()->updated_at->addDays(30)->isPast())
+                            <td class="border border-gray-400 bg-gray-100">
+                                No subscription
+                            </td>
+                            @elseif ($customer->user->membership_payments->first()->updated_at->addDays(30)->isToday())
+                            <td class="border border-gray-400 bg-green-200">
+                                {{$customer->user->membership_payments->first()->membership->first()->name}} Plan
+                            </td>
+
+                            @else
+                            <td class="border border-gray-400 bg-green-200">
+                                {{$customer->user->membership_payments->first()->membership->first()->name}} Plan
+                            </td>
+                            @endif
+                        @endif                      
 
                     </tr>               
                 @endforeach

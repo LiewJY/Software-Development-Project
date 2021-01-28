@@ -23,7 +23,7 @@
         @else
             <table class="min-w-full table-auto border-collapse border border-black">
                 <thead>
-                    <tr>
+                    <tr >
                         <th class="border border-gray-700 text-white bg-gray-700">Location</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Room</th>
                         <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
@@ -34,7 +34,7 @@
                 </thead>
                 <tbody>
                     @foreach ($bookings as $booking)
-                        <tr>
+                        <tr class="text-center">
                             <td class="border border-gray-400 bg-gray-100">{{$booking ->locations_name}}</td>
                             <td class="border border-gray-400 bg-gray-100">{{$booking ->name}}</td>
                             <td class="border border-gray-400 bg-gray-100">{{$booking ->reservation_date}}</td>
