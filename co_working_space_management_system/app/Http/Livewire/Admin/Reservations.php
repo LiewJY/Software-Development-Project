@@ -125,13 +125,19 @@ class Reservations extends Component
         $customer = Customer::find($this->customer_id);
         if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->first()->updated_at->addDays(30)->isPast()) {
             session()->flash('error', 'Selected customer does not have any active subscription.');
-        } else {
-
-            $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
-            $this->selectedRoom = NULL;
         }
     }
 
+    /**
+     * Load the rooms based on selected location
+     *
+     * @return void
+     */
+    public function updatedSelectedLocation()
+    {
+        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+        $this->selectedRoom = NULL;
+    }
 
 
     /**
