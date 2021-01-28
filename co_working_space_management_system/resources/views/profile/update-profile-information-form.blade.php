@@ -47,13 +47,13 @@
         {{-- address --}}
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="address" value="{{ __('Address') }}" />
-            <x-jet-input id="address" type="text" readonly class="mt-1 block w-full" wire:model.defer="state.employee.address" />
+            <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.defer="state.employee.address" />
             <x-jet-input-error for="address" />
         </div>
         {{-- contact number --}}
         <div class="col-span-6 sm:col-span-4">
             <x-jet-label for="contact_number" value="{{ __('Contact Number') }}" />
-            <x-jet-input id="contact_number" readonly type="text" class="mt-1 block w-full" wire:model.defer="state.employee.contact_number" />
+            <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.defer="state.employee.contact_number" />
             <x-jet-input-error for="contact_number" />
         </div>
 

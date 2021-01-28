@@ -76,6 +76,9 @@
                             <x-jet-nav-link href="{{ route('adminreservation') }}" :active="request()->routeIs('adminreservation')">
                                 {{ __('Reservations') }}
                             </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('admincustomer') }}" :active="request()->routeIs('admincustomer')">
+                                {{ __('Customer') }}
+                            </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
                                 {{ __('Membership Plans') }}
                             </x-jet-nav-link>
@@ -318,25 +321,28 @@
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('adminreservation') }}" :active="request()->routeIs('adminreservation')">
                     {{ __('Reservations') }}
-                    </x-jet-responsive-nav-linkk>
-                    <x-jet-responsive-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
-                        {{ __('Membership Plans') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('business-report') }}" :active="request()->routeIs('business-report')">
-                        {{ __('Business Report') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
-                        {{ __('Locations') }}
-                    </x-jet-responsive-nav-link>
-                    <x-jet-responsive-nav-link href="{{ route('adminrooms') }}" :active="request()->routeIs('adminrooms')">
-                        {{ __('Rooms') }}
-                    </x-jet-responsive-nav-link>
-                    <hr>
-                    @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
-                    <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
-                        <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
-                    </button>
-                    @else
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('admincustomer') }}" :active="request()->routeIs('admincustomer')">
+                    {{ __('Customer') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
+                    {{ __('Membership Plans') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('business-report') }}" :active="request()->routeIs('business-report')">
+                    {{ __('Business Report') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
+                    {{ __('Locations') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('adminrooms') }}" :active="request()->routeIs('adminrooms')">
+                    {{ __('Rooms') }}
+                </x-jet-responsive-nav-link>
+                <hr>
+                @if (Laravel\Jetstream\Jetstream::managesProfilePhotos())
+                <button class="flex text-sm border-2 border-transparent rounded-full focus:outline-none focus:border-gray-300 transition duration-150 ease-in-out">
+                    <img class="h-8 w-8 rounded-full object-cover" src="{{ Auth::user()->profile_photo_url }}" alt="{{ Auth::user()->name }}" />
+                </button>
+                @else
                     <div class="px-4 text-white">{{ Auth::user()->employee->first_name}}</div>
                     @endif
 

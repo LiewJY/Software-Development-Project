@@ -13,44 +13,45 @@
         <x-jet-section-border />
         @endif
 
+        @if(Auth::user()->roles == 2)
+            <div class="md:grid md:grid-cols-3 md:gap-6">
+                <x-jet-section-title>
+                    <x-slot name="title">Menbership status</x-slot>
+                    <x-slot name="description">Each membership subscription will last 30 days.</x-slot>
+                </x-jet-section-title>
 
-        <div class="md:grid md:grid-cols-3 md:gap-6">
-            <x-jet-section-title>
-                <x-slot name="title">Menbership status</x-slot>
-                <x-slot name="description">Each membership subscription will last 30 days.</x-slot>
-            </x-jet-section-title>
+                <div class="mt-5 md:mt-0 md:col-span-2">
+                    <div class="shadow overflow-hidden sm:rounded-md">
+                        <div class="px-4 py-5 bg-white sm:p-6">
+                            <div class="grid grid-cols-6 gap-6">
+                                <div class="col-span-6 sm:col-span-4">
+                                    @if (Auth::user()->membership_payments->first() == null)
+                                    No subscription
+                                    @else
 
-            <div class="mt-5 md:mt-0 md:col-span-2">
-                <div class="shadow overflow-hidden sm:rounded-md">
-                    <div class="px-4 py-5 bg-white sm:p-6">
-                        <div class="grid grid-cols-6 gap-6">
-                            <div class="col-span-6 sm:col-span-4">
-                                @if (Auth::user()->membership_payments->first() == null)
-                                No subscription
-                                @else
+                                    @if (Auth::user()->membership_payments->first()->updated_at->addDays(30)->isPast())
 
-                                @if (Auth::user()->membership_payments->first()->updated_at->addDays(30)->isPast())
+                                    No subscription
 
-                                No subscription
+                                    @elseif (Auth::user()->membership_payments->first()->updated_at->addDays(30)->isToday())
 
-                                @elseif (Auth::user()->membership_payments->first()->updated_at->addDays(30)->isToday())
+                                    {{Auth::user()->membership_payments->first()->membership->first()->name}}
 
-                                {{Auth::user()->membership_payments->first()->membership->first()->name}}
+                                    @else
 
-                                @else
+                                    {{Auth::user()->membership_payments->first()->membership->first()->name}}
 
-                                {{Auth::user()->membership_payments->first()->membership->first()->name}}
+                                    @endif
 
-                                @endif
-
-                                @endif
+                                    @endif
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <x-jet-section-border />
+            <x-jet-section-border />
+        @endif
 
 
         @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
