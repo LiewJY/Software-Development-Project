@@ -10,7 +10,7 @@
             <div class="mb-4">
             <div class="shadow py-2 bg-gray-100">
                 <div class="font-serif font-bold text-sm mb-1 mx-3">Total Approved Staff:</div>
-                <div class="font-serif mb-0 text-gray-800 text-center">1</div>
+                <div class="font-serif mb-0 text-gray-800 text-center">{{ $employeeCount }}</div>
             </div>
             </div>
 
