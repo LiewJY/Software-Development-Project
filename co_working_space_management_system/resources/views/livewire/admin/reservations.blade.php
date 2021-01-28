@@ -84,10 +84,13 @@
                     <x-jet-input-error for="customer_id" />
 
                     <x-jet-label for="selectedLocation" value="Location" />
-                    <x-jet-input id="selectedLocation" type="hidden" class="mt-1 block w-full" wire:model="selectedLocation" />
-                    <x-jet-input id="selectedLocation" type="text" readonly class="mt-1 block w-full" wire:model.lazy="loc_name" />
+                    <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="default">-- Select a Location --</option>
+                        @foreach($location as $loc)
+                        <option value="{{$loc->id}}">{{$loc->name}}</option>
+                        @endforeach
+                    </select>
                     <x-jet-input-error for="selectedLocation" />
-
                     <x-jet-label for="selectedDate" value="Date" />
                     @if (is_null($customer_id) || session()->has('error'))
                     <x-jet-input disabled placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />

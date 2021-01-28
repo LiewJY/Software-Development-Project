@@ -50,6 +50,7 @@ class Reservations extends Component
             ],
             [
                 'customers' => Customer::all(),
+                'location' => Location::all(),
             ]
         )->layout('layouts.page');
     }
