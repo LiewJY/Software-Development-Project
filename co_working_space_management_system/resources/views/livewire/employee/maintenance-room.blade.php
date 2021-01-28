@@ -1,5 +1,5 @@
 <div>
-    <h1 class="font-serif sm:text-2xl text-xl font-bold title-font mb-4 text-gray-900 underline mx-3">Location: {{$location->name}}</h1>
+    <h1 class="px-2 font-bold text-xl md:text-2xl pt-2">Location: {{$location->name}}</h1>
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Room"/>
@@ -11,35 +11,44 @@
     <br>
 
     <div class="overflow-x-auto mx-1">
-        <table class="min-w-full table-auto border-collapse border border-black">
-            <thead>
-                <tr>
-                    <th class="border border-gray-700 text-white bg-gray-700">Room</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Description</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($maintenances as $maintenance)
+        @if(count($maintenances) === 0 )
+            <x-emptyTable>
+                <x-slot name="header">
+                    Maintenance
+                </x-slot>
+                <x-slot name="content">
+                    Looks like there are no maintenance at {{$location->name}}.
+                </x-slot>
+            </x-emptyTable>
+        @else
+            <table class="min-w-full table-auto border-collapse border border-black">
+                <thead>
                     <tr>
-                        <td class="border border-gray-400 bg-gray-100">{{$maintenance ->room_name}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$maintenance ->description}}</td>
-                        <td class="border border-gray-400  bg-gray-100 py-1.5">
-                        <div class="border-none flex flex-row flex-nowrap justify-center">
-                            <x-jet-button class="mx-2" wire:click="edit({{$maintenance ->id}})">Edit</x-jet-button>
-                            <x-jet-button class="mx-2" wire:click="markAsComplete({{$maintenance->id}})">Completed</x-jet-button>
-                        </div>
-                        </td>
-                    </tr>               
-                @endforeach
-            </tbody>
+                        <th class="border border-gray-700 text-white bg-gray-700">Room</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Description</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($maintenances as $maintenance)
+                        <tr>
+                            <td class="border border-gray-400 bg-gray-100">{{$maintenance ->room_name}}</td>
+                            <td class="border border-gray-400 bg-gray-100">{{$maintenance ->description}}</td>
+                            <td class="border border-gray-400  bg-gray-100 py-1.5">
+                                <div class="border-none flex flex-row flex-nowrap justify-center">
+                                    <x-jet-button class="mx-2" wire:click="edit({{$maintenance ->id}})">Edit</x-jet-button>
+                                    <x-jet-button class="mx-2" wire:click="markAsComplete({{$maintenance->id}})">Completed</x-jet-button>
+                                </div>
+                            </td>
+                        </tr>               
+                    @endforeach
+                </tbody>
+            </table>
+            <br>
+            {{$maintenances->links()}}
+        @endif
 
-        </table>
-
-        <br>
-        {{$maintenances->links()}}
-
-        <x-jet-dialog-modal wire:model="maintenanceForm" >
+        <x-jet-dialog-modal wire:model="maintenanceForm">
             <x-slot name="title">
                     @if($maintenance_id)
                         <h1>Edit Maintenance</h1>
@@ -102,7 +111,7 @@
 
                 </x-slot>
                 <x-slot name="footer">
-                    <x-jet-button wire:click="store({{$maintenance_id}})">Completed</x-jet-button>
+                    <x-jet-danger-button wire:click="store({{$maintenance_id}})">Completed</x-jet-button>
                     <x-jet-button wire:click="$toggle('completeConfirmationForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>

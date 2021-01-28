@@ -1,7 +1,7 @@
 <div>
 
     <div>
-        <h1 class="font-serif sm:text-2xl text-xl font-bold title-font mb-4 text-gray-900 underline mx-3">Location: {{$loc_name}}</h1>
+        <h1 class="px-2 font-bold text-xl md:text-2xl pt-2">Location: {{$loc_name}}</h1>
         <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
             <div class="w-full md:w-1/2">
                 <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
@@ -13,44 +13,58 @@
         <br>
 
         <div class="overflow-x-auto mx-1">
-            <table class="min-w-full table-auto border-collapse border border-black">
-                <thead>
-                    <tr>
-                        <th class="border border-gray-700 text-white bg-gray-700">Customer</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Room</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Price</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Paid Amount</th>
-                        <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @foreach ($reservations as $reservation)
-                    <tr>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->first_name}} {{$reservation->last_name}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_date}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$reservation->start_time}} - {{$reservation->end_time}}</td>
-                        {{-- show price of that room the customer booked --}}
-                        <td class="border border-gray-400 bg-gray-100">RM {{$reservation->room->price}}</td>
-                        {{-- show amount that the customer paid --}}
-                        <td class="border border-gray-400 bg-gray-100">RM {{$reservation->amount}}</td>
-                        {{-- not sure what to put in extra details sp i left it blank first --}}
+            @if(count($reservations) === 0 )
+                <x-emptyTable>
+                    <x-slot name="header">
+                        Reservation
+                    </x-slot>
+                    <x-slot name="content">
+                        Looks like there are no reservation at {{$loc_name}}
+                    </x-slot>
+                </x-emptyTable>
 
-                        <td class="border border-gray-400  bg-gray-100 py-1.5">
-                            <div class="border-none flex flex-row flex-nowrap justify-center">
-                                {{-- <x-jet-button class="mx-2" wire:click="edit({{$reservation->id}})">Edit</x-jet-button> --}}
-                                <x-jet-button class="mx-2" wire:click="deleteModal({{$reservation->reservation_id}})">Cancel Reservation</x-jet-button>
-                                <x-jet-button class="mx-2" wire:click="print({{$reservation->reservation_id}})">Print Receipt</x-jet-button>
+            @else
+                <table class="min-w-full table-auto border-collapse border border-black">
+                    <thead>
+                        <tr>
+                            <th class="border border-gray-700 text-white bg-gray-700">Customer</th>
+                            <th class="border border-gray-700 text-white bg-gray-700">Room</th>
+                            <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
+                            <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
+                            <th class="border border-gray-700 text-white bg-gray-700">Price</th>
+                            <th class="border border-gray-700 text-white bg-gray-700">Paid Amount</th>
+                            <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($reservations as $reservation)
+                        <tr>
+                            <td class="border border-gray-400 bg-gray-100">{{$reservation->first_name}} {{$reservation->last_name}}</td>
+                            <td class="border border-gray-400 bg-gray-100">{{$reservation->name}}</td>
+                            <td class="border border-gray-400 bg-gray-100">{{$reservation->reservation_date}}</td>
+                            <td class="border border-gray-400 bg-gray-100">{{$reservation->start_time}} - {{$reservation->end_time}}</td>
+                            {{-- show price of that room the customer booked --}}
+                            <td class="border border-gray-400 bg-gray-100">RM {{$reservation->room->price}}</td>
+                            {{-- show amount that the customer paid --}}
+                            <td class="border border-gray-400 bg-gray-100">RM {{$reservation->amount}}</td>
+                            {{-- not sure what to put in extra details sp i left it blank first --}}
 
-                            </div>
-                        </td>
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-            <br>
+                            <td class="border border-gray-400  bg-gray-100 py-1.5">
+                                <div class="border-none flex flex-row flex-nowrap justify-center">
+                                    {{-- <x-jet-button class="mx-2" wire:click="edit({{$reservation->id}})">Edit</x-jet-button> --}}
+                                    <x-jet-button class="mx-2" wire:click="deleteModal({{$reservation->reservation_id}})">Cancel Reservation</x-jet-button>
+                                    <x-jet-button class="mx-2" wire:click="print({{$reservation->reservation_id}})">Print Invoice</x-jet-button>
+
+                                </div>
+                            </td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+                <br>
+                {{$reservations->links()}}
+            @endif
+
 
             <x-jet-dialog-modal wire:model="ReservationForm">
                 <x-slot name="title">
@@ -148,7 +162,7 @@
                         {{-- <p class="font-bold	">Please return amount of {{$return}} to customer upon cancellation.</p> --}}
                     </x-slot>
                     <x-slot name="footer">
-                        <x-jet-button wire:click="delete({{$reservationID}})">Cancel Reservation</x-jet-button>
+                        <x-jet-danger-button wire:click="delete({{$reservationID}})">Cancel Reservation</x-jet-button>
                         <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
                     </x-slot>
                 </form>

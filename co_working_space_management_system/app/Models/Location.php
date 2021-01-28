@@ -57,13 +57,23 @@ class Location extends Model
     {
         return $this->maintenances()->where('status', 0)->count();
     }
+
+    /**
+     * Get the room reservation
+     *
+     * @return void
+     */
+    public function reservations()
+    {
+        return $this->hasManyThrough(Reservation::class, Room::class);
+    }
     /**
      * Get the count of room of the location.
      *
      * @return void
      */
-    public function roomCount()
+    public function reservationCount()
     {
-        return $this->rooms()->count();
+        return $this->reservations()->count();
     }
 }

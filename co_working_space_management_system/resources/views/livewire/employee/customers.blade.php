@@ -4,7 +4,7 @@
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name"/>
         </div>
         <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
-            <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add User</x-jet-button>
+            <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Customer</x-jet-button>
         </div>
     </div>
     <br>
@@ -22,7 +22,7 @@
             </thead>
             <tbody>
                 @foreach ($customers as $customer)
-                    <tr>
+                    <tr class=" h-12">
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->first_name}} {{$customer ->last_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->address}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->contact_number}}</td>
