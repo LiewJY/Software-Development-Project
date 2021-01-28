@@ -16,7 +16,7 @@
         <p class="block mt-1 text-lg leading-tight font-medium text-black">Contact Number</p>
         <p class="text-gray-900 text-sm mt-1">{{$location->contact_number}}</p>
         <br>
-        <x-jet-button class="absolute bottom-5 right-5" wire:click="locations({{$location->id}})">
+        <x-jet-button class="absolute bottom-5 right-5 text-md" wire:click="locations({{$location->id}})">
             Learn More
         </x-jet-button>
     </div>

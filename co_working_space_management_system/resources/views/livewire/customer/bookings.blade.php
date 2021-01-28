@@ -15,38 +15,50 @@
     @endif
 
     <div class="overflow-x-auto mx-1">
-        <table class="min-w-full table-auto border-collapse border border-black">
-            <thead>
-                <tr>
-                    <th class="border border-gray-700 text-white bg-gray-700">Location</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Room</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Price</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($bookings as $booking)
-                <tr>
-                    <td class="border border-gray-400 bg-gray-100">{{$booking ->locations_name}}</td>
-                    <td class="border border-gray-400 bg-gray-100">{{$booking ->name}}</td>
-                    <td class="border border-gray-400 bg-gray-100">{{$booking ->reservation_date}}</td>
-                    <td class="border border-gray-400 bg-gray-100">{{$booking->start_time}} - {{$booking->end_time}}</td>
-                    <td class="border border-gray-400 bg-gray-100">RM {{$booking->room->price}}</td>
-                    <td class="border border-gray-400 bg-gray-100">
-                        <div class="border-none flex flex-row flex-nowrap justify-center">
-                            <x-jet-button class="mx-2" wire:click="deleteModal({{$booking ->booking_id}})">Cancel</x-jet-button>
-                            <x-jet-button class="mx-2" wire:click="print({{$booking->booking_id}})">Print Invoice</x-jet-button>
+        @if(count($bookings) === 0 )
+            <x-emptyTable>
+                <x-slot name="header">
+                    Upcoming Booking
+                </x-slot>
+                <x-slot name="content">
+                    Looks like you do not have any upcoming booking
+                </x-slot>
+            </x-emptyTable>
+        @else
+            <table class="min-w-full table-auto border-collapse border border-black">
+                <thead>
+                    <tr>
+                        <th class="border border-gray-700 text-white bg-gray-700">Location</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Room</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Reservation Date</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Slot</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Price</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($bookings as $booking)
+                    <tr>
+                        <td class="border border-gray-400 bg-gray-100">{{$booking ->locations_name}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$booking ->name}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$booking ->reservation_date}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$booking->start_time}} - {{$booking->end_time}}</td>
+                        <td class="border border-gray-400 bg-gray-100">RM {{$booking->room->price}}</td>
+                        <td class="border border-gray-400 bg-gray-100">
+                            <div class="border-none flex flex-row flex-nowrap justify-center">
+                                <x-jet-button class="mx-2" wire:click="deleteModal({{$booking ->booking_id}})">Cancel</x-jet-button>
+                                <x-jet-button class="mx-2" wire:click="print({{$booking->booking_id}})">Print Invoice</x-jet-button>
 
-                        </div>
-                    </td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <br>
-        {{$bookings->links()}}
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <br>
+            {{$bookings->links()}}
+        @endif
+
         <x-jet-dialog-modal wire:model="bookingsForm">
             <x-slot name="title">
                 <h1>Add Booking</h1>
@@ -151,7 +163,7 @@
                     {{-- add flash message to say money will be refunded --}}
                 </x-slot>
                 <x-slot name="footer">
-                    <x-jet-button wire:click="delete({{$bookingID}})">Delete</x-jet-button>
+                    <x-jet-danger-button wire:click="delete({{$bookingID}})">Cancel Booking</x-jet-button>
                     <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>
