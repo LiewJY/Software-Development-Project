@@ -37,9 +37,9 @@ class Reservations extends Component
             'livewire.admin.reservations',
             [
                 'reservations' => Reservation::where(function ($query) {
-                        $query->where('customers.last_name', 'like', '%' . $this->search . '%')
-                            ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
-                    })
+                    $query->where('customers.last_name', 'like', '%' . $this->search . '%')
+                        ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
+                })
                     ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
                     ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
                     ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
@@ -52,7 +52,7 @@ class Reservations extends Component
                 'customers' => Customer::all(),
                 'location' => Location::all(),
             ]
-        );
+        )->layout('layouts.page');
     }
     /**
      * Validation rules

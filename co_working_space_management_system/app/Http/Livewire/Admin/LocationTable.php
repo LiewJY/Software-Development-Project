@@ -33,7 +33,7 @@ class LocationTable extends Component
     {
         return view('livewire.admin.location-table', [
             'locations' => location::where('name', 'like', '%' . $this->search . '%')->paginate(25),
-        ]);
+        ])->layout('layouts.page');
     }
 
 
@@ -60,7 +60,7 @@ class LocationTable extends Component
      */
     public function store()
     {
-       $validatedData = $this->validate();
+        $validatedData = $this->validate();
 
         Location::updateOrCreate(
             ['id' => $this->locationID],

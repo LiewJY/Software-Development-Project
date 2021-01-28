@@ -21,19 +21,19 @@ class BookingHistory extends Component
 
         return view('livewire.customer.booking-history', [
             'bookings' => Reservation::join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
-            ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
-            ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-            ->join('slots', 'reservations.slot_id', '=', 'slots.id')
-            ->join('locations', 'rooms.location_id', '=', 'locations.id')
-            ->select('reservations.id as booking_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*', 'locations.name as locations_name')
-            ->where('reservation_payments.customer_id', '=', $this->customer_id)
-            ->where('reservations.reservation_date', '<', date("y-m-d"))
-            ->paginate(10)
-        ]);
+                ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
+                ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                ->join('slots', 'reservations.slot_id', '=', 'slots.id')
+                ->join('locations', 'rooms.location_id', '=', 'locations.id')
+                ->select('reservations.id as booking_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*', 'locations.name as locations_name')
+                ->where('reservation_payments.customer_id', '=', $this->customer_id)
+                ->where('reservations.reservation_date', '<', date("y-m-d"))
+                ->paginate(10)
+        ])->layout('layouts.page');
     }
+
     public function add()
     {
         return redirect()->route('bookings');
     }
-
 }

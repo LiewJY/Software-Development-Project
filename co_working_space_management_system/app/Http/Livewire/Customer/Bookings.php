@@ -69,13 +69,13 @@ class Bookings extends Component
                     ->join('locations', 'rooms.location_id', '=', 'locations.id')
                     ->select('reservations.id as booking_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*', 'locations.name as locations_name')
                     ->where('reservation_payments.customer_id', '=', $this->customer_id)
-                    ->where('reservations.reservation_date', '>=' ,date("y-m-d"))
+                    ->where('reservations.reservation_date', '>=', date("y-m-d"))
                     ->paginate(10)
             ],
             [
                 'location' => Location::all(),
             ]
-        );
+        )->layout('layouts.page');
     }
 
     /**
@@ -85,22 +85,21 @@ class Bookings extends Component
      */
     public function store()
     {
-            $this->validate();
+        $this->validate();
 
-            $payment = ReservationPayment::create([
-                'customer_id' => $this->customer_id,
-                'amount' => $this->price
-            ]);
+        $payment = ReservationPayment::create([
+            'customer_id' => $this->customer_id,
+            'amount' => $this->price
+        ]);
 
-            $reservation = Reservation::create([
-                'room_id' => $this->selectedRoom,
-                'slot_id' => $this->selectedSlot,
-                'reservation_date' => $this->selectedDate,
-            ]);
+        $reservation = Reservation::create([
+            'room_id' => $this->selectedRoom,
+            'slot_id' => $this->selectedSlot,
+            'reservation_date' => $this->selectedDate,
+        ]);
 
-            $payment->reservation()->save($reservation);
-            $this->bookingsForm = false;
-        
+        $payment->reservation()->save($reservation);
+        $this->bookingsForm = false;
     }
 
     /**

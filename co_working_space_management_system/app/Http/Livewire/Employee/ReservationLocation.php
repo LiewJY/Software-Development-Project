@@ -45,24 +45,23 @@ class ReservationLocation extends Component
         return view(
             'livewire.employee.reservation-location',
             [
-                'reservations' => Reservation::
-                where(function($query){
-                    $query->where('customers.last_name', 'like', '%' . $this->search . '%')
-                    ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
-                })
-                ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
-                ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
-                ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-                ->join('slots', 'reservations.slot_id', '=', 'slots.id')
-                ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
-                ->where('reservations.reservation_date', '>=', date("y-m-d"))
-                ->where('rooms.location_id', '=', $this->location_id)
-                ->paginate(10)
+                'reservations' => Reservation::where(function ($query) {
+                        $query->where('customers.last_name', 'like', '%' . $this->search . '%')
+                            ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
+                    })
+                    ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
+                    ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
+                    ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                    ->join('slots', 'reservations.slot_id', '=', 'slots.id')
+                    ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
+                    ->where('reservations.reservation_date', '>=', date("y-m-d"))
+                    ->where('rooms.location_id', '=', $this->location_id)
+                    ->paginate(10)
             ],
             [
                 'customers' => Customer::all(),
             ]
-        );
+        )->layout('layouts.page');
     }
 
     /**

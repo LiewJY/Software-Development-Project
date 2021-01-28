@@ -112,8 +112,6 @@ class BusinessReport extends Component
                 'pieChartModel' => $pieChartModel,
                 'lineChartModel' => $lineChartModel,
                 'areaChartModel' => $areaChartModel,
-            ]);
+            ])->layout('layouts.page');
     }
 }
-
-?>

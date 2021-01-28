@@ -8,6 +8,6 @@ class LocationRooms extends Component
 {
     public function render()
     {
-        return view('livewire.location-rooms');
+        return view('livewire.location-rooms')->layout('layouts.page');
     }
 }

@@ -31,7 +31,7 @@ class MembershipPlans extends Component
         return view('livewire.customer.membership-plans', [
             'membershipplans' => Membership::all()
                 ->where('id', '=', $this->plans_id)
-        ]);
+        ])->layout('layouts.page');
     }
 
     public function subscriptionConfirmationModal($plan_name, $plan_cost)

@@ -18,9 +18,9 @@ class LocationDetails extends Component
 
     public function render()
     {
-        return view('livewire.customer.location-details',[
+        return view('livewire.customer.location-details', [
             'locationdetails' => Location::all()
-            ->where('id', '=', $this->details_id)
-        ]);
+                ->where('id', '=', $this->details_id)
+        ])->layout('layouts.page');
     }
 }

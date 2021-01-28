@@ -1,13 +1,8 @@
 <?php
 
-use App\Models\Employee;
-use App\Models\User;
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ChartController;
-use Illuminate\Support\Facades\Auth;
 
 use App\Http\Controllers\InvoiceController;
-
 
 /*
 |--------------------------------------------------------------------------
@@ -20,121 +15,70 @@ use App\Http\Controllers\InvoiceController;
 |
 */
 
-//GENERAL
 Route::get('/', function () {
     return view('index');
 })->name('index');
+
 Route::get('/locations', function () {
     return view('locations');
 })->name('locations');
+
 Route::get('/membershipplans', function () {
     return view('membershipPlans');
 })->name('membershipplans');
+
 Route::get('/contactus', function () {
     return view('contactUs');
 })->name('contactus');
+
 Route::get('/aboutus', function () {
     return view('aboutUs');
 })->name('aboutus');
 
+Route::get("/locations/details{id}", \App\Http\Livewire\Customer\LocationDetails::class)->name('locationDetails');
 
-Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
-    return view('dashboard');
-})->name('dashboard');
+Route::group(['middleware' => ['auth']], function () {
 
-//ADMIN
-Route::get('/adminlocation', function () {
-    return view('admin.location');
-})->name('adminlocation');
-//ok
-Route::get('/adminmaintenance', function () {
-    return view('admin.maintenance');
-})->name('maintenance');
-//ok
-Route::get('/adminmembership-plans', function () {
-    return view('admin.membership-plans');
-})->name('membership-plans');
-//ok
-Route::get('/adminreport', function () {
-    return view('admin.businessReport');
-})->name('business-report');
-//ok need to have data to check
-Route::get('/adminemployee', function () {
-    return view('admin.staff');
-})->name('Staff');
-//ok
-Route::get('/adminrooms', function () {
-    return view('admin.rooms');
-})->name('adminrooms');
-//ok
-Route::get('/adminreservation', function () {
-    return view('admin.reservation');
-})->name('adminreservation');
-//ok
+    Route::middleware(['admin'])->group(function () {
 
-//EMPLOYEE
-Route::get('/employeecustomer', function () {
-    return view('employee.customer');
-})->name('employeecustomer');
-//ok
-Route::get('/employeereservation', function () {
-    return view('employee.reservation');
-})->name('reservation');
-//ok
-Route::get('/employeereservationlocation/location{id}', function ($id) {
-    return view('employee.reservationLocation', compact('id'));
-})->name('reservationlocation');
-//ok
-Route::get('/employeeemployeemaintenance', function () {
-    return view('employee.maintenance');
-})->name('employeemaintenance');
-//ok
-Route::get('/employeemaintenance/location{id}', function ($id) {
-    return view('employee.maintenanceRoom', compact('id'));
-})->name('employeeroom');
-//ok
+        Route::get("/adminlocation", \App\Http\Livewire\Admin\LocationTable::class)->name('adminlocation');
 
-//CUSTOMER
-Route::get('/membershipplans/plans{id}', function ($id) {
-    return view('customer.membershipPlans', compact('id'));
-})->name('membershipPlans');
+        Route::get("/adminmaintenance", \App\Http\Livewire\Admin\Maintenances::class)->name('maintenance');
 
-Route::get('/locations/details{id}', function ($id) {
-    return view('customer.locationDetails', compact('id'));
-})->name('locationDetails');
+        Route::get("/adminmembership-plans", \App\Http\Livewire\Admin\MembershipPlans::class)->name('membership-plans');
 
-Route::get('/bookings', function () {
-    return view('customer.bookings');
-})->name('bookings');
+        Route::get("/adminreport", \App\Http\Livewire\Admin\BusinessReport::class)->name('business-report');
 
-Route::get('/bookinghistory', function () {
-    return view('customer.bookingHistory');
-})->name('bookinghistory');
+        Route::get("/adminemployee", \App\Http\Livewire\Admin\Staff::class)->name('Staff');
 
-// // this page is not needed 
-// Route::get('/subscriptionhistory', function () {
-//     return view('customer.subscriptionhistory');
-// })->name('subscriptionhistory');
+        Route::get("/adminrooms", \App\Http\Livewire\Admin\Rooms::class)->name('adminrooms');
 
-//for invoice
-Route::get('/membershipinvoice/{id}', 
-[InvoiceController::class, 'membership'])
-->name('printmembership');
+        Route::get("/adminreservation", \App\Http\Livewire\Admin\Reservations::class)->name('adminreservation');
+    });
 
-Route::get('/reservationinvoice/{id}', 
-[InvoiceController::class, 'reservation'])
-->name('printreservation');
-//this does not work
-// Route::get('/reservationinvoice/{id}', function ($id) {
-//     return view([InvoiceController::class, 'reservation'], compact('id'));
-// })->name('printreservation');
+    Route::middleware(['employee'])->group(function () {
 
+        Route::get("/employeecustomer", \App\Http\Livewire\Employee\Customers::class)->name('employeecustomer');
 
-Route::get('/test', function () {
-    $state = [];
+        Route::get("/employeereservation", \App\Http\Livewire\Employee\Reservations::class)->name('reservation');
 
-        $state = User::with("customer")->find(3)->toArray();
+        Route::get("/employeereservationlocation/location{id}", \App\Http\Livewire\Employee\ReservationLocation::class)->name('reservationlocation');
 
+        Route::get("/employeeemployeemaintenance", \App\Http\Livewire\Employee\Maintenances::class)->name('employeemaintenance');
 
-    dd($state);
+        Route::get("/employeemaintenance/location{id}", \App\Http\Livewire\Employee\MaintenanceRoom::class)->name('employeeroom');
+    });
+
+    Route::middleware(['customer'])->group(function () {
+
+        Route::get("/membershipplans/plans{id}", \App\Http\Livewire\Customer\MembershipPlans::class)->name('membershipPlans');
+
+        Route::get("/bookings", \App\Http\Livewire\Customer\Bookings::class)->name('bookings');
+
+        Route::get("/bookinghistory", \App\Http\Livewire\Customer\BookingHistory::class)->name('bookinghistory');
+
+        Route::get('/membershipinvoice/{id}', [InvoiceController::class, 'membership'])->name('printmembership');
+
+        Route::get('/reservationinvoice/{id}', [InvoiceController::class, 'reservation'])->name('printreservation');
+    });
 });
