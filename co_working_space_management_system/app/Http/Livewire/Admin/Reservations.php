@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Livewire\Admin;
+
 use Livewire\WithPagination;
 use App\Models\Reservation;
 use App\Models\Customer;
@@ -31,48 +32,38 @@ class Reservations extends Component
      */
     public function render()
     {
-        return view('livewire.admin.reservations',
-        [
-            'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
-                ->orwhere('customers.first_name', 'like', '%' . $this->search . '%')
-                ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
-                ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
-                ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
-                ->join('slots', 'reservations.slot_id', '=', 'slots.id')
-                ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
-                ->where('reservations.reservation_date', '>', date("y-m-d"))
-                ->paginate(10)
-        ],
-        [
-            'customers' => Customer::all(),
-            'location' => Location::all(),
-        ]);
+        return view(
+            'livewire.admin.reservations',
+            [
+                'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
+                    ->orwhere('customers.first_name', 'like', '%' . $this->search . '%')
+                    ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
+                    ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
+                    ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
+                    ->join('slots', 'reservations.slot_id', '=', 'slots.id')
+                    ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
+                    ->where('reservations.reservation_date', '>', date("y-m-d"))
+                    ->paginate(10)
+            ],
+            [
+                'customers' => Customer::all(),
+                'location' => Location::all(),
+            ]
+        );
     }
-     /**
+    /**
      * Validation rules
      *
      * @var array
      */
     protected $rules = [
         'selectedLocation' => ['required'],
-        'selectedDate' => ['required'],
+        'selectedDate' => ['required', 'date', "after_or_equal:today"],
         'selectedRoom' => ['required'],
         'selectedSlot' => ['required'],
         'customer_id' => ['required'],
-        'amount' => ['required', 'regex:/^\d+\.\d{1,2}/', 'not_in:0'],
-        'balance' => ['required', 'regex:/^\d+\.\d{1,2}/']
     ];
 
-    /**
-     * Custominze error message
-     *
-     * @var array
-     */
-    protected $messages = [
-        'balance.regex' => 'Balance could not be in negetive value.',
-        'amount.regex' => 'Please enter a valid amount.',
-        'amount.not_in' => 'Please enter a valid amount.'
-    ];
 
     /**
      * Live validation
@@ -122,14 +113,19 @@ class Reservations extends Component
     }
 
     /**
-     * Load rooms based on selected date
+     * Check if the customer has any subscription , if yes load the location's room
      *
      * @return void
      */
-    public function updatedSelectedDate()
+    public function updatedCustomerId()
     {
-        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
-        $this->selectedRoom = NULL;
+        $customer = Customer::find($this->customer_id);
+        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+            session()->flash('error', 'Selected customer does not have any active subscription.');
+        } else {
+            $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+            $this->selectedRoom = NULL;
+        }
     }
 
     /**
@@ -161,7 +157,7 @@ class Reservations extends Component
         $this->balance = $amount - $this->price;
     }
     public $name, $room, $date, $return;
-    
+
     /**
      * show the delete modal
      *
@@ -174,7 +170,7 @@ class Reservations extends Component
         $reservation = Reservation::findorFail($id);
         $this->reservationID = $id;
         $name = $reservation->reservationpayment->customer;
-        $this->name = $name['first_name']. ' ' .$name['last_name'];
+        $this->name = $name['first_name'] . ' ' . $name['last_name'];
         $this->room = $reservation->room->name;
         $this->date = $reservation->reservation_date;
         $this->return = $reservation->reservationpayment->amount;
@@ -188,10 +184,10 @@ class Reservations extends Component
      */
     public function delete($id)
     {
-        $reservation = Reservation::where('id', $id)->firstorfail();
-        $reservation->delete();
+        $reservation = Reservation::find($id);
+        ReservationPayment::find($reservation->reservation_payment_id)->delete();
         $this->deleteConfirmationForm = false;
-    }  
+    }
 
     /**
      * open receipt
