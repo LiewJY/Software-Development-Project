@@ -31,7 +31,7 @@ class MembershipPlans extends Component
     public function render()
     {
         return view('livewire.admin.membership-plans', [
-            'membershipplans' => Membership::where('name', 'like', '%' . $this->search . '%')->paginate(25),
+            'membershipplans' => Membership::where('name', 'like', '%' . $this->search . '%')->paginate(10),
         ]);
     }
 

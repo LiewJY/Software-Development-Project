@@ -18,7 +18,7 @@
                         </div>
 
                         <div class="flex justify-center bg-white py-2">
-                            <h1 class="text-gray-800 text-center font-bold text-xl">Number of rooms: {{$location->roomCount()}}</h1>
+                            <h1 class="text-gray-800 text-center font-bold text-xl">Number of reservation: {{$location->reservationCount()}}</h1>
                         </div>
                         <div class="flex justify-center">
                             <x-jet-button class="py-3 w-full flex items-center bg-white justify-center rounded-none" wire:click="room({{$location->id}})">Select</x-jet-button>

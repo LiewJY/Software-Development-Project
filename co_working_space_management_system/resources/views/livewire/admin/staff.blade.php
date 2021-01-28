@@ -1,6 +1,6 @@
 <div>
     <!-- Title -->
-    <h1 class="font-serif sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900 underline mx-3">Employee</h1>
+    <h1 class="px-2 font-bold text-xl md:text-2xl pt-2">Employee</h1>
 
     <!-- Search -->
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
@@ -15,80 +15,59 @@
 
     <!-- Table -->
     <div class="overflow-x-auto mx-1">
-        <table class="min-w-full table-auto border-collapse border border-black">
-            <thead>
-                <tr>
-                    <th class="border border-gray-700 text-white bg-gray-700">Name</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Address</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Contact Number</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Username</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Email</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Role</th>
-                    <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
-                </tr>
-            </thead>
-            <tbody>
-                @foreach ($employees as $employee)
-                <tr>
-                    <td class="border border-gray-400 bg-gray-100">{{$employee ->last_name}} {{$employee ->first_name}}</td>
-                    <td class="border border-gray-400 bg-gray-100">{{$employee ->address}}</td>
-                    <td class="border border-gray-400 bg-gray-100">{{$employee ->contact_number}}</td>
-                    <td class="border border-gray-400 bg-gray-100">{{$employee ->username}}</td>
-                    <td class="border border-gray-400 bg-gray-100">{{$employee ->email}}</td>
-                    <td class="border border-gray-400 bg-gray-100">
-                        @if($employee ->roles === 0)
-                        Admin
-                        @elseif($employee ->roles === 1)
-                        Staff
-                        @else
-                        {{$employee ->roles}}
-                        @endif
-                    </td>
-                    <td class="border border-gray-400 bg-gray-100 py-1.5">
-                        <div class="border-none flex flex-row flex-nowrap justify-center">
-                            <x-jet-button class="mx-2" wire:click="edit({{$employee->id}})">Edit</x-jet-button>
-                            <x-jet-button class="mx-2" wire:click="deleteModal({{$employee ->id}}, '{{$employee ->first_name}}')">Delete</x-jet-button>
-                        </div>
-                    </td>
-
-
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-        <br>
-        {{$employees->links()}}
-
-        <!-- Edit Modal -->
-        {{-- <x-jet-dialog-modal wire:model="employeeForm">
-            <x-slot name="title">
-                <h1>Edit Employee</h1>
-            </x-slot>
-            <form>
+        @if(count($employees) === 0 )
+            <x-emptyTable>
+                <x-slot name="header">
+                    Reservation
+                </x-slot>
                 <x-slot name="content">
-                    <x-jet-label for="firstName" value="First name" />
-                    <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="first_name"/>
-                    <x-jet-input-error for="firstName" />
-
-                    <x-jet-label for="lastName" value="Last name" />
-                    <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.lazy="last_name"/>
-                    <x-jet-input-error for="lastName" />
-
-                    <x-jet-label for="address" value="Address" />
-                    <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address"/>
-                    <x-jet-input-error for="address" />
-
-                    <x-jet-label for="contact_number" value="Contact Number" />
-                    <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number"/>
-                    <x-jet-input-error for="contact_number" />
+                    Looks like there are no employee record.
                 </x-slot>
-                <x-slot name="footer">
-                    <x-jet-button wire:click="store">Save</x-jet-button>
-                    <x-jet-button wire:click="$toggle('employeeForm')">Cancel</x-jet-button>
-                </x-slot>
-            </form>
-        </x-jet-dialog-modal> --}}
-
+            </x-emptyTable>
+        @else
+            <table class="min-w-full table-auto border-collapse border border-black">
+                <thead>
+                    <tr>
+                        <th class="border border-gray-700 text-white bg-gray-700">Name</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Address</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Contact Number</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Username</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Email</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Role</th>
+                        <th class="border border-gray-700 text-white bg-gray-700">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach ($employees as $employee)
+                    <tr>
+                        <td class="border border-gray-400 bg-gray-100">{{$employee ->last_name}} {{$employee ->first_name}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$employee ->address}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$employee ->contact_number}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$employee ->username}}</td>
+                        <td class="border border-gray-400 bg-gray-100">{{$employee ->email}}</td>
+                        <td class="border border-gray-400 bg-gray-100">
+                            @if($employee ->roles === 0)
+                            Admin
+                            @elseif($employee ->roles === 1)
+                            Staff
+                            @else
+                            {{$employee ->roles}}
+                            @endif
+                        </td>
+                        <td class="border border-gray-400 bg-gray-100 py-1.5">
+                            <div class="border-none flex flex-row flex-nowrap justify-center">
+                                <x-jet-button class="mx-2" wire:click="edit({{$employee->id}})">Edit</x-jet-button>
+                                <x-jet-button class="mx-2" wire:click="deleteModal({{$employee ->id}}, '{{$employee ->first_name}}')">Delete</x-jet-button>
+                            </div>
+                        </td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
+            <br>
+            {{$employees->links()}}
+        @endif
+       
         <!-- Add Modal -->
         <x-jet-dialog-modal wire:model="employeeForm">
             <x-slot name="title">
@@ -204,10 +183,10 @@
             </x-slot>
             <form>
                 <x-slot name="content">
-                    <p>Are you sure you want to remove the employee with the name {{$first_name}}</p>
+                    <p>Are you sure you want to remove the employee with the name {{$first_name}}.</p>
                 </x-slot>
                 <x-slot name="footer">
-                    <x-jet-button wire:click="delete({{$employeeID}})">Delete</x-jet-button>
+                    <x-jet-danger-button wire:click="delete({{$employeeID}})">Delete</x-jet-button>
                     <x-jet-button wire:click="$toggle('deleteConEmployeeForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>

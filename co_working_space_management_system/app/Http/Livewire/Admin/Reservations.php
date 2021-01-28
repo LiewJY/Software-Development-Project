@@ -9,6 +9,7 @@ use App\Models\Location;
 use App\Models\Room;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
+use App\Models\User;
 
 use Livewire\Component;
 
@@ -35,14 +36,16 @@ class Reservations extends Component
         return view(
             'livewire.admin.reservations',
             [
-                'reservations' => Reservation::where('customers.last_name', 'like', '%' . $this->search . '%')
-                    ->orwhere('customers.first_name', 'like', '%' . $this->search . '%')
+                'reservations' => Reservation::where(function ($query) {
+                        $query->where('customers.last_name', 'like', '%' . $this->search . '%')
+                            ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
+                    })
                     ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
                     ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
                     ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
                     ->join('slots', 'reservations.slot_id', '=', 'slots.id')
                     ->select('reservations.id as reservation_id', 'reservations.*', 'customers.*', 'reservation_payments.*', 'rooms.*', 'slots.*')
-                    ->where('reservations.reservation_date', '>', date("y-m-d"))
+                    ->where('reservations.reservation_date', '>=', date("y-m-d"))
                     ->paginate(10)
             ],
             [

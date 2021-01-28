@@ -12,7 +12,7 @@
         <a href="#" class="transition bg-gray-100 px-10 py-3 rounded font-bold hover:bg-gray-300 block w-full text-center border-2 border-white">Explore!</a>
     </div>
     <div class="lg:pl-5 w-full lg:w-1/2">
-        <a href="#" class="transition bg-transparent px-10 py-3 rounded font-bold hover:bg-gray-800 hover:text-gray-100 text-black block w-full text-center border-2 border-gray-900">View Membership Plans!</a>
+        <a href="membershipplans" class="transition bg-transparent px-10 py-3 rounded font-bold hover:bg-gray-800 hover:text-gray-100 text-black block w-full text-center border-2 border-gray-900">View Membership Plans!</a>
     </div>
 </div>
 </div>
@@ -23,7 +23,7 @@
 <div class="container px-5 py-15 mx-auto flex flex-col">
     <div class="lg:w-4/6 mx-auto">
       <div class="flex flex-col text-center w-full mb-1">
-      <h1 class="font-serif sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900 underline animate-bounce">ABOUT US</h1>
+      <h1 class="md:text-4xl text-3xl font-bold text-gray-900 text-center">About Us</h1>
       </div>
 
 <!-- Content Founder -->
@@ -118,7 +118,7 @@
 <!-- Why Us? -->
 <section class="text-gray-700 body-font bg-gray-300">
   <div class="flex flex-col text-center w-full pt-10">
-      <h1 class="font-serif sm:text-3xl text-2xl font-bold title-font mb-4 text-gray-900 underline animate-bounce">WHY CHOOSE US?</h1>
+    <h1 class="md:text-4xl text-3xl font-bold text-gray-900 text-center">Why ShareSpace ?</h1>
   </div>
   <div class="container px-5 py-24 mx-auto flex flex-wrap">
     <div class="lg:w-1/2 w-full mb-10 lg:mb-0 rounded-lg overflow-hidden border border-gray-300">

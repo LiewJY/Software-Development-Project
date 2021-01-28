@@ -1,4 +1,6 @@
 <div>
+    <h1 class="px-2 font-bold text-xl md:text-2xl pt-2">Locations</h1>
+
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
@@ -90,7 +92,7 @@
                     <p>Are you sure you want to remove the location with the name {{$name}}</p>
                 </x-slot>
                 <x-slot name="footer">
-                    <x-jet-button wire:click="delete({{$locationID}})">Delete</x-jet-button>
+                    <x-jet-danger-button wire:click="delete({{$locationID}})">Delete</x-jet-button>
                     <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>

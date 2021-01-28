@@ -2,13 +2,11 @@
 @section('content')
 
 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-        Profile
-    </h2>
+    <h1 class="font-bold text-xl md:text-2xl">Profile</h1>
 </div>
 
 <div>
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8">
+    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 bg-gray-50">
         @if (Laravel\Fortify\Features::canUpdateProfileInformation())
         @livewire('profile')
 

@@ -59,7 +59,7 @@ Route::get('/adminreport', function () {
     return view('admin.businessReport');
 })->name('business-report');
 //ok need to have data to check
-Route::get('/adminstaff', function () {
+Route::get('/adminemployee', function () {
     return view('admin.staff');
 })->name('Staff');
 //ok
@@ -77,16 +77,15 @@ Route::get('/employeecustomer', function () {
     return view('employee.customer');
 })->name('employeecustomer');
 //ok
-Route::get('/reservation', function () {
+Route::get('/employeereservation', function () {
     return view('employee.reservation');
 })->name('reservation');
 //ok
-Route::get('/reservationlocation/location{id}', function ($id) {
+Route::get('/employeereservationlocation/location{id}', function ($id) {
     return view('employee.reservationLocation', compact('id'));
 })->name('reservationlocation');
-
-
-Route::get('/employeemaintenance', function () {
+//ok
+Route::get('/employeeemployeemaintenance', function () {
     return view('employee.maintenance');
 })->name('employeemaintenance');
 //ok
@@ -104,17 +103,19 @@ Route::get('/locations/details{id}', function ($id) {
     return view('customer.locationDetails', compact('id'));
 })->name('locationDetails');
 
-Route::get('/customerbookings', function () {
+Route::get('/bookings', function () {
     return view('customer.bookings');
 })->name('bookings');
 
-Route::get('/customerbookinghistory', function () {
+Route::get('/bookinghistory', function () {
     return view('customer.bookingHistory');
 })->name('bookinghistory');
 
-Route::get('/subscriptionhistory', function () {
-    return view('customer.subscriptionhistory');
-})->name('subscriptionhistory');
+// // this page is not needed 
+// Route::get('/subscriptionhistory', function () {
+//     return view('customer.subscriptionhistory');
+// })->name('subscriptionhistory');
+
 //for invoice
 Route::get('/membershipinvoice/{id}', 
 [InvoiceController::class, 'membership'])
