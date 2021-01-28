@@ -4,7 +4,7 @@
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name"/>
         </div>
         <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
-            <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Customer</x-jet-button>
+            {{-- <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Customer</x-jet-button> --}}
         </div>
     </div>
     <br>
@@ -36,7 +36,7 @@
         <br>
         {{$customers->links()}}
 
-        <x-jet-dialog-modal wire:model="customerForm">
+        {{-- <x-jet-dialog-modal wire:model="customerForm">
             <x-slot name="title">
                 <h1>Add Customer</h1>
             </x-slot>
@@ -76,6 +76,6 @@
                     <x-jet-button wire:click="$toggle('customerForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>
-        </x-jet-dialog-modal>
+        </x-jet-dialog-modal> --}}
     </div>
 </div>
