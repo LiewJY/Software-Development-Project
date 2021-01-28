@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Location;
 use App\Models\ReservationPayment;
 use App\Models\Reservation;
 use App\Models\Room;

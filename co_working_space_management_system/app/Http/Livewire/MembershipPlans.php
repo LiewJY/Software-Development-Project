@@ -10,7 +10,7 @@ class MembershipPlans extends Component
     public function render()
     {
         $memberships = Membership::all();
-        return view('livewire.membership-plans', ['memberships' => $memberships]);
+        return view('livewire.membership-plans', ['memberships' => $memberships])->layout('layouts.page');
     }
 
     public function membership($plans)

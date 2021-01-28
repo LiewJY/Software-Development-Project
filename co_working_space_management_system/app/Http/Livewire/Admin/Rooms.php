@@ -56,7 +56,7 @@ class Rooms extends Component
         ], [
             'locations' => location::get(),
             'slots' => slot::get()
-        ]);
+        ])->layout('layouts.page');
     }
 
     /**

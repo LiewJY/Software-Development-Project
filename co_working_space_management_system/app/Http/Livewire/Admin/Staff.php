@@ -45,7 +45,7 @@ class Staff extends Component
                 ->join('users', 'employees.user_id', '=', 'users.id')
                 ->select('employees.*', 'users.roles', 'users.username', 'users.email')
                 ->paginate(10),
-        ]);
+        ])->layout('layouts.page');
     }
 
     public function add()

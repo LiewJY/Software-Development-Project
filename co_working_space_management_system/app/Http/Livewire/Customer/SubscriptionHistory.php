@@ -15,9 +15,9 @@ class SubscriptionHistory extends Component
 
         return view('livewire.customer.subscription-history', [
             'subscriptions' => MembershipPayment::where('user_id', '=', $user)
-                            ->orderBy('updated_at', 'desc')
-                            ->paginate(10),
-        ]);
+                ->orderBy('updated_at', 'desc')
+                ->paginate(10),
+        ])->layout('layouts.page');
     }
 
     /**

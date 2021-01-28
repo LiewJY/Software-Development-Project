@@ -10,7 +10,7 @@ class Locations extends Component
     public function render()
     {
         $locations = Location::all();
-        return view('livewire.locations', ['locations' => $locations]);
+        return view('livewire.locations', ['locations' => $locations])->layout('layouts.page');
     }
 
     public function locations($details)

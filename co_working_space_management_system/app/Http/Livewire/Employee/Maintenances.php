@@ -21,7 +21,7 @@ class Maintenances extends Component
             [
                 'locations' => Location::where('locations.name', 'like', '%' . $this->search . '%')->get()
             ]
-        );
+        )->layout('layouts.page');
     }
     public function room($location)
     {

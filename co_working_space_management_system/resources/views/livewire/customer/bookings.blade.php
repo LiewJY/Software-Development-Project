@@ -38,7 +38,7 @@
                 </thead>
                 <tbody>
                     @foreach ($bookings as $booking)
-                    <tr>
+                    <tr class="text-center">
                         <td class="border border-gray-400 bg-gray-100">{{$booking ->locations_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$booking ->name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$booking ->reservation_date}}</td>

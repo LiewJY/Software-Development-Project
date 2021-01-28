@@ -50,8 +50,8 @@ class MaintenanceRoom extends Component
                 ->paginate(10)
         ], [
             'rooms' => room::where('rooms.location_id', '=', $this->location_id)
-            ->get()
-        ]);
+                ->get()
+        ])->layout('layouts.page');
     }
 
 

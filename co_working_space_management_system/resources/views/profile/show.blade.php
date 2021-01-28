@@ -1,6 +1,4 @@
-@extends('layouts.page')
-@section('content')
-
+<x-app-layout >
 <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
     <h1 class="font-bold text-xl md:text-2xl">Profile</h1>
 </div>
@@ -82,4 +80,4 @@
     </div>
 </div>
 
-@endsection
+</x-app-layout>
