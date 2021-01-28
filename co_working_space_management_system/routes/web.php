@@ -71,6 +71,9 @@ Route::get('/adminreservation', function () {
     return view('admin.reservation');
 })->name('adminreservation');
 //ok
+Route::get('/admincustomer', function () {
+    return view('admin.customer');
+})->name('admincustomer');
 
 //EMPLOYEE
 Route::get('/employeecustomer', function () {

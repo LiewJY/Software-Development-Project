@@ -76,6 +76,9 @@
                             <x-jet-nav-link href="{{ route('adminreservation') }}" :active="request()->routeIs('adminreservation')">
                                 {{ __('Reservations') }}
                             </x-jet-nav-link>
+                            <x-jet-nav-link href="{{ route('admincustomer') }}" :active="request()->routeIs('admincustomer')">
+                                {{ __('Customer') }}
+                            </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
                                 {{ __('Membership Plans') }}
                             </x-jet-nav-link>
@@ -318,7 +321,10 @@
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('adminreservation') }}" :active="request()->routeIs('adminreservation')">
                     {{ __('Reservations') }}
-                </x-jet-responsive-nav-linkk>
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('admincustomer') }}" :active="request()->routeIs('admincustomer')">
+                    {{ __('Customer') }}
+                </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
                     {{ __('Membership Plans') }}
                 </x-jet-responsive-nav-link>
