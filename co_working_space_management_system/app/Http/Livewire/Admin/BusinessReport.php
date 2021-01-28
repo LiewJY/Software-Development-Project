@@ -2,6 +2,7 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Models\Location;
 use App\Models\ReservationPayment;
 use Asantibanez\LivewireCharts\Models\AreaChartModel;
 use Asantibanez\LivewireCharts\Models\ColumnChartModel;
@@ -12,7 +13,7 @@ use Livewire\Component;
 
 class BusinessReport extends Component
 {
-     public $locations = ['New Shirleyfort', 'South Zachery', 'Stammburgh',];
+    public $locations;
 
     public $colors = [
         'New Shirleyfort' => '#f6ad55',
@@ -45,73 +46,86 @@ class BusinessReport extends Component
 
     public function render()
     {
-        $payment = ReservationPayment::whereIn('reference', $this->locations)->get();
 
-        $columnChartModel = $payment->groupBy('reference')
-            ->reduce(function (ColumnChartModel $columnChartModel, $data) {
-                $reference = $data->first()->reference;
-                $value = $data->sum('amount');
+        $locations = Location::find(2);
 
-                return $columnChartModel->addColumn($reference, $value, $this->colors[$reference]);
-            }, (new ColumnChartModel())
-                ->setTitle('Income by Location')
-                ->setAnimated($this->firstRun)
-                ->withOnColumnClickEventName('onColumnClick')
-            );
 
-        $pieChartModel = $payment->groupBy('reference')
-            ->reduce(function (PieChartModel $pieChartModel, $data) {
-                $reference = $data->first()->reference;
-                $value = $data->sum('amount');
+        dd($locations->reservations()->first()->reservationpayment()->first());
 
-                return $pieChartModel->addSlice($reference, $value, $this->colors[$reference]);
-            }, (new PieChartModel())
-                ->setTitle('Income by Location')
-                ->setAnimated($this->firstRun)
-                ->withOnSliceClickEvent('onSliceClick')
-            );
 
-        $lineChartModel = $payment
-            ->reduce(function (LineChartModel $lineChartModel, $data) use ($payment) {
-                $index = $payment->search($data);
+        // foreach ($locations as $location) {
+        //     foreach ($location->reservations as $reservation) {
+        //         dd($reservation->toArray());
+        //     }
+        // }
+        //     $payment = ReservationPayment::whereIn('reference', $this->locations)->get();
 
-                $amountSum = $payment->take($index + 1)->sum('amount');
+        //     $columnChartModel = $payment->groupBy('reference')
+        //         ->reduce(function (ColumnChartModel $columnChartModel, $data) {
+        //             $reference = $data->first()->reference;
+        //             $value = $data->sum('amount');
 
-                if ($index == 6) {
-                    $lineChartModel->addMarker(7, $amountSum);
-                }
+        //             return $columnChartModel->addColumn($reference, $value, $this->colors[$reference]);
+        //         }, (new ColumnChartModel())
+        //             ->setTitle('Income by Location')
+        //             ->setAnimated($this->firstRun)
+        //             ->withOnColumnClickEventName('onColumnClick')
+        //         );
 
-                if ($index == 11) {
-                    $lineChartModel->addMarker(12, $amountSum);
-                }
+        //     $pieChartModel = $payment->groupBy('reference')
+        //         ->reduce(function (PieChartModel $pieChartModel, $data) {
+        //             $reference = $data->first()->reference;
+        //             $value = $data->sum('amount');
 
-                return $lineChartModel->addPoint($index, $amountSum, ['reference' => $data->reference]);
-            }, (new LineChartModel())
-                ->setTitle('Income Evolution')
-                ->setAnimated($this->firstRun)
-                ->withOnPointClickEvent('onPointClick')
-            );
+        //             return $pieChartModel->addSlice($reference, $value, $this->colors[$reference]);
+        //         }, (new PieChartModel())
+        //             ->setTitle('Income by Location')
+        //             ->setAnimated($this->firstRun)
+        //             ->withOnSliceClickEvent('onSliceClick')
+        //         );
 
-        $areaChartModel = $payment
-            ->reduce(function (AreaChartModel $areaChartModel, $data) use ($payment) {
-                return $areaChartModel->addPoint($data->description, $data->amount, ['reference' => $data->reference]);
-            }, (new AreaChartModel())
-                ->setTitle('Income Peaks')
-                ->setAnimated($this->firstRun)
-                ->setColor('#f6ad55')
-                ->withOnPointClickEvent('onAreaPointClick')
-                ->setXAxisVisible(false)
-                ->setYAxisVisible(true)
-            );
+        //     $lineChartModel = $payment
+        //         ->reduce(function (LineChartModel $lineChartModel, $data) use ($payment) {
+        //             $index = $payment->search($data);
 
-        $this->firstRun = false;
+        //             $amountSum = $payment->take($index + 1)->sum('amount');
 
-        return view('livewire.admin.business-report')
-            ->with([
-                'columnChartModel' => $columnChartModel,
-                'pieChartModel' => $pieChartModel,
-                'lineChartModel' => $lineChartModel,
-                'areaChartModel' => $areaChartModel,
-            ])->layout('layouts.page');
+        //             if ($index == 6) {
+        //                 $lineChartModel->addMarker(7, $amountSum);
+        //             }
+
+        //             if ($index == 11) {
+        //                 $lineChartModel->addMarker(12, $amountSum);
+        //             }
+
+        //             return $lineChartModel->addPoint($index, $amountSum, ['reference' => $data->reference]);
+        //         }, (new LineChartModel())
+        //             ->setTitle('Income Evolution')
+        //             ->setAnimated($this->firstRun)
+        //             ->withOnPointClickEvent('onPointClick')
+        //         );
+
+        //     $areaChartModel = $payment
+        //         ->reduce(function (AreaChartModel $areaChartModel, $data) use ($payment) {
+        //             return $areaChartModel->addPoint($data->description, $data->amount, ['reference' => $data->reference]);
+        //         }, (new AreaChartModel())
+        //             ->setTitle('Income Peaks')
+        //             ->setAnimated($this->firstRun)
+        //             ->setColor('#f6ad55')
+        //             ->withOnPointClickEvent('onAreaPointClick')
+        //             ->setXAxisVisible(false)
+        //             ->setYAxisVisible(true)
+        //         );
+
+        //     $this->firstRun = false;
+
+        //     return view('livewire.admin.business-report')
+        //         ->with([
+        //             'columnChartModel' => $columnChartModel,
+        //             'pieChartModel' => $pieChartModel,
+        //             'lineChartModel' => $lineChartModel,
+        //             'areaChartModel' => $areaChartModel,
+        //         ])->layout('layouts.page');
+        // }
     }
 }

@@ -54,6 +54,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get("/adminrooms", \App\Http\Livewire\Admin\Rooms::class)->name('adminrooms');
 
         Route::get("/adminreservation", \App\Http\Livewire\Admin\Reservations::class)->name('adminreservation');
+
+        Route::get("/admincustomer", \App\Http\Livewire\Admin\Customers::class)->name('admincustomer');
     });
 
     Route::middleware(['employee'])->group(function () {

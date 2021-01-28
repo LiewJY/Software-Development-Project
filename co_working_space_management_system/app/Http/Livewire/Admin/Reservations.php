@@ -50,7 +50,6 @@ class Reservations extends Component
             ],
             [
                 'customers' => Customer::all(),
-                'location' => Location::all(),
             ]
         )->layout('layouts.page');
     }
@@ -126,10 +125,13 @@ class Reservations extends Component
         if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->first()->updated_at->addDays(30)->isPast()) {
             session()->flash('error', 'Selected customer does not have any active subscription.');
         } else {
+
             $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
             $this->selectedRoom = NULL;
         }
     }
+
+
 
     /**
      * Load available slots based on selected room

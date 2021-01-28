@@ -35,6 +35,6 @@ class Customers extends Component
                 ->orWhere('customers.last_name', 'like', '%' . $this->search . '%')
                 ->join('users', 'customers.user_id', '=', 'users.id')
                 ->paginate(10),
-        ]);
+        ])->layout('layouts.page');
     }
 }
