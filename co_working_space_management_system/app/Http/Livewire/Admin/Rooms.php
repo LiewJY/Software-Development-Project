@@ -165,5 +165,4 @@ class Rooms extends Component
             }
         }
     }
-
 }

@@ -46,7 +46,12 @@ class Room extends Model
      */
     public function maintenance()
     {
-        return $this->hasMany('App\Models\Maintenance');
+        return $this->hasMany(Maintenance::class);
+    }
+
+    public function workingRoom()
+    {
+        return $this->maintenance()->where('status', 1)->get();
     }
 
     /**
