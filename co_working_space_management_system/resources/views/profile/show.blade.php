@@ -1,17 +1,17 @@
-<x-app-layout >
-<div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-    <h1 class="font-bold text-xl md:text-2xl">Profile</h1>
-</div>
+<x-app-layout>
+    <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
+        <h1 class="font-bold text-xl md:text-2xl">Profile</h1>
+    </div>
 
-<div>
-    <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 bg-gray-50">
-        @if (Laravel\Fortify\Features::canUpdateProfileInformation())
-        @livewire('profile')
+    <div>
+        <div class="max-w-7xl mx-auto py-10 sm:px-6 lg:px-8 bg-gray-50">
+            @if (Laravel\Fortify\Features::canUpdateProfileInformation())
+            @livewire('profile')
 
-        <x-jet-section-border />
-        @endif
+            <x-jet-section-border />
+            @endif
 
-        @if(Auth::user()->roles == 2)
+            @if(Auth::user()->roles == 2)
             <div class="md:grid md:grid-cols-3 md:gap-6">
                 <x-jet-section-title>
                     <x-slot name="title">Menbership status</x-slot>
@@ -27,17 +27,17 @@
                                     No subscription
                                     @else
 
-                                    @if (Auth::user()->membership_payments->first()->updated_at->addDays(30)->isPast())
+                                    @if (Auth::user()->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast())
 
                                     No subscription
 
-                                    @elseif (Auth::user()->membership_payments->first()->updated_at->addDays(30)->isToday())
+                                    @elseif (Auth::user()->membership_payments->sortByDesc('created_at')->first()->expired_on->isToday())
 
-                                    {{Auth::user()->membership_payments->first()->membership->first()->name}}
+                                    {{Auth::user()->membership_payments->->sortByDesc('created_at')->first()->membership->first()->name}}
 
                                     @else
 
-                                    {{Auth::user()->membership_payments->first()->membership->first()->name}}
+                                    {{Auth::user()->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}}
 
                                     @endif
 
@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                         </div>
-                    {{-- <div class="flex items-center justify-end px-4 py-3 bg-gray-100 text-right sm:px-6">
+                        {{-- <div class="flex items-center justify-end px-4 py-3 bg-gray-100 text-right sm:px-6">
                         <x-jet-button >Print Invoice</x-jet-button>
                     </div> --}}
                     </div>
@@ -53,35 +53,35 @@
                 </div>
             </div>
             <x-jet-section-border />
-        @endif
+            @endif
 
 
-        @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
-        <div class="mt-10 sm:mt-0">
-            @livewire('profile.update-password-form')
-        </div>
+            @if (Laravel\Fortify\Features::enabled(Laravel\Fortify\Features::updatePasswords()))
+            <div class="mt-10 sm:mt-0">
+                @livewire('profile.update-password-form')
+            </div>
 
-        <x-jet-section-border />
-        @endif
+            <x-jet-section-border />
+            @endif
 
-        @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
-        <div class="mt-10 sm:mt-0">
-            @livewire('profile.two-factor-authentication-form')
-        </div>
+            @if (Laravel\Fortify\Features::canManageTwoFactorAuthentication())
+            <div class="mt-10 sm:mt-0">
+                @livewire('profile.two-factor-authentication-form')
+            </div>
 
-        <x-jet-section-border />
-        @endif
+            <x-jet-section-border />
+            @endif
 
-        <div class="mt-10 sm:mt-0">
-            @livewire('profile.logout-other-browser-sessions-form')
-        </div>
+            <div class="mt-10 sm:mt-0">
+                @livewire('profile.logout-other-browser-sessions-form')
+            </div>
 
-        <x-jet-section-border />
+            <x-jet-section-border />
 
-        <div class="mt-10 sm:mt-0">
-            @livewire('profile.delete-user-form')
+            <div class="mt-10 sm:mt-0">
+                @livewire('profile.delete-user-form')
+            </div>
         </div>
     </div>
-</div>
 
 </x-app-layout>

@@ -126,7 +126,7 @@ class Reservations extends Component
     public function updatedCustomerId()
     {
         $customer = Customer::find($this->customer_id);
-        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast()) {
             session()->flash('error', 'Selected customer does not have any active subscription.');
         }
     }

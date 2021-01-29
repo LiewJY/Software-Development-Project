@@ -23,7 +23,8 @@ class MembershipPayment extends Model
      */
     protected $fillable = [
         'membership_id',
-        'user_id'
+        'user_id',
+        'expired_on'
     ];
 
     /**

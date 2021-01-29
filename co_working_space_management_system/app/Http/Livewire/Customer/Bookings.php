@@ -119,7 +119,7 @@ class Bookings extends Component
 
     public function add()
     {
-        if (Auth::user()->membership_payments->first() == null || Auth::user()->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+        if (Auth::user()->membership_payments->sortByDesc('expired_on')->first() == null || Auth::user()->membership_payments->sortByDesc('expired_on')->first()->expired_on->isPast()) {
             session()->flash("error", "You dont have any active subscription. Please subscribe to any available plans before proceeding.");
         } else {
             $this->reset();
