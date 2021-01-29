@@ -26,6 +26,8 @@ class Reservations extends Component
     public $locations, $rooms, $slots, $price, $amount, $balance;
     public $customer_id, $reservationID;
 
+    public $ongoingMaintenance = [];
+
 
     /**
      * Return blade view
@@ -140,9 +142,15 @@ class Reservations extends Component
     public function updatedSelectedLocation()
     {
 
-        var_dump(Location::find($this->selectedLocation)->rooms()->maintenance->where('status', 0));
+        $location = Location::find($this->selectedLocation)->rooms;
+        foreach ($location as $room) {
+            foreach ($room->maintenance as $maintenance) {
+                array_push($this->ongoingMaintenance, $maintenance->room_id);
+            }
+        }
 
-        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+
+        $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
         $this->selectedRoom = NULL;
     }
 

@@ -27,6 +27,7 @@ class Bookings extends Component
     public $bookingID, $user_id, $customer_name, $customer_id;
     public $bookingsForm = false;
     public $deleteConfirmationForm = false;
+    public $ongoingMaintenance = [];
 
     /**
      * Validation rules
@@ -138,7 +139,16 @@ class Bookings extends Component
      */
     public function updatedSelectedLocation()
     {
-        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+
+        $location = Location::find($this->selectedLocation)->rooms;
+        foreach ($location as $room) {
+            foreach ($room->maintenance as $maintenance) {
+                array_push($this->ongoingMaintenance, $maintenance->room_id);
+            }
+        }
+
+
+        $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
         $this->selectedRoom = NULL;
     }
 

@@ -11,8 +11,6 @@ use App\Models\Room;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
 use App\Models\User;
-use DateTime;
-use Illuminate\Support\Facades\DB;
 
 class ReservationLocation extends Component
 {
@@ -27,6 +25,7 @@ class ReservationLocation extends Component
     public $customer_id, $reservationID;
 
     public $location, $loc_name, $location_id;
+    public $ongoingMaintenance = [];
 
     public function mount($id)
     {
@@ -136,7 +135,14 @@ class ReservationLocation extends Component
         if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast()) {
             session()->flash('error', 'Selected customer does not have any active subscription.');
         } else {
-            $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+            $location = Location::find($this->selectedLocation)->rooms;
+            foreach ($location as $room) {
+                foreach ($room->maintenance as $maintenance) {
+                    array_push($this->ongoingMaintenance, $maintenance->room_id);
+                }
+            }
+
+            $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
             $this->selectedRoom = NULL;
         }
     }
