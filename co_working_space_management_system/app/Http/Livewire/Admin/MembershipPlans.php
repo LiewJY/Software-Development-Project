@@ -5,6 +5,10 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Membership;
+use App\Models\MembershipPayment;
+use Carbon\Carbon;
+
+use function PHPUnit\Framework\isEmpty;
 
 class MembershipPlans extends Component
 {
@@ -81,9 +85,13 @@ class MembershipPlans extends Component
      */
     public function delete($id)
     {
-        $membership = Membership::where('id', $id)->firstorfail();
-        $membership->delete();
-        $this->deleteConfirmationForm = false;
+        if (!isEmpty(MembershipPayment::where('membership_id', $id)->whereDate('expired_on', '>', Carbon::now())->get())) {
+            session()->flash("error", "Could not delete membership plan when there is active subscription");
+        } else {
+            $membership = Membership::where('id', $id)->firstorfail();
+            $membership->delete();
+            $this->deleteConfirmationForm = false;
+        }
     }
 
     public function deleteModal($id, $name)

@@ -1,7 +1,7 @@
 <div>
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
-            <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name"/>
+            <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
         </div>
         <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
             {{-- <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Customer</x-jet-button> --}}
@@ -24,33 +24,33 @@
             </thead>
             <tbody>
                 @foreach ($customers as $customer)
-                    <tr class=" h-12 text-center">
-                        <td class="border border-gray-400 bg-gray-100">{{$customer ->first_name}} {{$customer ->last_name}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$customer ->address}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$customer ->contact_number}}</td>
-                        <td class="border border-gray-400 bg-gray-100">{{$customer ->email}}</td>
-                        @if ($customer->user->membership_payments->first() == null)
-                            <td class="border border-gray-400 bg-gray-100">
-                                No subscription
-                            </td>
-                            @else
-                            @if ($customer->user->membership_payments->first()->updated_at->addDays(30)->isPast())
-                            <td class="border border-gray-400 bg-gray-100">
-                                No subscription
-                            </td>
-                            @elseif ($customer->user->membership_payments->first()->updated_at->addDays(30)->isToday())
-                            <td class="border border-gray-400 bg-green-200">
-                                {{$customer->user->membership_payments->first()->membership->first()->name}} Plan
-                            </td>
+                <tr class=" h-12 text-center">
+                    <td class="border border-gray-400 bg-gray-100">{{$customer ->first_name}} {{$customer ->last_name}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$customer ->address}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$customer ->contact_number}}</td>
+                    <td class="border border-gray-400 bg-gray-100">{{$customer ->email}}</td>
+                    @if ($customer->user->membership_payments->first() == null)
+                    <td class="border border-gray-400 bg-gray-100">
+                        No subscription
+                    </td>
+                    @else
+                    @if ($customer->user->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast())
+                    <td class="border border-gray-400 bg-gray-100">
+                        No subscription
+                    </td>
+                    @elseif ($customer->user->membership_payments->sortByDesc('created_at')->first()->expired_on->isToday())
+                    <td class="border border-gray-400 bg-green-200">
+                        {{$customer->user->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}} Plan
+                    </td>
 
-                            @else
-                            <td class="border border-gray-400 bg-green-200">
-                                {{$customer->user->membership_payments->first()->membership->first()->name}} Plan
-                            </td>
-                            @endif
-                        @endif                      
+                    @else
+                    <td class="border border-gray-400 bg-green-200">
+                        {{$customer->user->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}} Plan
+                    </td>
+                    @endif
+                    @endif
 
-                    </tr>               
+                </tr>
                 @endforeach
             </tbody>
 

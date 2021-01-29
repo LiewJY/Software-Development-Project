@@ -39,6 +39,8 @@ Route::get("/locations/details{id}", \App\Http\Livewire\Customer\LocationDetails
 
 Route::group(['middleware' => ['auth']], function () {
 
+    Route::get('/reservationinvoice/{id}', [InvoiceController::class, 'reservation'])->name('printreservation');
+
     Route::middleware(['admin'])->group(function () {
 
         Route::get("/adminlocation", \App\Http\Livewire\Admin\LocationTable::class)->name('adminlocation');
@@ -82,7 +84,5 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get("/bookinghistory", \App\Http\Livewire\Customer\BookingHistory::class)->name('bookinghistory');
 
         Route::get('/membershipinvoice/{id}', [InvoiceController::class, 'membership'])->name('printmembership');
-
-        Route::get('/reservationinvoice/{id}', [InvoiceController::class, 'reservation'])->name('printreservation');
     });
 });

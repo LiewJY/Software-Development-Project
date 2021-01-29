@@ -6,6 +6,7 @@ use Livewire\WithPagination;
 use App\Models\Reservation;
 use App\Models\Customer;
 use App\Models\Location;
+use App\Models\Maintenance;
 use App\Models\Room;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
@@ -24,6 +25,8 @@ class Reservations extends Component
     public $selectedLocation, $selectedDate, $selectedRoom, $selectedSlot = null;
     public $locations, $rooms, $slots, $price, $amount, $balance;
     public $customer_id, $reservationID;
+
+    public $ongoingMaintenance = [];
 
 
     /**
@@ -126,7 +129,7 @@ class Reservations extends Component
     public function updatedCustomerId()
     {
         $customer = Customer::find($this->customer_id);
-        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast()) {
             session()->flash('error', 'Selected customer does not have any active subscription.');
         }
     }
@@ -138,7 +141,16 @@ class Reservations extends Component
      */
     public function updatedSelectedLocation()
     {
-        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+
+        $location = Location::find($this->selectedLocation)->rooms;
+        foreach ($location as $room) {
+            foreach ($room->maintenance as $maintenance) {
+                array_push($this->ongoingMaintenance, $maintenance->room_id);
+            }
+        }
+
+
+        $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
         $this->selectedRoom = NULL;
     }
 

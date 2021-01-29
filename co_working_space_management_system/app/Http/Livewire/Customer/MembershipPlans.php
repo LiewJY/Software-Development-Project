@@ -6,6 +6,7 @@ use Livewire\Component;
 use App\Models\Membership;
 use App\Models\MembershipPayment;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 
 class MembershipPlans extends Component
@@ -45,22 +46,30 @@ class MembershipPlans extends Component
     {
 
         $user = User::find(Auth::user()->id);
-        $payment = $user->membership_payments->first();
+        $payment = $user->membership_payments->sortByDesc('created_at')->first();
+        $expired_on = Carbon::now()->addDays(30);
 
         if ($payment == null) {
 
             MembershipPayment::create([
                 'membership_id' => $this->plans_id,
-                'user_id' => Auth::user()->id
+                'user_id' => Auth::user()->id,
+                'expired_on' => Carbon::now()->addDays(30)
             ]);
 
-            $subscriptionConfirmation = false;
-        } elseif ($payment != null && $payment->updated_at->addDays(30)->isPast()) {
-            MembershipPayment::where('user_id', Auth::user()->id)->update(['membership_id' => $this->plans_id]);
-            $subscriptionConfirmation = false;
+            $this->subscriptionConfirmation = false;
+        } elseif ($payment != null && $payment->expired_on->isPast()) {
+
+            MembershipPayment::create([
+                'membership_id' => $this->plans_id,
+                'user_id' => Auth::user()->id,
+                'expired_on' => Carbon::now()->addDays(30)
+            ]);
+
+            $this->subscriptionConfirmation = false;
         } else {
 
-            $endDate = $payment->updated_at->addDays(30)->toDateString();
+            $endDate = $payment->expired_on->toDateString();
             session()->flash('message', 'Could not subscribe when you have an active subscription. End at' . $endDate);
         }
     }

@@ -26,6 +26,7 @@ class Bookings extends Component
     public $bookingID, $user_id, $customer_name, $customer_id;
     public $bookingsForm = false;
     public $deleteConfirmationForm = false;
+    public $ongoingMaintenance = [];
 
     /**
      * Validation rules
@@ -118,8 +119,7 @@ class Bookings extends Component
 
     public function add()
     {
-        Session::forget('error');
-        if (Auth::user()->membership_payments->first() == null || Auth::user()->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+        if (Auth::user()->membership_payments->sortByDesc('expired_on')->first() == null || Auth::user()->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast()) {
             session()->flash("error", "You dont have any active subscription. Please subscribe to any available plans before proceeding.");
         } else {
             $this->reset();
@@ -138,7 +138,16 @@ class Bookings extends Component
      */
     public function updatedSelectedLocation()
     {
-        $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+
+        $location = Location::find($this->selectedLocation)->rooms;
+        foreach ($location as $room) {
+            foreach ($room->maintenance as $maintenance) {
+                array_push($this->ongoingMaintenance, $maintenance->room_id);
+            }
+        }
+
+
+        $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
         $this->selectedRoom = NULL;
     }
 

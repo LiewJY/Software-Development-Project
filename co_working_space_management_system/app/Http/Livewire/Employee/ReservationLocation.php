@@ -11,8 +11,6 @@ use App\Models\Room;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
 use App\Models\User;
-use DateTime;
-use Illuminate\Support\Facades\DB;
 
 class ReservationLocation extends Component
 {
@@ -27,6 +25,7 @@ class ReservationLocation extends Component
     public $customer_id, $reservationID;
 
     public $location, $loc_name, $location_id;
+    public $ongoingMaintenance = [];
 
     public function mount($id)
     {
@@ -46,9 +45,9 @@ class ReservationLocation extends Component
             'livewire.employee.reservation-location',
             [
                 'reservations' => Reservation::where(function ($query) {
-                        $query->where('customers.last_name', 'like', '%' . $this->search . '%')
-                            ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
-                    })
+                    $query->where('customers.last_name', 'like', '%' . $this->search . '%')
+                        ->orwhere('customers.first_name', 'like', '%' . $this->search . '%');
+                })
                     ->join('reservation_payments', 'reservations.reservation_payment_id', '=', 'reservation_payments.id')
                     ->join('customers', 'reservation_payments.customer_id', '=', 'customers.id')
                     ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
@@ -133,10 +132,17 @@ class ReservationLocation extends Component
     public function updatedCustomerId()
     {
         $customer = Customer::find($this->customer_id);
-        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->first()->updated_at->addDays(30)->isPast()) {
+        if (User::find($customer->user_id)->membership_payments->first() == null || User::find($customer->user_id)->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast()) {
             session()->flash('error', 'Selected customer does not have any active subscription.');
         } else {
-            $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
+            $location = Location::find($this->selectedLocation)->rooms;
+            foreach ($location as $room) {
+                foreach ($room->maintenance as $maintenance) {
+                    array_push($this->ongoingMaintenance, $maintenance->room_id);
+                }
+            }
+
+            $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
             $this->selectedRoom = NULL;
         }
     }

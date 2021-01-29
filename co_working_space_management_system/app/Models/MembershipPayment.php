@@ -16,6 +16,8 @@ class MembershipPayment extends Model
      */
     public $timestamps = true;
 
+    protected $dates = ['expired_on'];
+
     /**
      * Attributes that are mass assignable
      *
@@ -23,7 +25,8 @@ class MembershipPayment extends Model
      */
     protected $fillable = [
         'membership_id',
-        'user_id'
+        'user_id',
+        'expired_on'
     ];
 
     /**
