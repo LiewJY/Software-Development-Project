@@ -24,7 +24,7 @@
             </thead>
             <tbody>
                 @foreach ($customers as $customer)
-                    <tr class=" h-12">
+                    <tr class=" h-12 text-center">
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->first_name}} {{$customer ->last_name}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->address}}</td>
                         <td class="border border-gray-400 bg-gray-100">{{$customer ->contact_number}}</td>

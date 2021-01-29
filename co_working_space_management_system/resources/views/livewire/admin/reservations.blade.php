@@ -74,70 +74,66 @@
                         {{ session('error') }}
                     </div>
                     @endif
-                    <x-jet-label for="customer_id" value="Customer name" />
-                    <select id="customer_id" wire:model.lazy="customer_id" name="customer_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Customer --</option>
-                        @foreach($customers as $customer)
-                        <option value="{{$customer->id}}">{{$customer->first_name}} {{$customer->last_name}}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="customer_id" />
 
-                    <x-jet-label for="selectedLocation" value="Location" />
-                    <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Location --</option>
-                        @foreach($location as $loc)
-                        <option value="{{$loc->id}}">{{$loc->name}}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="selectedLocation" />
-                    <x-jet-label for="selectedDate" value="Date" />
+                        <x-jet-label for="customer_id" value="Customer name" />
+                        <select id="customer_id" wire:model.lazy="customer_id" name="customer_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="default">-- Select a Customer --</option>
+                            @foreach($customers as $customer)
+                            <option value="{{$customer->id}}">{{$customer->first_name}} {{$customer->last_name}}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="customer_id" />
+
                     @if (is_null($customer_id) || session()->has('error'))
-                    <x-jet-input disabled placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />
+                        <x-jet-label for="selectedLocation" value="Location" />
+                        <select id="selectedLocation" disabled wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="default">-- Select a Location --</option>
+                            @foreach($location as $loc)
+                            <option value="{{$loc->id}}">{{$loc->name}}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="selectedLocation" />
                     @else
-                    <x-jet-input placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />
-                    <x-jet-input-error for="selectedDate" />
+                        <x-jet-label for="selectedLocation" value="Location" />
+                        <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="default">-- Select a Location --</option>
+                            @foreach($location as $loc)
+                            <option value="{{$loc->id}}">{{$loc->name}}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="selectedLocation" />
                     @endif
 
-
-
+                    @if (!is_null($selectedLocation))
+                        <x-jet-label for="selectedDate" value="Date" />
+                        <x-jet-input placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />
+                        <x-jet-input-error for="selectedDate" />
+                    @endif
 
                     @if (!is_null($selectedDate))
-                    <x-jet-label for="selectedRoom" value="Room" />
-                    <select id="selectedRoom" wire:model.lazy="selectedRoom" name="selectedRoom" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Room --</option>
-                        @foreach($rooms as $room)
-                        <option value="{{$room->id}}">{{$room->name}}, {{$room->size}}pax</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="selectedRoom" />
+                        <x-jet-label for="selectedRoom" value="Room" />
+                        <select id="selectedRoom" wire:model.lazy="selectedRoom" name="selectedRoom" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="default">-- Select a Room --</option>
+                            @foreach($rooms as $room)
+                            <option value="{{$room->id}}">{{$room->name}}, {{$room->size}}pax</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="selectedRoom" />
                     @endif
-
+                       
                     @if (!is_null($selectedRoom))
-                    <x-jet-label for="price" value="Price" />
-                    <x-jet-input id="price" readonly type="text" class="mt-1 block w-full" wire:model.lazy="price" />
+                        <x-jet-label for="price" value="Price" />
+                        <x-jet-input id="price" readonly type="text" class="mt-1 block w-full" wire:model.lazy="price" />
 
-                    <x-jet-label for="selectedSlot" value="Slot" />
-                    <select id="selectedSlot" wire:model.lazy="selectedSlot" name="selectedSlot" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Slot --</option>
-                        @foreach($slots as $slot)
-                        <option value="{{$slot->id}}">{{$slot->start_time}} -- {{$slot->end_time}}</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="selectedSlot" />
+                        <x-jet-label for="selectedSlot" value="Slot" />
+                        <select id="selectedSlot" wire:model.lazy="selectedSlot" name="selectedSlot" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="default">-- Select a Slot --</option>
+                            @foreach($slots as $slot)
+                            <option value="{{$slot->id}}">{{$slot->start_time}} -- {{$slot->end_time}}</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="selectedSlot" />
                     @endif
-
-                    @if (!is_null($selectedSlot))
-                    {{-- <x-jet-label for="amount" value="Payment amount" />
-                <x-jet-input id="amount" type="text" class="mt-1 block w-full" wire:model.debounce.200ms="amount" />
-                <x-jet-input-error for="amount" />
-
-                <x-jet-label for="balance" value="Balance" />
-                <x-jet-input id="balance" readonly type="text" class="mt-1 block w-full" wire:model="balance" />
-                <x-jet-input-error for="balance" /> --}}
-
-                    @endif
-
 
                 </x-slot>
                 <x-slot name="footer">

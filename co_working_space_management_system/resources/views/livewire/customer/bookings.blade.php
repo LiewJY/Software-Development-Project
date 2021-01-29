@@ -69,15 +69,6 @@
                     <x-jet-input id="customer_name" type="text" readonly class="mt-1 block w-full" wire:model.lazy="customer_name" />
                     <x-jet-input-error for="customer_name" />
 
-                    {{-- <x-jet-label for="customer_name" value="Name" />
-                <x-jet-input id="customer_name" type="text" class="mt-1 block w-full" wire:model.lazy="customer_name" />
-                <x-jet-input-error for="customer_name" /> --}}
-
-                    <x-jet-label for="selectedDate" value="Date" />
-                    <x-jet-input placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />
-                    <x-jet-input-error for="selectedDate" />
-
-
                     <x-jet-label for="selectedLocation" value="Location" />
                     <select id="selectedLocation" wire:model.lazy="selectedLocation" name="selectedLocation" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="default">-- Select a Location --</option>
@@ -87,17 +78,23 @@
                     </select>
                     <x-jet-input-error for="selectedLocation" />
 
-
                     @if (!is_null($selectedLocation))
-                    <x-jet-label for="selectedRoom" value="Room" />
-                    <select id="selectedRoom" wire:model.lazy="selectedRoom" name="selectedRoom" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                        <option value="default">-- Select a Room --</option>
-                        @foreach($rooms as $room)
-                        <option value="{{$room->id}}">{{$room->name}}, {{$room->size}}pax</option>
-                        @endforeach
-                    </select>
-                    <x-jet-input-error for="selectedRoom" />
+                        <x-jet-label for="selectedDate" value="Date" />
+                        <x-jet-input placeholder="yyyy/mm/dd" id="selectedDate" type="date" class="mt-1 block w-full" wire:model.lazy="selectedDate" />
+                        <x-jet-input-error for="selectedDate" />
                     @endif
+
+                    @if (!is_null($selectedDate))
+                        <x-jet-label for="selectedRoom" value="Room" />
+                        <select id="selectedRoom" wire:model.lazy="selectedRoom" name="selectedRoom" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                            <option value="default">-- Select a Room --</option>
+                            @foreach($rooms as $room)
+                            <option value="{{$room->id}}">{{$room->name}}, {{$room->size}}pax</option>
+                            @endforeach
+                        </select>
+                        <x-jet-input-error for="selectedRoom" />
+                    @endif
+                 
 
                     @if (!is_null($selectedRoom))
                     <x-jet-label for="price" value="Price" />
