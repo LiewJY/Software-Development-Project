@@ -261,7 +261,10 @@
                                 {{ __('Profile') }}
                             </x-jet-dropdown-link>
                             <div class="border-t border-gray-100"></div>
-
+                            <x-jet-dropdown-link href="{{ route('subscriptionhistory') }}">
+                                {{ __('Subscription History') }}
+                            </x-jet-dropdown-link>
+                            <div class="border-t border-gray-100"></div>
                             <x-jet-dropdown-link href="{{ route('bookinghistory') }}">
                                 {{ __('Booking History') }}
                             </x-jet-dropdown-link>
@@ -440,6 +443,9 @@
                 </div>
                 <x-jet-responsive-nav-link href="{{ route('profile.show') }}">
                     {{ __('Profile') }}
+                </x-jet-responsive-nav-link>
+                <x-jet-responsive-nav-link href="{{ route('subscriptionhistory') }}">
+                    {{ __('Membership History') }}
                 </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('bookinghistory') }}">
                     {{ __('Booking History') }}
