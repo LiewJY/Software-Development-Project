@@ -17,13 +17,11 @@ use Livewire\Component;
 
 class BusinessReport extends Component
 {
-    public $locations;
+    public $values = [];
     public $employeeCount, $roomCount, $maintenanceCount, $customerCount, $doneMaintenance;
 
-    public $colors = [
-        'Lake Siennastad' => '#f6ad55',
-        'Leechester' => '#fc8181',
-        'New Holly' => '#90cdf4',
+    protected $rules = [
+        'values.*' => 'required'
     ];
 
     public $firstRun = true;
@@ -59,10 +57,15 @@ class BusinessReport extends Component
         dd($column);
     }
 
+
+    public function click($value)
+    {
+        dd($value);
+    }
+
+
     public function render()
     {
-
-        $this->locations = Location::get("name")->toArray();
         $this->employeeCount = Employee::get()->count();
         $this->roomCount = Room::get()->count();
         $this->maintenanceCount = Maintenance::where('status', 1)->get()->count();
@@ -74,13 +77,14 @@ class BusinessReport extends Component
         $payment = ReservationPayment::join('reservations', 'reservation_payments.id', '=', 'reservations.reservation_payment_id')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
             ->join('locations', 'rooms.location_id', '=', 'locations.id')
-            ->select('locations.name AS reference', 'reservation_payments.amount AS amount')->get();
+            ->select('locations.name AS location', 'reservation_payments.amount AS amount')->get();
 
+        // dd($payment->whereIn('location', $this->values));
 
-        $columnChartModel = $payment->groupBy('reference')
+        $columnChartModel = $payment->whereIn('location', $this->values)->groupBy('location')
             ->reduce(
                 function (ColumnChartModel $columnChartModel, $data) {
-                    $payment = $data->first()->reference;
+                    $payment = $data->first()->location;
                     $value = $data->sum('amount');
                     $color = $this->randomColor();
                     return $columnChartModel->addColumn($payment, $value, $color);
@@ -91,10 +95,10 @@ class BusinessReport extends Component
                     ->withOnColumnClickEventName('onColumnClick')
             );
 
-        $pieChartModel = $payment->groupBy('reference')
+        $pieChartModel = $payment->whereIn('location', $this->values)->groupBy('location')
             ->reduce(
                 function (PieChartModel $pieChartModel, $data) {
-                    $payment = $data->first()->reference;
+                    $payment = $data->first()->location;
                     $value = $data->sum('amount');
                     $color = $this->randomColor();
                     return $pieChartModel->addSlice($payment, $value, $color);
@@ -120,7 +124,7 @@ class BusinessReport extends Component
                         $lineChartModel->addMarker(12, $amountSum);
                     }
 
-                    return $lineChartModel->addPoint($index, $amountSum, ['reference' => $data->reference]);
+                    return $lineChartModel->addPoint($index, $amountSum, ['location' => $data->location]);
                 },
                 (new LineChartModel())
                     ->setTitle('Income Evolution')
@@ -131,7 +135,7 @@ class BusinessReport extends Component
         $areaChartModel = $payment
             ->reduce(
                 function (AreaChartModel $areaChartModel, $data) use ($payment) {
-                    return $areaChartModel->addPoint($data->description, $data->amount, ['reference' => $data->reference]);
+                    return $areaChartModel->addPoint($data->description, $data->amount, ['location' => $data->location]);
                 },
                 (new AreaChartModel())
                     ->setTitle('Income Peaks')
@@ -148,7 +152,8 @@ class BusinessReport extends Component
             'payments' => ReservationPayment::join('reservations', 'reservation_payments.id', '=', 'reservations.reservation_payment_id')
                 ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
                 ->join('locations', 'rooms.location_id', '=', 'locations.id')
-                ->select('locations.name AS reference', 'reservation_payments.amount AS amount')
+                ->select('locations.name AS reference', 'reservation_payments.amount AS amount'),
+            'locations' => Location::all()
         ])
             ->with([
                 'columnChartModel' => $columnChartModel,

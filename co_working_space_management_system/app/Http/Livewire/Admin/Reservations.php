@@ -87,24 +87,24 @@ class Reservations extends Component
      */
     public function store()
     {
-        // $this->validate();
+        $this->validate();
 
-        $room = Room::where('location_id', 1)->first();
-        dd($room->workingRoom());
+        // $room = Room::where('location_id', 1)->first();
+        // dd($room->workingRoom());
 
-        // $payment = ReservationPayment::create([
-        //     'customer_id' => $this->customer_id,
-        //     'amount' => $this->amount,
-        // ]);
+        $payment = ReservationPayment::create([
+            'customer_id' => $this->customer_id,
+            'amount' => $this->price,
+        ]);
 
-        // $reservation = Reservation::create([
-        //     'room_id' => $this->selectedRoom,
-        //     'slot_id' => $this->selectedSlot,
-        //     'reservation_date' => $this->selectedDate,
-        // ]);
+        $reservation = Reservation::create([
+            'room_id' => $this->selectedRoom,
+            'slot_id' => $this->selectedSlot,
+            'reservation_date' => $this->selectedDate,
+        ]);
 
-        // $payment->reservation()->save($reservation);
-        // $this->ReservationForm = false;
+        $payment->reservation()->save($reservation);
+        $this->ReservationForm = false;
     }
 
     /**
