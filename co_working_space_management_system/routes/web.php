@@ -76,6 +76,8 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get("/membershipplans/plans{id}", \App\Http\Livewire\Customer\MembershipPlans::class)->name('membershipPlans');
 
         Route::get("/bookings", \App\Http\Livewire\Customer\Bookings::class)->name('bookings');
+        
+        Route::get("/subscriptionhistory", \App\Http\Livewire\Customer\Subscriptionhistory::class)->name('subscriptionhistory');
 
         Route::get("/bookinghistory", \App\Http\Livewire\Customer\BookingHistory::class)->name('bookinghistory');
 
