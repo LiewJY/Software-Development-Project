@@ -22,9 +22,9 @@ class TwoFactorLoginResponse implements TwoFactorLoginResponseContract
 
         switch ($role) {
             case '0':
-                return redirect()->intended(config('fortify.home'));
+                return redirect()->intended(config('fortify.admin'));
             case '1':
-                return redirect()->intended(config('fortify.home'));
+                return redirect()->intended(config('fortify.employee'));
             default:
                 return redirect()->intended(config('fortify.home'));
         }

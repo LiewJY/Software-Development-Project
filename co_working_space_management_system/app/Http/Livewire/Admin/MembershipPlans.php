@@ -93,7 +93,14 @@ class MembershipPlans extends Component
             $this->deleteConfirmationForm = false;
         }
     }
-
+    
+    /**
+     * Delete confirmation form 
+     *
+     * @param  int $id
+     * @param  string $name
+     * @return void
+     */
     public function deleteModal($id, $name)
     {
         $this->deleteConfirmationForm = true;

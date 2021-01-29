@@ -73,13 +73,11 @@ class BusinessReport extends Component
         $this->customerCount = Customer::get()->count();
 
 
-
         $payment = ReservationPayment::join('reservations', 'reservation_payments.id', '=', 'reservations.reservation_payment_id')
             ->join('rooms', 'reservations.room_id', '=', 'rooms.id')
             ->join('locations', 'rooms.location_id', '=', 'locations.id')
             ->select('locations.name AS location', 'reservation_payments.amount AS amount')->get();
 
-        // dd($payment->whereIn('location', $this->values));
 
         $columnChartModel = $payment->whereIn('location', $this->values)->groupBy('location')
             ->reduce(

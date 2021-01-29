@@ -140,13 +140,10 @@ class Bookings extends Component
     public function updatedSelectedLocation()
     {
 
-        $location = Location::find($this->selectedLocation)->rooms;
+        $location = Location::find($this->selectedLocation)->maintenances()->where('status', 0)->get();
         foreach ($location as $room) {
-            foreach ($room->maintenance as $maintenance) {
-                array_push($this->ongoingMaintenance, $maintenance->room_id);
-            }
+            array_push($this->ongoingMaintenance, $room->room_id);
         }
-
 
         $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
         $this->selectedRoom = NULL;

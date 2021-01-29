@@ -6,9 +6,7 @@ use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Maintenance;
 use App\Models\Room;
-use App\Models\Location;
 use App\Models\Employee;
-
 
 
 use Illuminate\Support\Facades\Auth;
@@ -23,6 +21,11 @@ class Maintenances extends Component
     public $deleteConfirmationForm = false;
     protected $employeeID;
 
+    /**
+     * Validation rules for maintenance class attributes
+     *
+     * @var array
+     */
     protected $rules = [
         'room_id' => ['required'],
         'employee_id' => ['required'],
@@ -59,6 +62,11 @@ class Maintenances extends Component
         $this->maintenanceForm = true;
     }
 
+    /**
+     * Update or create maintenance
+     *
+     * @return void
+     */
     public function store()
     {
         $validatedData = $this->validate();
@@ -71,6 +79,12 @@ class Maintenances extends Component
     }
 
 
+    /**
+     * Fill in the attrivute accordingly to the data from database
+     *
+     * @param  int $id
+     * @return void
+     */
     public function edit($id)
     {
         $this->maintenanceForm = true;
@@ -84,17 +98,30 @@ class Maintenances extends Component
         $this->description = $maintenance->description;
         $this->status = $maintenance->status;
     }
+
+    /**
+     * Delete confirmation form
+     *
+     * @param  int $id
+     * @return void
+     */
     public function deleteModal($id)
     {
         $this->deleteConfirmationForm = true;
         $maintenance = Maintenance::findorFail($id);
-        $room = room::join('locations', 'rooms.location_id', '=', 'locations.id')
+        $room = Room::join('locations', 'rooms.location_id', '=', 'locations.id')
             ->select('rooms.*', 'locations.name as location_name')
             ->first();
         $this->name = $room['name'] . ', ' . $room['location_name'];
         $this->maintenance_id = $maintenance->id;
     }
 
+    /**
+     * Delete selected maintenance
+     *
+     * @param  int  $id
+     * @return void
+     */
     public function delete($id)
     {
         $maintenance = Maintenance::where('id', $id)->firstorfail();

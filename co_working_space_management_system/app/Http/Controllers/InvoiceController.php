@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-
 use LaravelDaily\Invoices\Invoice;
 use LaravelDaily\Invoices\Classes\Buyer;
 use LaravelDaily\Invoices\Classes\InvoiceItem;
@@ -46,8 +44,8 @@ class InvoiceController extends Controller
             ],
         ]);
         $item = (new InvoiceItem())->title($membershipsPayment->membership['name'] . ' Plan (30 days subscription)')
-                ->pricePerUnit($membershipsPayment->membership->price);
-        
+            ->pricePerUnit($membershipsPayment->membership->price);
+
         $invoice = Invoice::make()
             ->logo(public_path('vendor/invoices/logo.png'))
             ->name("Membership Invoice")

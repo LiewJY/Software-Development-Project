@@ -2,6 +2,7 @@
 
 namespace App\Http\Responses;
 
+use Illuminate\Support\Facades\Auth;
 use Laravel\Fortify\Contracts\LoginResponse as LoginResponseContract;
 
 class LoginResponse implements LoginResponseContract
@@ -14,7 +15,7 @@ class LoginResponse implements LoginResponseContract
      */
     public function toResponse($request)
     {
-        $role = \Auth::user()->role;
+        $role = Auth::user()->roles;
 
         if ($request->wantsJson()) {
             return response()->json(['two_factor' => false]);
@@ -22,11 +23,11 @@ class LoginResponse implements LoginResponseContract
 
         switch ($role) {
             case 0:
-                return redirect()->intended(config('fortify.home')); //admin dashboard
+                return redirect()->intended(config('fortify.admin')); //admin dashboard
             case 1:
-                return redirect()->intended(config('fortify.home')); //employee dashboard
+                return redirect()->intended(config('fortify.employee')); //employee dashboard
             default:
-                return redirect()->intended(config('fortify.home')); //customer dashboard
+                return redirect()->intended(config('fortify.admin')); //customer dashboard
         }
     }
 }

@@ -2,13 +2,10 @@
 
 namespace App\Http\Livewire\Admin;
 
-// use App\Actions\Fortify\PasswordValidationRules;
-use Illuminate\Validation\Rule;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Employee;
 use App\Models\User;
-use Illuminate\Support\Facades\Validator;
 
 class Staff extends Component
 {

@@ -47,7 +47,6 @@ class MembershipPlans extends Component
 
         $user = User::find(Auth::user()->id);
         $payment = $user->membership_payments->sortByDesc('created_at')->first();
-        $expired_on = Carbon::now()->addDays(30);
 
         if ($payment == null) {
 

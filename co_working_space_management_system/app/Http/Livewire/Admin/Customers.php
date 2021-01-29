@@ -5,7 +5,6 @@ namespace App\Http\Livewire\Admin;
 use Livewire\Component;
 use Livewire\WithPagination;
 use App\Models\Customer;
-use App\Models\User;
 
 class Customers extends Component
 {
@@ -27,7 +26,8 @@ class Customers extends Component
         'address' => ['required', 'string', 'max:255'],
         'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
     ];
-
+    
+    
     public function render()
     {
         return view('livewire.admin.customers', [
