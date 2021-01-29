@@ -10,13 +10,12 @@ use App\Models\Room;
 use App\Models\Location;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
-
-
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Auth;
 
 class Bookings extends Component
-{
+{   
     use WithPagination;
     //public $search = '';
     //protected $queryString = ['search'];
@@ -119,6 +118,7 @@ class Bookings extends Component
 
     public function add()
     {
+        Session::forget('error');
         if (Auth::user()->membership_payments->first() == null || Auth::user()->membership_payments->first()->updated_at->addDays(30)->isPast()) {
             session()->flash("error", "You dont have any active subscription. Please subscribe to any available plans before proceeding.");
         } else {
