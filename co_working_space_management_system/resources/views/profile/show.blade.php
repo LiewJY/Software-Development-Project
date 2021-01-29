@@ -33,11 +33,7 @@
 
                                     @elseif (Auth::user()->membership_payments->sortByDesc('created_at')->first()->expired_on->isToday())
 
-                                    {{Auth::user()->membership_payments->->sortByDesc('created_at')->first()->membership->first()->name}}
-
-                                    @else
-
-                                    {{Auth::user()->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}}
+                                    {{Auth::user()->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}} @else {{Auth::user()->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}}
 
                                     @endif
 

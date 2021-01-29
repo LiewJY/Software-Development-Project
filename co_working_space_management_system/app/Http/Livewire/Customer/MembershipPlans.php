@@ -54,22 +54,22 @@ class MembershipPlans extends Component
             MembershipPayment::create([
                 'membership_id' => $this->plans_id,
                 'user_id' => Auth::user()->id,
-                'expired_on' => $expired_on
+                'expired_on' => Carbon::now()->addDays(30)
             ]);
 
             $this->subscriptionConfirmation = false;
-        } elseif ($payment != null && $payment->updated_at->addDays(30)->isPast()) {
+        } elseif ($payment != null && $payment->expired_on->isPast()) {
 
             MembershipPayment::create([
                 'membership_id' => $this->plans_id,
                 'user_id' => Auth::user()->id,
-                'expired_on' => $expired_on
+                'expired_on' => Carbon::now()->addDays(30)
             ]);
 
             $this->subscriptionConfirmation = false;
         } else {
 
-            $endDate = $payment->updated_at->addDays(30)->toDateString();
+            $endDate = $payment->expired_on->toDateString();
             session()->flash('message', 'Could not subscribe when you have an active subscription. End at' . $endDate);
         }
     }

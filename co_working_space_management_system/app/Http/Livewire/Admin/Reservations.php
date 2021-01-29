@@ -6,6 +6,7 @@ use Livewire\WithPagination;
 use App\Models\Reservation;
 use App\Models\Customer;
 use App\Models\Location;
+use App\Models\Maintenance;
 use App\Models\Room;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
@@ -138,6 +139,9 @@ class Reservations extends Component
      */
     public function updatedSelectedLocation()
     {
+
+        var_dump(Location::find($this->selectedLocation)->rooms()->maintenance->where('status', 0));
+
         $this->rooms = Room::where('location_id', $this->selectedLocation)->get();
         $this->selectedRoom = NULL;
     }
