@@ -36,4 +36,14 @@ class BookingHistory extends Component
     {
         return redirect()->route('bookings');
     }
+        /**
+     * open receipt
+     *
+     * @param  mixed $id
+     * @return void
+     */
+    public function print($id)
+    {
+        return redirect()->route('printreservation', ['id' => $id]);
+    }
 }
