@@ -44,7 +44,7 @@
                             <td class="border border-gray-400 bg-gray-100">RM {{$subscription->membership->price}}</td>
                             <td class="border border-gray-400 bg-gray-100">
                                 <div class="border-none flex flex-row flex-nowrap justify-center">
-                                    <x-jet-button class="mx-2" wire:click="print({{$subscription->id}})">Print Receipt</x-jet-button>
+                                    <x-jet-button class="mx-2" wire:click="print({{$subscription->id}})">Print Invoice</x-jet-button>
                                 </div>
                             </td>
                         </tr>               

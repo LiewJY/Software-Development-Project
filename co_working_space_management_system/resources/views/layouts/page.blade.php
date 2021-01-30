@@ -18,6 +18,10 @@
     <link rel="dns-prefetch" href="//fonts.gstatic.com">
     <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
     
+    
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+    
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
@@ -69,6 +73,9 @@
                         </div>
                         @elseif(Auth::user()->roles == 0)
                         <div class="flex space-x-4">
+                            <x-jet-nav-link href="{{ route('business-report') }}" :active="request()->routeIs('business-report')">
+                                {{ __('Business Report') }}
+                            </x-jet-nav-link>
                             <x-jet-nav-link href="{{ route('Staff') }}" :active="request()->routeIs('Staff')">
                                 {{ __('Employee') }}
                             </x-jet-nav-link>
@@ -84,9 +91,7 @@
                             <x-jet-nav-link href="{{ route('membership-plans') }}" :active="request()->routeIs('membership-plans')">
                                 {{ __('Membership Plans') }}
                             </x-jet-nav-link>
-                            <x-jet-nav-link href="{{ route('business-report') }}" :active="request()->routeIs('business-report')">
-                                {{ __('Business Report') }}
-                            </x-jet-nav-link>
+
                             <x-jet-nav-link href="{{ route('adminlocation') }}" :active="request()->routeIs('adminlocation')">
                                 {{ __('Locations') }}
                             </x-jet-nav-link>
@@ -318,6 +323,9 @@
 
                 @elseif(Auth::user()->roles == 0)
 
+                <x-jet-responsive-nav-link href="{{ route('business-report') }}" :active="request()->routeIs('business-report')">
+                    {{ __('Business Report') }}
+                </x-jet-responsive-nav-link>
                 <x-jet-responsive-nav-link href="{{ route('Staff') }}" :active="request()->routeIs('Staff')">
                     {{ __('Employee') }}
                 </x-jet-responsive-nav-link>

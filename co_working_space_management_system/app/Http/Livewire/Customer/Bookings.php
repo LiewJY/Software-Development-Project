@@ -10,13 +10,12 @@ use App\Models\Room;
 use App\Models\Location;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
-
-
+use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Auth;
 
 class Bookings extends Component
-{
+{   
     use WithPagination;
     //public $search = '';
     //protected $queryString = ['search'];
