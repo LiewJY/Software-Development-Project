@@ -3,10 +3,6 @@
     <div class="flex flex-row flex-wrap-reverse justify-between mt-4 px-2 py-2">
         <div class="w-full md:w-1/2">
             <h1 class="px-2 font-bold text-xl md:text-2xl pt-2">Subscription History</h1>
-            {{-- <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Location"/> --}}
-        </div>
-        <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
-            {{-- <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add"></x-jet-button> --}}
         </div>
     </div>
     <br>
@@ -17,7 +13,7 @@
                     Subscription History
                 </x-slot>
                 <x-slot name="content">
-                    Looks like you do not have any subscription
+                    Looks like you do not have any subscription yet.
                 </x-slot>
             </x-emptyTable>
         @else

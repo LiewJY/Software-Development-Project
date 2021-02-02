@@ -7,6 +7,12 @@
     </p>
   </div>
 
+  @if (session()->has('success'))
+  <div id="alert" class="relative py-3 pl-4 pr-10 leading-normal text-green-700 bg-green-100 rounded-lg">
+    <p>{{ session('success') }}</p>
+  </div>
+  @endif
+
   <div class="container px-5 py-3 mx-auto flex flex-col">
     <!-- Content -->
     <div class="flex flex-wrap mx-1 my-5">
@@ -25,7 +31,7 @@
         </div>
         <h2 class="sm:text-3xl text-2xl title-font font-bold text-gray-900 mt-4 mb-4">Features</h2>
 
-
+        {{-- seperate description into point form --}}
         @php
         $descriptions = $membership->description;
         $description = (explode(",",$descriptions));
@@ -39,10 +45,12 @@
         </div>
         @endforeach
       </div>
+
+      {{-- credit card info --}}
       <div class="p-12 lg:w-1/2 w-full flex flex-col items-start border border-gray-300 bg-gray-100 rounded-lg mt-2 lg:mt-0">
         <form class="w-full">
           <x-jet-label for="card_type" value="Card Type" />
-          <select id="card_type" wire:model.lazy="card_type" name="card_type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+          <select id="card_type" name="card_type" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
             <option value="default">Select a Card</option>
             <option value="">Visa</option>
             <option value="">Master</option>
@@ -50,54 +58,47 @@
           <x-jet-input-error for="card_type" />
 
           <x-jet-label for="card_number" value="Card Number" />
-          <x-jet-input readonly id="card_number" type="text" class="mt-1 block w-full" wire:model.lazy="card_number" />
+          <x-jet-input  id="card_number" type="text" class="mt-1 block w-full" />
           <x-jet-input-error for="card_number" />
 
           <x-jet-label for="exp_date" value="Expire Date" />
           <div class="flex justify-between gap-3">
             <span class="w-1/2">
               <x-jet-label for="month" value="Month" />
-              <x-jet-input id="month" readonly type="text" class="mt-1 block w-full" wire:model.lazy="month" />
+              <x-jet-input id="month"  type="text" class="mt-1 block w-full" />
               <x-jet-input-error for="month" />
             </span>
             <span class="w-1/2">
               <x-jet-label for="year" value="Year" />
-              <x-jet-input id="year" readonly type="text" class="mt-1 block w-full" wire:model.lazy="year" />
+              <x-jet-input id="year"  type="text" class="mt-1 block w-full" />
               <x-jet-input-error for="year" />
             </span>
           </div>
           <x-jet-label for="card_cvc" value="Card CVV2/CVC2/4DBC" />
-          <x-jet-input readonly id="card_cvc" type="text" class="mt-1 block w-1/4" wire:model.lazy="card_cvc" />
+          <x-jet-input  id="card_cvc" type="text" class="mt-1 block w-1/4" />
           <x-jet-input-error for="card_cvc" />
 
-
           <div class="py-4 bg-gray-100 text-left">
-            <x-jet-button wire:click="subscribe">Clear</x-jet-button>
-            {{-- this need to be type = "button" or not the form willl submit and not show popup --}}
             <x-jet-button type="button" wire:click="subscriptionConfirmationModal('{{$membership->name}}',  {{$membership->price}})">Pay</x-jet-button>
           </div>
         </form>
-
-
-
       </div>
     </div>
   </div>
   @endforeach
+
   <!-- confirmaiton Modal -->
   <x-jet-dialog-modal wire:model="subscriptionConfirmation">
-
     <x-slot name="title">
       <h1>Subscription Confirmation</h1>
     </x-slot>
     <form>
       <x-slot name="content">
-
         <p>You are going to subscribe to the {{$plan_name}} Plan for ONE MONTH with price of RM {{$plan_cost}}.</p>
         <div>
           @if (session()->has('message'))
-          <div class="alert alert-success text-right">
-            {{ session('message') }}
+          <div id="alert" class="relative py-3 pl-4 pr-10 leading-normal text-yellow-700 bg-yellow-100 rounded-lg">
+            <p>{{ session('message') }}</p>
           </div>
           @endif
         </div>
@@ -109,3 +110,13 @@
     </form>
   </x-jet-dialog-modal>
 </div>
+
+<script>
+  document.addEventListener("livewire:load", function(event) {
+    window.livewire.hook('message.processed', () => {
+      setTimeout(function() {
+        $('#alert').fadeOut('slow');
+      }, 5000);
+    });
+  });
+</script>

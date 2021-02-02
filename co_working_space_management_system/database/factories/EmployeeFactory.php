@@ -4,9 +4,6 @@ namespace Database\Factories;
 
 use App\Models\Employee;
 use Illuminate\Database\Eloquent\Factories\Factory;
-use Illuminate\Support\Facades\App;
-use App\Models\User;
-use Database\Seeders\UserSeeder;
 
 class EmployeeFactory extends Factory
 {
@@ -28,10 +25,8 @@ class EmployeeFactory extends Factory
             'first_name' => $this->faker->firstName,
             'last_name' => $this->faker->lastName,
             'address' => $this->faker->address,
-            'contact_number' => rand(12, 12),
+            'contact_number' => $this->faker->mobileNumber($countryCodePrefix = false, $formatting = false),
             // 'user_id' => User::factory()
         ];
-
-      
     }
 }

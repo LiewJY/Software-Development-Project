@@ -10,7 +10,7 @@ class Reservation extends Model
     use HasFactory;
 
     /**
-     * Attribute that are mass assignable
+     * Attributes that are mass assignable
      *
      * @var array
      */

@@ -15,7 +15,12 @@ class LocationDetails extends Component
         $this->details_id = $id;
         $this->details = Location::findorFail($id);
     }
-
+    
+    /**
+     * Show selected location's details
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.customer.location-details', [

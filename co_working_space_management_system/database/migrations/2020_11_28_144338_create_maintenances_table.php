@@ -15,7 +15,7 @@ class CreateMaintenancesTable extends Migration
     {
         Schema::create('maintenances', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_id')->nullable()->constrained();
+            $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('employee_id')->nullable()->constrained()->onDelete('set null');
             $table->string('description')->nullable();
             $table->boolean('status')->default(false);

@@ -13,6 +13,11 @@ class BookingHistory extends Component
     public $user_id, $customer_id;
 
 
+    /**
+     * Show cutomer's booking history page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         $this->user_id = Auth::user()->id;
@@ -36,7 +41,7 @@ class BookingHistory extends Component
     {
         return redirect()->route('bookings');
     }
-        /**
+    /**
      * open receipt
      *
      * @param  mixed $id

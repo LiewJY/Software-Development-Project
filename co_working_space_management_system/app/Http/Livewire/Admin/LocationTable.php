@@ -9,9 +9,40 @@ use App\Models\Location;
 class LocationTable extends Component
 {
     use WithPagination;
+
+
+    /**
+     * Edit and create location form
+     *
+     * @var bool
+     */
     public $locationForm = false;
+
+    /**
+     * Delete confirmation form
+     *
+     * @var bool
+     */
     public $deleteConfirmationForm = false;
+
+
+    /**
+     * Location component attributes
+     *
+     * @var string name
+     * @var string address
+     * @var string contact_number
+     * @var string description
+     * @var string location id
+     */
     public $name, $address, $contact_number, $description, $locationID;
+
+
+    /**
+     * Search query
+     *
+     * @var string
+     */
     public $search = '';
     protected $queryString = ['search'];
 
@@ -29,6 +60,11 @@ class LocationTable extends Component
     ];
 
 
+    /**
+     * Show the location management page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.admin.location-table', [
@@ -37,9 +73,15 @@ class LocationTable extends Component
     }
 
 
+    /**
+     * Show and reset component attributes when clicking add button 
+     *
+     * @return \Illuminate\View\View
+     */
     public function add()
     {
         $this->reset();
+        $this->resetErrorBag();
         $this->locationForm = true;
     }
 
@@ -70,11 +112,11 @@ class LocationTable extends Component
         // Location::create($validatedData);
 
         $this->locationForm = false;
-
-        session()->flash(
-            'message',
-            $this->locationID ? 'Location Updated Successfully.' : 'Location Created Successfully.'
-        );
+        if ($this->locationID != null) {
+            session()->flash('success', 'Location infomation updated.');
+        } else {
+            session()->flash('success', 'Location created');
+        };
     }
 
     /**
@@ -87,6 +129,7 @@ class LocationTable extends Component
     {
 
         $this->locationForm = true;
+        $this->resetErrorBag();
         $location = Location::findOrFail($id);
         $this->locationID = $id;
         $this->name = $location->name;
@@ -96,6 +139,13 @@ class LocationTable extends Component
     }
 
 
+    /**
+     * Show delete confirmation form
+     *
+     * @param  int $id
+     * @param  string $name
+     * @return \Illuminate\View\View
+     */
     public function deleteModal($id, $name)
     {
         $this->deleteConfirmationForm = true;
@@ -113,5 +163,6 @@ class LocationTable extends Component
     {
         Location::where('id', $id)->delete();
         $this->deleteConfirmationForm = false;
+        session()->flash('success', 'Location successfully removed');
     }
 }

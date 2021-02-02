@@ -32,6 +32,11 @@ class MembershipPlans extends Component
     ];
 
 
+    /**
+     * Show membership plan management page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.admin.membership-plans', [
@@ -39,9 +44,15 @@ class MembershipPlans extends Component
         ])->layout('layouts.page');
     }
 
+    /**
+     * add
+     *
+     * @return \Illuminate\View\View
+     */
     public function add()
     {
         $this->reset();
+        $this->resetErrorBag();
         $this->membershipForm = true;
     }
 
@@ -59,6 +70,11 @@ class MembershipPlans extends Component
         );
 
         $this->membershipForm = false;
+        if ($this->membershipID != null) {
+            session()->flash('success', 'Membership Plan infomation updated.');
+        } else {
+            session()->flash('success', 'Membership Plan successfully added.');
+        };
     }
 
     /**
@@ -70,6 +86,7 @@ class MembershipPlans extends Component
     public function edit($id)
     {
         $this->membershipForm = true;
+        $this->resetErrorBag();
         $membership = Membership::findorFail($id);
         $this->membershipID = $id;
         $this->name =  $membership->name;
@@ -85,15 +102,19 @@ class MembershipPlans extends Component
      */
     public function delete($id)
     {
-        if (!isEmpty(MembershipPayment::where('membership_id', $id)->whereDate('expired_on', '>', Carbon::now())->get())) {
+        $date = Carbon::now()->toDateString();
+        $membership = MembershipPayment::where('membership_id', $id)->whereDate('expired_on', '>', $date)->get();
+
+        if (!$membership->isEmpty()) {
             session()->flash("error", "Could not delete membership plan when there is active subscription");
         } else {
             $membership = Membership::where('id', $id)->firstorfail();
             $membership->delete();
             $this->deleteConfirmationForm = false;
+            session()->flash('success', 'Membership Plan successfully removed.');
         }
     }
-    
+
     /**
      * Delete confirmation form 
      *

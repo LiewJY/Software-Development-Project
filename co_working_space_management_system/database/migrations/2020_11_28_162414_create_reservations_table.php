@@ -15,7 +15,7 @@ class CreateReservationsTable extends Migration
     {
         Schema::create('reservations', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('room_id')->nullable()->constrained();
+            $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
             $table->foreignId('slot_id')->nullable()->constrained();
             $table->date('reservation_date')->nullable();
         });

@@ -38,6 +38,11 @@ class MaintenanceRoom extends Component
         $this->location = Location::findorFail($id);
     }
 
+    /**
+     * Show selected location's maintenance
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.employee.maintenance-room', [
@@ -62,8 +67,8 @@ class MaintenanceRoom extends Component
      */
     public function add()
     {
-        $this->reset('maintenance_id');
         $this->reset('maintenance_id', 'room_id', 'employee_id', 'description', 'status', 'employee_name', 'name');
+        $this->resetErrorBag();
         $this->user = Auth::user()->id;
         $employee_info = Employee::where('user_id', $this->user)->select('employees.*')->first();
         $this->employee_name = $employee_info['last_name'] . ' ' . $employee_info['first_name'];
@@ -86,7 +91,14 @@ class MaintenanceRoom extends Component
             $validatedData
         );
         $this->maintenanceForm = false;
+
         $this->completeConfirmationForm = false;
+
+        if ($this->maintenance_id != null) {
+            session()->flash('success', 'Maintenance infomation updated.');
+        } else {
+            session()->flash('success', 'Maintenance successfully created');
+        };
     }
 
 
@@ -98,6 +110,7 @@ class MaintenanceRoom extends Component
      */
     public function edit($id)
     {
+        $this->resetErrorBag();
         $this->maintenanceForm = true;
         $maintenance = Maintenance::findorFail($id);
         $this->maintenance_id = $id;

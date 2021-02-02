@@ -24,15 +24,15 @@ class Reservations extends Component
 
     public $selectedLocation, $selectedDate, $selectedRoom, $selectedSlot = null;
     public $locations, $rooms, $slots, $price, $amount, $balance;
-    public $customer_id, $reservationID;
+    public $customer_id, $reservationID, $expired;
 
     public $ongoingMaintenance = [];
 
 
     /**
-     * Return blade view
+     * Show reservation management page
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function render()
     {
@@ -57,18 +57,23 @@ class Reservations extends Component
             ]
         )->layout('layouts.page');
     }
+
+
     /**
      * Validation rules
      *
-     * @var array
+     * @return array
      */
-    protected $rules = [
-        'selectedLocation' => ['required'],
-        'selectedDate' => ['required', 'date', "after_or_equal:today"],
-        'selectedRoom' => ['required'],
-        'selectedSlot' => ['required'],
-        'customer_id' => ['required'],
-    ];
+    public function rules()
+    {
+        return [
+            'selectedLocation' => ['required'],
+            'selectedDate' => ['required', 'date', 'after_or_equal:today', 'before_or_equal:' . $this->expired],
+            'selectedRoom' => ['required'],
+            'selectedSlot' => ['required'],
+            'customer_id' => ['required'],
+        ];
+    }
 
 
     /**
@@ -92,9 +97,6 @@ class Reservations extends Component
     {
         $this->validate();
 
-        // $room = Room::where('location_id', 1)->first();
-        // dd($room->workingRoom());
-
         $payment = ReservationPayment::create([
             'customer_id' => $this->customer_id,
             'amount' => $this->price,
@@ -107,6 +109,7 @@ class Reservations extends Component
         ]);
 
         $payment->reservation()->save($reservation);
+        session()->flash('success', 'Reservation successfully created.');
         $this->ReservationForm = false;
     }
 
@@ -118,6 +121,7 @@ class Reservations extends Component
     public function add()
     {
         $this->reset();
+        $this->resetErrorBag();
         $this->ReservationForm = true;
     }
 
@@ -146,6 +150,8 @@ class Reservations extends Component
             array_push($this->ongoingMaintenance, $room->room_id);
         }
 
+        $customer = Customer::find($this->customer_id);
+        $this->expired = User::find($customer->user_id)->membership_payments->sortByDesc('created_at')->first()->expired_on->toDateString();
 
         $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
         $this->selectedRoom = NULL;
@@ -211,6 +217,7 @@ class Reservations extends Component
         $reservation = Reservation::find($id);
         ReservationPayment::find($reservation->reservation_payment_id)->delete();
         $this->deleteConfirmationForm = false;
+        session()->flash('success', 'Reservation sucessfully canceled.');
     }
 
     /**

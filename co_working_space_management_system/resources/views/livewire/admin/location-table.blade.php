@@ -10,8 +10,27 @@
         </div>
     </div>
     <br>
-
+    @if (session()->has('success'))
+    <div id="alert" class="relative py-3 pl-4 pr-10 leading-normal text-green-700 bg-green-100 rounded-lg">
+        <p>{{ session('success') }}</p>
+    </div>
+    <br>
+    @endif
     <div class="overflow-x-auto mx-1">
+        @if(count($locations) === 0 )
+        <x-emptyTable>
+            <x-slot name="header">
+                Location
+            </x-slot>
+            <x-slot name="content">
+                @if(!empty($search))
+                There are no record of locaiton with the name "{{$search}}"
+                @else
+                Looks like there are no location record.
+                @endif
+            </x-slot>
+        </x-emptyTable>
+        @else
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>
                 <tr>
@@ -35,14 +54,13 @@
                             <x-jet-button class="mx-2" wire:click="deleteModal({{$location->id}}, '{{$location->name}}')">Delete</x-jet-button>
                         </div>
                     </td>
-
-
                 </tr>
                 @endforeach
             </tbody>
         </table>
         <br>
         {{$locations->links()}}
+        @endif
 
         <x-jet-dialog-modal wire:model="locationForm">
             <x-slot name="title">
@@ -90,10 +108,12 @@
             <form>
                 <x-slot name="content">
                     <p>Are you sure you want to remove the location with the name {{$name}}</p>
+                    <p class="font-bold"> This will delete all the rooms and it's maintenances related this location.</p>
+
                 </x-slot>
                 <x-slot name="footer">
                     <x-jet-danger-button wire:click="delete({{$locationID}})">Delete</x-jet-button>
-                    <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
+                        <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>
         </x-jet-dialog-modal>

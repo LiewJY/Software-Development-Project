@@ -30,7 +30,7 @@
                     <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
                         <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">STARBUCKS
                         </h1>
-                        <p class="mb-8 leading-relaxed">We from Starbucks would definitely recommend the space for anyone or any team who is looking for functional office space with great facilities. ShareSpace allowed for us to operate individually and in a collaborative environment within the various room configuration.</p>
+                        <p class="mb-8 leading-relaxed text-justify">We from Starbucks would definitely recommend the space for anyone or any team who is looking for functional office space with great facilities. ShareSpace allowed for us to operate individually and in a collaborative environment within the various room configuration.</p>
                         <div class="flex justify-center">
                         </div>
                     </div>
@@ -45,7 +45,7 @@
                     <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
                         <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">HUAWEI
                         </h1>
-                        <p class="mb-8 leading-relaxed">ShareSpace allows us the flexibility to quickly add people while maximizing efficiency and productivity. This is an ideal space for our needs, located at the heart of Kuala Lumpur.</p>
+                        <p class="mb-8 leading-relaxed text-justify">ShareSpace allows us the flexibility to quickly add people while maximizing efficiency and productivity. This is an ideal space for our needs, located at the heart of Kuala Lumpur.</p>
                         <div class="flex justify-center">
                         </div>
                     </div>
@@ -61,7 +61,7 @@
                     <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
                         <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">GOOGLE
                         </h1>
-                        <p class="mb-8 leading-relaxed">Besides the essentials that are unlimited coffee and free wifi, We like ShareSpace because of the balance of the creative-corporate working environment. It's a place that's conducive to work, but at the same time have lounges to relax on when you need a break.</p>
+                        <p class="mb-8 leading-relaxed text-justify">Besides the essentials that are unlimited coffee and free wifi, We like ShareSpace because of the balance of the creative-corporate working environment. It's a place that's conducive to work, but at the same time have lounges to relax on when you need a break.</p>
                         <div class="flex justify-center">
                         </div>
                     </div>
@@ -72,12 +72,12 @@
             <section class="text-black body-font">
                 <div class="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center">
                     <div class="lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0 shadow-md">
-                        <img class="object-cover object-center rounded" alt="burger king" src="https://logos-world.net/wp-content/uploads/2020/04/Burger-King-Logo-1999-present.jpg">
+                        <img class="object-cover object-center rounded" alt="burger king" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/79/Burger_King_logo.svg/1200px-Burger_King_logo.svg.png">
                     </div>
                     <div class="lg:flex-grow md:w-1/2 lg:pl-24 md:pl-16 flex flex-col md:items-start md:text-left items-center text-center">
                         <h1 class="title-font sm:text-4xl text-3xl mb-4 font-medium text-gray-900">BURGER KING
                         </h1>
-                        <p class="mb-8 leading-relaxed">ShareSpace is a great place to work, everyone is really friendly and focused. Its hard not to get things done with a hive of busy people working quietly around you. The views are a bonus as it's located in the center of Kuala Lumpur.</p>
+                        <p class="mb-8 leading-relaxed text-justify">ShareSpace is a great place to work, everyone is really friendly and focused. Its hard not to get things done with a hive of busy people working quietly around you. The views are a bonus as it's located in the center of Kuala Lumpur.</p>
                         <div class="flex justify-center">
                         </div>
                     </div>

@@ -10,10 +10,11 @@ class Reservations extends Component
 {
     public $search = '';
     protected $queryString = ['search'];
+
     /**
-     * Return blade view
+     * Show location with reservation count
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function render()
     {
@@ -24,6 +25,14 @@ class Reservations extends Component
             ]
         )->layout('layouts.page');
     }
+
+        
+    /**
+     * Redirect to show all location's reservations page
+     *
+     * @param  int $location
+     * @return \Illuminate\View\View
+     */
     public function room($location)
     {
         return redirect()->route('reservationlocation', ['id' => $location]);

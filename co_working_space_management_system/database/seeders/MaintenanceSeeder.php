@@ -18,18 +18,17 @@ class MaintenanceSeeder extends Seeder
      */
     public function run()
     {
-        $faker = Faker::create();
+        $faker = Faker::create('ms_MY');
         $employees = Employee::pluck('id');
         $rooms = Room::pluck('id');
 
-        foreach (range(1,20) as $index) {
+        foreach (range(1, 20) as $index) {
             Maintenance::create([
                 'room_id' => $faker->randomElement($rooms),
                 'employee_id' => $faker->randomElement($employees),
                 'description' => $faker->sentence($nbWords = 6, $variableNbWords = true),
                 'status' => $faker->numberBetween(0, 1)
             ]);
-        } 
-
+        }
     }
 }

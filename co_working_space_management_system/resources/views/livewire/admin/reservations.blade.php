@@ -10,6 +10,13 @@
         </div>
     </div>
     <br>
+    @if (session()->has('success'))
+    <div id="alert"  class="relative py-3 pl-4 pr-10 leading-normal text-green-700 bg-green-100 rounded-lg">
+        <p>{{ session('success') }}</p>
+    </div>
+    <br>
+    @endif
+
     <div class="overflow-x-auto mx-1">
         @if(count($reservations) === 0 )
         <x-emptyTable>
@@ -20,7 +27,6 @@
                 Looks like there are no reservation record
             </x-slot>
         </x-emptyTable>
-
         @else
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>

@@ -27,7 +27,7 @@ class LoginResponse implements LoginResponseContract
             case 1:
                 return redirect()->intended(config('fortify.employee')); //employee dashboard
             default:
-                return redirect()->intended(config('fortify.admin')); //customer dashboard
+                return redirect()->intended(config('fortify.home')); //customer dashboard
         }
     }
 }

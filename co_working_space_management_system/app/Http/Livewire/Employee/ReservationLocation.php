@@ -24,20 +24,20 @@ class ReservationLocation extends Component
     public $locations, $rooms, $slots, $price, $amount, $balance;
     public $customer_id, $reservationID;
 
-    public $location, $loc_name, $location_id;
+    public $location, $location_id, $expired;
     public $ongoingMaintenance = [];
 
     public function mount($id)
     {
         $this->location_id = $id;
         $this->selectedLocation = $id;
-        $location = Location::findorFail($id);
-        $this->loc_name = $location->name;
+        $this->location = Location::findorFail($id);
     }
+
     /**
-     * Return blade view
+     * Show all upcoming reservations on selected locations
      *
-     * @return void
+     * @return \Illuminate\View\View
      */
     public function render()
     {
@@ -63,18 +63,24 @@ class ReservationLocation extends Component
         )->layout('layouts.page');
     }
 
+
+
     /**
      * Validation rules
      *
-     * @var array
+     * @return array
      */
-    protected $rules = [
-        'selectedLocation' => ['required'],
-        'selectedDate' => ['required', 'date', "after_or_equal:today"],
-        'selectedRoom' => ['required'],
-        'selectedSlot' => ['required'],
-        'customer_id' => ['required'],
-    ];
+    public function rules()
+    {
+
+        return [
+            'selectedLocation' => ['required'],
+            'selectedDate' => ['required', 'date', 'after_or_equal:today', 'before_or_equal:' . $this->expired],
+            'selectedRoom' => ['required'],
+            'selectedSlot' => ['required'],
+            'customer_id' => ['required'],
+        ];
+    }
 
 
     /**
@@ -111,6 +117,7 @@ class ReservationLocation extends Component
 
         $payment->reservation()->save($reservation);
         $this->ReservationForm = false;
+        session()->flash('success', 'Reservation successfully created.');
     }
 
     /**
@@ -121,6 +128,7 @@ class ReservationLocation extends Component
     public function add()
     {
         $this->reset('selectedDate', 'selectedRoom', 'selectedSlot', 'locations', 'rooms', 'slots', 'price', 'amount', 'balance', 'customer_id', 'reservationID');
+        $this->resetErrorBag();
         $this->ReservationForm = true;
     }
 
@@ -140,6 +148,10 @@ class ReservationLocation extends Component
             foreach ($location as $room) {
                 array_push($this->ongoingMaintenance, $room->room_id);
             }
+
+            $customer = Customer::find($this->customer_id);
+            $this->expired = User::find($customer->user_id)->membership_payments->sortByDesc('created_at')->first()->expired_on->toDateString();
+
             $this->rooms = Room::where('location_id', $this->selectedLocation)->whereNotIn('id', $this->ongoingMaintenance)->get();
             $this->selectedRoom = NULL;
         }
@@ -204,8 +216,8 @@ class ReservationLocation extends Component
     {
         $reservation = Reservation::find($id);
         ReservationPayment::find($reservation->reservation_payment_id)->delete();
-        // $reservation->delete();
         $this->deleteConfirmationForm = false;
+        session()->flash('success', 'Reservation successfully canceled.');
     }
 
     /**

@@ -2,17 +2,20 @@
 
 namespace App\Http\Livewire\Admin;
 
+use App\Actions\Fortify\PasswordValidationRules;
 use Livewire\Component;
+use Illuminate\Validation\Rule;
 use Livewire\WithPagination;
 use App\Models\Employee;
 use App\Models\User;
 
 class Staff extends Component
 {
+    use PasswordValidationRules;
     use WithPagination;
     public $employeeForm = false;
     public $deleteConEmployeeForm = false;
-    public $username, $email, $password, $roles, $first_name, $last_name, $address, $contact_number, $employeeID, $users_id;
+    public $username, $email, $password, $roles, $first_name, $last_name, $address, $contact_number, $employeeID, $users_id, $password_confirmation;
     public $search = '';
     protected $queryString = ['search'];
 
@@ -22,23 +25,33 @@ class Staff extends Component
      *
      * @var array
      */
-    protected $rules = [
-        'username' => ['required', 'string', 'min:6', 'max:255', 'unique:users'],
-        'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-        'roles' => ['required'],
-        'first_name' => ['required', 'string', 'max:255'],
-        'last_name' => ['required', 'string', 'max:255'],
-        'address' => ['required', 'string', 'max:255'],
-        'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
-        'password'  => ['required', 'min:8',]
-    ];
+    public function rules()
+    {
+        return [
+            'username' => ['required', 'string', 'min:6', 'max:255', 'unique:users'],
+            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
+            'roles' => ['required'],
+            'first_name' => ['required', 'string', 'max:255'],
+            'last_name' => ['required', 'string', 'max:255'],
+            'address' => ['required', 'string', 'max:255'],
+            'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
+            'password'  => $this->passwordRules()
+        ];
+    }
 
 
+    /**
+     * Show staff management page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.admin.staff', [
-            'employees' => employee::where('employees.first_name', 'like', '%' . $this->search . '%')
-                ->orWhere('employees.last_name', 'like', '%' . $this->search . '%')
+            'employees' => employee::where(function ($query) {
+                $query->where('employees.last_name', 'like', '%' . $this->search . '%')
+                    ->orwhere('employees.first_name', 'like', '%' . $this->search . '%');
+            })
                 ->join('users', 'employees.user_id', '=', 'users.id')
                 ->select('employees.*', 'users.roles', 'users.username', 'users.email')
                 ->paginate(10),
@@ -48,6 +61,7 @@ class Staff extends Component
     public function add()
     {
         $this->reset();
+        $this->resetErrorBag();
         $this->employeeForm = true;
     }
 
@@ -77,6 +91,7 @@ class Staff extends Component
         $user->employee()->save($employee);
 
         $this->employeeForm = false;
+        session()->flash('success', 'Employee successfully added.');
     }
 
     /**
@@ -96,6 +111,7 @@ class Staff extends Component
 
 
         $this->employeeForm = false;
+        session()->flash('success', 'Employee information successfully updated.');
     }
 
     /**
@@ -106,6 +122,7 @@ class Staff extends Component
      */
     public function edit($id)
     {
+        $this->resetErrorBag();
         $this->employeeForm = true;
         $employee = Employee::findorFail($id);
         $this->employeeID = $id;
@@ -136,6 +153,7 @@ class Staff extends Component
         $employee =  Employee::where('id', $id)->firstorfail();
         User::where('id', $employee->user_id)->firstorfail()->delete();
         $this->deleteConEmployeeForm = false;
+        session()->flash('success', 'Employee successfully removed.');
     }
 
     /**

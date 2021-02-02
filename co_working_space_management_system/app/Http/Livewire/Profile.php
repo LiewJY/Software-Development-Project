@@ -12,7 +12,7 @@ class Profile extends UpdateProfileInformationForm
     public function mount()
     {
         if (Auth::user()->roles == 2) {
-            $this->state = User::with("customer")->find(3)->toArray();
+            $this->state = User::with("customer")->find(Auth::user()->id)->toArray();
         } else {
             $this->state = User::with("employee")->find(Auth::user()->id)->toArray();
         }

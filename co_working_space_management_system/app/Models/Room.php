@@ -48,7 +48,12 @@ class Room extends Model
     {
         return $this->hasMany(Maintenance::class);
     }
-
+    
+    /**
+     * Get the rooms where maintenance is done
+     *
+     * @return void
+     */
     public function workingRoom()
     {
         return $this->maintenance()->where('status', 1)->get();

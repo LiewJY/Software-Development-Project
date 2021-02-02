@@ -10,7 +10,7 @@ class ReservationPayment extends Model
     use HasFactory;
 
     /**
-     * Properties that are mass assignable
+     * Attributes that are mass assignable
      *
      * @var array
      */

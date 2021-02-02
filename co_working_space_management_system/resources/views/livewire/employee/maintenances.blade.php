@@ -3,7 +3,6 @@
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
         </div>
-
     </div>
     <br>
 

@@ -24,7 +24,7 @@ class LocationFactory extends Factory
         return [
             'name' => $this->faker->city,
             'address' => $this->faker->address,
-            'contact_number' => $this->faker->randomNumber(),
+            'contact_number' => $this->faker->fixedLineNumber($countryCodePrefix = false, $formatting = false),
             'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
         ];
     }

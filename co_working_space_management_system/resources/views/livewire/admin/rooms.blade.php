@@ -10,8 +10,27 @@
         </div>
     </div>
     <br>
-
+    @if (session()->has('success'))
+    <div id="alert" class="relative py-3 pl-4 pr-10 leading-normal text-green-700 bg-green-100 rounded-lg">
+        <p>{{ session('success') }}</p>
+    </div>
+    <br>
+    @endif
     <div class="overflow-x-auto mx-1">
+        @if(count($rooms) === 0 )
+        <x-emptyTable>
+            <x-slot name="header">
+                Room
+            </x-slot>
+            <x-slot name="content">
+                @if(!empty($search))
+                There are no record of room with the name "{{$search}}"
+                @else
+                Looks like there are no room record.
+                @endif
+            </x-slot>
+        </x-emptyTable>
+        @else
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>
                 <tr>
@@ -46,6 +65,7 @@
         </table>
         <br>
         {{$rooms->links()}}
+        @endif
 
         <x-jet-dialog-modal wire:model="roomForm">
             <x-slot name="title">
@@ -128,7 +148,7 @@
                 </x-slot>
                 <x-slot name="footer">
                     <x-jet-danger-button wire:click="delete({{$roomID}})">Delete</x-jet-button>
-                    <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
+                        <x-jet-button wire:click="$toggle('deleteConfirmationForm')">Cancel</x-jet-button>
                 </x-slot>
             </form>
         </x-jet-dialog-modal>

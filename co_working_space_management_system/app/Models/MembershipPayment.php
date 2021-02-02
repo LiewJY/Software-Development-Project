@@ -15,7 +15,12 @@ class MembershipPayment extends Model
      * @var bool
      */
     public $timestamps = true;
-
+    
+    /**
+     * Declare expired_on coloumn as date
+     *
+     * @var array
+     */
     protected $dates = ['expired_on'];
 
     /**

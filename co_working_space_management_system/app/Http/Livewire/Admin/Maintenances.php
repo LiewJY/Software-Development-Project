@@ -33,6 +33,11 @@ class Maintenances extends Component
         'status' => ['required', 'boolean']
     ];
 
+    /**
+     * Show maintenance management page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.admin.maintenances', [
@@ -52,9 +57,15 @@ class Maintenances extends Component
         ])->layout('layouts.page');
     }
 
+    /**
+     * Show 
+     *
+     * @return \Illuminate\View\View
+     */
     public function add()
     {
         $this->reset();
+        $this->resetErrorBag();
         $this->user = Auth::user()->id;
         $employee_info = Employee::where('user_id', $this->user)->select('employees.*')->first();
         $this->employee_name = $employee_info['last_name'] . ' ' . $employee_info['first_name'];
@@ -76,6 +87,11 @@ class Maintenances extends Component
             $validatedData
         );
         $this->maintenanceForm = false;
+        if ($this->maintenance_id != null) {
+            session()->flash('success', 'Maintenance infomation updated.');
+        } else {
+            session()->flash('success', 'Maintenance successfully created.');
+        };
     }
 
 
@@ -88,6 +104,7 @@ class Maintenances extends Component
     public function edit($id)
     {
         $this->maintenanceForm = true;
+        $this->resetErrorBag();
         $maintenance = Maintenance::findorFail($id);
         $this->maintenance_id = $id;
         $this->room_id = $maintenance->room_id;
@@ -127,5 +144,6 @@ class Maintenances extends Component
         $maintenance = Maintenance::where('id', $id)->firstorfail();
         $maintenance->delete();
         $this->deleteConfirmationForm = false;
+        session()->flash('success', 'Maintenance successfully removed');
     }
 }

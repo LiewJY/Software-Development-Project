@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-
 use App\Http\Controllers\InvoiceController;
 
 /*
@@ -19,13 +18,9 @@ Route::get('/', function () {
     return view('index');
 })->name('index');
 
-Route::get('/locations', function () {
-    return view('locations');
-})->name('locations');
+Route::get('/locations', \App\Http\Livewire\Locations::class)->name('locations');
 
-Route::get('/membershipplans', function () {
-    return view('membershipPlans');
-})->name('membershipplans');
+Route::get('/membershipplans', \App\Http\Livewire\MembershipPlans::class)->name('membershipplans');
 
 Route::get('/contactus', function () {
     return view('contactUs');
@@ -34,6 +29,8 @@ Route::get('/contactus', function () {
 Route::get('/aboutus', function () {
     return view('aboutUs');
 })->name('aboutus');
+
+
 
 Route::get("/locations/details{id}", \App\Http\Livewire\Customer\LocationDetails::class)->name('locationDetails');
 
@@ -78,7 +75,7 @@ Route::group(['middleware' => ['auth']], function () {
         Route::get("/membershipplans/plans{id}", \App\Http\Livewire\Customer\MembershipPlans::class)->name('membershipPlans');
 
         Route::get("/bookings", \App\Http\Livewire\Customer\Bookings::class)->name('bookings');
-        
+
         Route::get("/subscriptionhistory", \App\Http\Livewire\Customer\Subscriptionhistory::class)->name('subscriptionhistory');
 
         Route::get("/bookinghistory", \App\Http\Livewire\Customer\BookingHistory::class)->name('bookinghistory');

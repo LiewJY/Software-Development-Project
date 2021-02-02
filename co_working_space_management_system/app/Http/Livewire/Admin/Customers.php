@@ -9,25 +9,20 @@ use App\Models\Customer;
 class Customers extends Component
 {
     use WithPagination;
-    public $search = '';
-    protected $queryString = ['search'];
-    public $username, $roles, $first_name, $last_name, $address, $contact_number, $customerID, $users_id, $email, $password;
-    public $customerForm = false;
+
 
     /**
-     * Validation rules
+     * Customer component attributes
      *
-     * @var array
      */
-    protected $rules = [
+    public $search = '';
+    protected $queryString = ['search'];
 
-        'first_name' => ['required', 'string', 'max:255'],
-        'last_name' => ['required', 'string', 'max:255'],
-        'address' => ['required', 'string', 'max:255'],
-        'contact_number' => ['required', 'regex:/^(01)[0-46-9]*[0-9]{7,8}$/'],
-    ];
-    
-    
+    /**
+     * Show the admin's customer management page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.admin.customers', [

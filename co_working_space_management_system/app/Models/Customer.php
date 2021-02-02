@@ -10,7 +10,7 @@ class Customer extends Model
     use HasFactory;
 
     /**
-     * The attribute that are mass assignable
+     * The attributes that are mass assignable
      *
      * @var array
      */
@@ -34,7 +34,7 @@ class Customer extends Model
     }
 
     /**
-     * Get the reservation's patmnet of the customer
+     * Get the reservation's payment of the customer
      *
      * @return void
      */

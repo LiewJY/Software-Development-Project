@@ -79,7 +79,7 @@
             <img alt="gallery" class="w-full object-cover h-full object-center block rounded-lg border" src="https://gfgtower-9397.kxcdn.com/wp-content/uploads/2019/01/fronthome.jpeg">
           </div>
           <div class="md:p-2 p-1 w-1/2">
-            <img alt="gallery" class="w-full object-cover h-full object-center block rounded-lg border" src="https://spaceiq.com/app/default/assets/images/Web_150DPI-20190423_WeWork_Gangnam2_Common%20Area_5.jpg?v=1572382393">
+            <img alt="gallery" class="w-full object-cover h-full object-center block rounded-lg border" src="https://www.coworker.com/mag/wp-content/uploads/2017/10/NEST-@-TRYP-hotel-1280x640.jpg">
           </div>
           <div class="md:p-2 p-1 w-full">
             <img alt="gallery" class="w-full h-full object-cover object-center block rounded-lg border" src="https://images.adsttc.com/media/images/5b22/824c/f197/cc5c/d900/000e/slideshow/01_Coworking_Space_Building_inside_Building_Cover_Image.jpg?1528988192">

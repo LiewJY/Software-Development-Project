@@ -46,6 +46,11 @@ class Rooms extends Component
         'time.required' => "Please select one or many time slot for the room"
     ];
 
+    /**
+     * Show room management page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.admin.rooms', [
@@ -72,6 +77,7 @@ class Rooms extends Component
     public function add()
     {
         $this->reset();
+        $this->resetErrorBag();
         $this->roomForm = true;
     }
 
@@ -93,7 +99,11 @@ class Rooms extends Component
         $slot = array_unique($this->time);
 
         $room->slots()->sync($slot);
-
+        if ($this->roomID != null) {
+            session()->flash('success', 'Room infomation updated.');
+        } else {
+            session()->flash('success', 'Room created');
+        };
         $this->roomForm = false;
     }
 
@@ -112,7 +122,8 @@ class Rooms extends Component
         $this->description = $room->description;
         $this->price = $room->price;
         $this->size =  $room->size;
-        $this->time = $room->slots->pluck('id');
+        $this->time = $room->slots->pluck('id')->toArray();
+        $this->resetErrorBag();
         $this->roomForm = true;
     }
 
@@ -137,6 +148,7 @@ class Rooms extends Component
         $room->slots()->detach();
         $room->delete();
         $this->deleteConfirmationForm = false;
+        session()->flash('success', 'Room successfully removed.');
     }
 
     /**

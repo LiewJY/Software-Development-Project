@@ -10,16 +10,12 @@ use App\Models\Room;
 use App\Models\Location;
 use App\Models\ReservationPayment;
 use App\Models\Slot;
-use Illuminate\Support\Facades\Session;
 
 use Illuminate\Support\Facades\Auth;
 
 class Bookings extends Component
-{   
+{
     use WithPagination;
-    //public $search = '';
-    //protected $queryString = ['search'];
-    //public $customer_id, $room_id, $payment_id, $reservation_date, $payment_status; 
     public $selectedLocation, $selectedDate, $selectedRoom, $selectedSlot = null;
     public $locations, $rooms, $slots, $price;
 
@@ -31,15 +27,19 @@ class Bookings extends Component
     /**
      * Validation rules
      *
-     * @var array
+     * @return array
      */
-    protected $rules = [
-        'selectedLocation' => ['required'],
-        'selectedDate' => ['required', "date", "after_or_equal:today"],
-        'selectedRoom' => ['required'],
-        'selectedSlot' => ['required'],
-        'customer_id' => ['required'],
-    ];
+    public function rules()
+    {
+        return [
+            'selectedLocation' => ['required'],
+            'selectedDate' => ['required', 'date', 'after_or_equal:today', 'before_or_equal:' . Auth::user()->membership_payments->sortByDesc('created_at')->first()->expired_on->toDateString()],
+            'selectedRoom' => ['required'],
+            'selectedSlot' => ['required'],
+            'customer_id' => ['required'],
+        ];
+    }
+
 
     /**
      * Live validation
@@ -53,6 +53,11 @@ class Bookings extends Component
     }
 
 
+    /**
+     * Show customer's upcoming booking page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         $this->user_id = Auth::user()->id;
@@ -100,6 +105,8 @@ class Bookings extends Component
 
         $payment->reservation()->save($reservation);
         $this->bookingsForm = false;
+        session()->flash('success', 'Booking successfully created.');
+
     }
 
     /**
@@ -112,17 +119,19 @@ class Bookings extends Component
     {
         $reservation = Reservation::find($id);
         ReservationPayment::find($reservation->reservation_payment_id)->delete();
-        // $reservation->delete();
         $this->deleteConfirmationForm = false;
+        session()->flash('success', 'Booking successfully canceled.');
+
     }
 
 
     public function add()
     {
         if (Auth::user()->membership_payments->sortByDesc('expired_on')->first() == null || Auth::user()->membership_payments->sortByDesc('created_at')->first()->expired_on->isPast()) {
-            session()->flash("error", "You dont have any active subscription. Please subscribe to any available plans before proceeding.");
+            session()->flash("error", "You dont have an active subscription. Please subscribe to any available plans before proceeding.");
         } else {
             $this->reset();
+            $this->resetErrorBag();
             $this->user_id = Auth::user()->id;
             $customer_info = Customer::where('user_id', $this->user_id)->select('customers.*')->first();
             $this->customer_name = $customer_info['last_name'] . ' ' . $customer_info['first_name'];

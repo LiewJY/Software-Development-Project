@@ -24,9 +24,12 @@ class MembershipPlans extends Component
         $this->plans = Membership::findorFail($id);
     }
 
-    // need to login to access this page
-
-
+    
+    /**
+     * Show payment page of membership subscription
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         return view('livewire.customer.membership-plans', [
@@ -41,7 +44,12 @@ class MembershipPlans extends Component
         $this->plan_name = $plan_name;
         $this->plan_cost = $plan_cost;
     }
-
+    
+    /**
+     * Creating new subscription entry
+     *
+     * @return void
+     */
     public function subscribe()
     {
 
@@ -57,6 +65,7 @@ class MembershipPlans extends Component
             ]);
 
             $this->subscriptionConfirmation = false;
+            session()->flash('success', 'Subscription added. Valid until ' . Carbon::now()->addDays(30));
         } elseif ($payment != null && $payment->expired_on->isPast()) {
 
             MembershipPayment::create([
@@ -64,12 +73,12 @@ class MembershipPlans extends Component
                 'user_id' => Auth::user()->id,
                 'expired_on' => Carbon::now()->addDays(30)
             ]);
-
             $this->subscriptionConfirmation = false;
+            session()->flash('success', 'Subscription added. Valid until ' . Carbon::now()->addDays(30));
         } else {
 
             $endDate = $payment->expired_on->toDateString();
-            session()->flash('message', 'Could not subscribe when you have an active subscription. End at' . $endDate);
+            session()->flash('message', 'Could not subscribe when you have an active subscription. End at ' . $endDate);
         }
     }
 }

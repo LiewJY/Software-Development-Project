@@ -3,13 +3,24 @@
         <div class="w-full md:w-1/2">
             <x-jet-input class="w-full" type="search" wire:model="search" placeholder="Search by Name" />
         </div>
-        <div class="w-full flex md:justify-end md:w-1/2 mb-3 md:mb-0">
-            {{-- <x-jet-button class="w-full flex items-center justify-center md:w-auto" wire:click="add">Add Customer</x-jet-button> --}}
-        </div>
     </div>
     <br>
 
     <div class="overflow-x-auto mx-1">
+        @if(count($customers) === 0 )
+        <x-emptyTable>
+            <x-slot name="header">
+                Location
+            </x-slot>
+            <x-slot name="content">
+                @if(!empty($search))
+                There are no record of customer with the name "{{$search}}"
+                @else
+                Looks like there are no customer record.
+                @endif
+            </x-slot>
+        </x-emptyTable>
+        @else
         <table class="min-w-full table-auto border-collapse border border-black">
             <thead>
                 <tr>
@@ -18,8 +29,6 @@
                     <th class="border border-gray-700 text-white bg-gray-700">Contact Number</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Email</th>
                     <th class="border border-gray-700 text-white bg-gray-700">Membership Status</th>
-
-
                 </tr>
             </thead>
             <tbody>
@@ -40,12 +49,11 @@
                     </td>
                     @elseif ($customer->user->membership_payments->sortByDesc('created_at')->first()->expired_on->isToday())
                     <td class="border border-gray-400 bg-green-200">
-                        {{$customer->user->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}} Plan
+                        {{$customer->user->membership_payments->sortByDesc('created_at')->first()->membership->name}} Plan
                     </td>
-
                     @else
                     <td class="border border-gray-400 bg-green-200">
-                        {{$customer->user->membership_payments->sortByDesc('created_at')->first()->membership->first()->name}} Plan
+                        {{$customer->user->membership_payments->sortByDesc('created_at')->first()->membership->name}} Plan
                     </td>
                     @endif
                     @endif
@@ -57,47 +65,6 @@
         </table>
         <br>
         {{$customers->links()}}
-
-        {{-- <x-jet-dialog-modal wire:model="customerForm">
-            <x-slot name="title">
-                <h1>Add Customer</h1>
-            </x-slot>
-            <form>
-                <x-slot name="content">
-                    <div class="flex justify-between gap-3">
-                        <span class="w-1/2">
-                            <x-jet-label for="firstName" value="First name" />
-                            <x-jet-input id="firstName" type="text" class="mt-1 block w-full" wire:model.lazy="first_name" />
-                            <x-jet-input-error for="first_name" />
-                        </span>
-                        <span class="w-1/2">
-                            <x-jet-label for="lastName" value="Last name" />
-                            <x-jet-input id="lastName" type="text" class="mt-1 block w-full" wire:model.lazy="last_name" />
-                            <x-jet-input-error for="last_name" />
-                        </span>
-                    </div> 
-
-                    <x-jet-label for="address" value="Address" />
-                    <x-jet-input id="address" type="text" class="mt-1 block w-full" wire:model.lazy="address" />
-                    <x-jet-input-error for="address" />
- 
-                    <x-jet-label for="contact_number" value="Contact Number" />
-                    <x-jet-input id="contact_number" type="text" class="mt-1 block w-full" wire:model.lazy="contact_number" />
-                    <x-jet-input-error for="contact_number" />
-
-                    <x-jet-label for="username" value="Username" />
-                    <x-jet-input id="username" type="text" class="mt-1 block w-full" wire:model.lazy="username" />
-                    <x-jet-input-error for="username" />
-                    
-                    <x-jet-label for="email" value="Email" />
-                    <x-jet-input id="email" type="text" class="mt-1 block w-full" wire:model.lazy="email" />
-                    <x-jet-input-error for="email" />
-                </x-slot>
-                <x-slot name="footer">
-                    <x-jet-button wire:click="store">Add</x-jet-button>
-                    <x-jet-button wire:click="$toggle('customerForm')">Cancel</x-jet-button>
-                </x-slot>
-            </form>
-        </x-jet-dialog-modal> --}}
+        @endif
     </div>
 </div>

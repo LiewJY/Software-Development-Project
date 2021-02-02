@@ -59,7 +59,7 @@
             </svg>
           </div>
           <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Enhance Cleaning Services</h2>
-          <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway tile poke farm.</p>
+          <p class="leading-relaxed text-base">Each and every corner of ShareSpace is cleaned trice a week and deep cleaning is conducted twice a month.</p>
         </div>
       </div>
       <div class="xl:w-1/3 md:w-1/2 p-4">
@@ -72,7 +72,7 @@
             </svg>
           </div>
           <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Hands-free dispensers</h2>
-          <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway tile poke farm.</p>
+          <p class="leading-relaxed text-base">The pantry is equipped with hand free soap dispenser to be more hygenic.</p>
         </div>
       </div>
       <div class="xl:w-1/3 md:w-1/2 p-4">
@@ -84,7 +84,7 @@
             </svg>
           </div>
           <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Enhanced HVAC standards</h2>
-          <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway tile poke farm.</p>
+          <p class="leading-relaxed text-base">Equipped with top of the line heating, ventilation and air conditioning providing the maximum comfort at work.</p>
         </div>
       </div>
       <div class="xl:w-1/3 md:w-1/2 p-4">
@@ -95,7 +95,7 @@
             </svg>
           </div>
           <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Parking</h2>
-          <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway tile poke farm.</p>
+          <p class="leading-relaxed text-base">Edequate parking space are available at this location.</p>
         </div>
       </div>
       <div class="xl:w-1/3 md:w-1/2 p-4">
@@ -105,8 +105,8 @@
               <path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
             </svg>
           </div>
-          <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Wellnes Room</h2>
-          <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway tile poke farm.</p>
+          <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Quiet Room</h2>
+          <p class="leading-relaxed text-base">A dedicated area for people who prefer to work in a peace and quire environment.</p>
         </div>
       </div>
       <div class="xl:w-1/3 md:w-1/2 p-4">
@@ -116,8 +116,8 @@
               <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path>
             </svg>
           </div>
-          <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Materials library</h2>
-          <p class="leading-relaxed text-base">Fingerstache flexitarian street art 8-bit waist co, subway tile poke farm.</p>
+          <h2 class="text-lg text-gray-900 font-medium title-font mb-2">Library</h2>
+          <p class="leading-relaxed text-base">Contains self-help or business related books that are free to read.</p>
         </div>
       </div>
     </div>

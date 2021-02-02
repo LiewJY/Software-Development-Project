@@ -8,7 +8,12 @@ use App\Models\MembershipPayment;
 
 
 class SubscriptionHistory extends Component
-{
+{    
+    /**
+     * Show customer's past subscription
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         $user = Auth::user()->id;

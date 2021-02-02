@@ -491,5 +491,14 @@
 
 @livewireScripts
 @livewireChartsScripts
+<script>
+    document.addEventListener("livewire:load", function(event) {
+        window.livewire.hook('message.processed', () => {
+            setTimeout(function() {
+                $('#alert').fadeOut('slow');
+            }, 3000);
+        });
+    });
+</script>
 
 </html>

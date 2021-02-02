@@ -22,8 +22,6 @@ class MaintenanceFactory extends Factory
     public function definition()
     {
         return [
-            // 'room_id' => $roomID,
-            // 'employee_id' => $employeeID,
             'description' => $this->faker->sentence($nbWords = 6, $variableNbWords = true),
             'status' => $this->faker->numberBetween(0, 1)
         ];

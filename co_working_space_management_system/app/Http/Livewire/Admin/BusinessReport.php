@@ -17,15 +17,23 @@ use Livewire\Component;
 
 class BusinessReport extends Component
 {
+
+
+    /**
+     * Business report attributes
+     *
+     */
     public $values = [];
     public $employeeCount, $roomCount, $maintenanceCount, $customerCount, $doneMaintenance;
 
-    protected $rules = [
-        'values.*' => 'required'
-    ];
-
     public $firstRun = true;
 
+    /**
+     * Generate random colors for charts
+     *
+     * @param  mixed $threshold
+     * @return void
+     */
     function randomColor($threshold = 127)
     {
         $dt = '';
@@ -36,34 +44,13 @@ class BusinessReport extends Component
         return '#' . $dt;
     }
 
-    protected $listeners = [
-        'onPointClick' => 'handleOnPointClick',
-        'onSliceClick' => 'handleOnSliceClick',
-        'onColumnClick' => 'handleOnColumnClick',
-    ];
 
-    public function handleOnPointClick($point)
-    {
-        dd($point);
-    }
-
-    public function handleOnSliceClick($slice)
-    {
-        dd($slice);
-    }
-
-    public function handleOnColumnClick($column)
-    {
-        dd($column);
-    }
-
-
-    public function click($value)
-    {
-        dd($value);
-    }
-
-
+    
+    /**
+     * Show the business report page
+     *
+     * @return \Illuminate\View\View
+     */
     public function render()
     {
         $this->employeeCount = Employee::get()->count();
@@ -90,7 +77,6 @@ class BusinessReport extends Component
                 (new ColumnChartModel())
                     ->setTitle('Income by Location')
                     ->setAnimated($this->firstRun)
-                    ->withOnColumnClickEventName('onColumnClick')
             );
 
         $pieChartModel = $payment->whereIn('location', $this->values)->groupBy('location')
@@ -104,7 +90,6 @@ class BusinessReport extends Component
                 (new PieChartModel())
                     ->setTitle('Income by Location')
                     ->setAnimated($this->firstRun)
-                    ->withOnSliceClickEvent('onSliceClick')
             );
 
         $lineChartModel = $payment
@@ -127,7 +112,6 @@ class BusinessReport extends Component
                 (new LineChartModel())
                     ->setTitle('Income Evolution')
                     ->setAnimated($this->firstRun)
-                    ->withOnPointClickEvent('onPointClick')
             );
 
         $areaChartModel = $payment
@@ -139,7 +123,6 @@ class BusinessReport extends Component
                     ->setTitle('Income Peaks')
                     ->setAnimated($this->firstRun)
                     ->setColor('#f6ad55')
-                    ->withOnPointClickEvent('onAreaPointClick')
                     ->setXAxisVisible(false)
                     ->setYAxisVisible(true)
             );

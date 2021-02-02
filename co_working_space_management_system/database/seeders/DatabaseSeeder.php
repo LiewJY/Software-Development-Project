@@ -21,7 +21,9 @@ class DatabaseSeeder extends Seeder
             MembershipSeeder::class,
             LocationSeeder::class,
             SlotSeeder::class,
-            MaintenanceSeeder::class
+            MaintenanceSeeder::class,
+            MembershipPaymentSeeder::class,
+            ReservationSeeder::class
         ]);
     }
 }

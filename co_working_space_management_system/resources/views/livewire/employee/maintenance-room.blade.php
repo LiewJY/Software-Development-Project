@@ -9,17 +9,27 @@
         </div>
     </div>
     <br>
+    @if (session()->has('success'))
+    <div id="alert"  class="relative py-3 pl-4 pr-10 leading-normal text-green-700 bg-green-100 rounded-lg">
+        <p>{{ session('success') }}</p>
+    </div>
+    <br>
+    @endif
 
     <div class="overflow-x-auto mx-1">
         @if(count($maintenances) === 0 )
-            <x-emptyTable>
-                <x-slot name="header">
-                    Maintenance
-                </x-slot>
-                <x-slot name="content">
+        <x-emptyTable>
+            <x-slot name="header">
+                Maintenance
+            </x-slot>
+            <x-slot name="content">
+                @if(!empty($search))
+                    There are no record of maintenance with the room name "{{$search}}"
+                @else 
                     Looks like there are no maintenance at {{$location->name}}.
-                </x-slot>
-            </x-emptyTable>
+                @endif
+            </x-slot>
+        </x-emptyTable>
         @else
             <table class="min-w-full table-auto border-collapse border border-black">
                 <thead>
@@ -48,6 +58,7 @@
             {{$maintenances->links()}}
         @endif
 
+        {{-- add or edit --}}
         <x-jet-dialog-modal wire:model="maintenanceForm">
             <x-slot name="title">
                     @if($maintenance_id)
@@ -96,6 +107,7 @@
                 </x-slot>
             </form>
         </x-jet-dialog-modal>
+        {{-- marked as complete --}}
         <x-jet-dialog-modal wire:model="completeConfirmationForm">
             <x-slot name="title">
                 <h1>Complete Confirmation</h1>
@@ -106,9 +118,6 @@
                     <x-jet-input id="room_name" type="hidden" class="mt-1 block w-full" wire:model.lazy="room_name"/>   
                     <x-jet-input id="description" type="hidden" class="mt-1 block w-full" wire:model.lazy="description"/>
                     <x-jet-input id="status" type="hidden" class="mt-1 block w-full" wire:model.lazy="status"/>
-
-               
-
                 </x-slot>
                 <x-slot name="footer">
                     <x-jet-danger-button wire:click="store({{$maintenance_id}})">Completed</x-jet-button>

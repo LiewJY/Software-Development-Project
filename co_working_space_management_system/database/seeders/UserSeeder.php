@@ -2,15 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Customer;
-use App\Models\Employee;
-use App\Models\Location;
-use App\Models\Maintenance;
-use App\Models\Room;
 use App\Models\User;
-use Database\Factories\CustomerFactory;
 use Illuminate\Database\Seeder;
-use Illuminate\Foundation\Auth\User as AuthUser;
 use Illuminate\Support\Str;
 
 

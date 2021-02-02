@@ -16,10 +16,9 @@
                     Past Booking
                 </x-slot>
                 <x-slot name="content">
-                    Looks like you have not made any booking yet
+                    Looks like you have not made any booking yet.
                 </x-slot>
             </x-emptyTable>
-
         @else
             <table class="min-w-full table-auto border-collapse border border-black">
                 <thead>

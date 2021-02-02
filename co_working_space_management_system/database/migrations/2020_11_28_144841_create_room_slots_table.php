@@ -16,7 +16,7 @@ class CreateRoomSlotsTable extends Migration
         Schema::create('room_slot', function (Blueprint $table) {
             $table->id();
             $table->foreignId('slot_id')->nullable()->constrained();
-            $table->foreignId('room_id')->nullable()->constrained();
+            $table->foreignId('room_id')->nullable()->constrained()->onDelete('set null');
         });
     }
 
