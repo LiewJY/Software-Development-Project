@@ -112,6 +112,8 @@ class BusinessReport extends Component
                 (new LineChartModel())
                     ->setTitle('Income Evolution')
                     ->setAnimated($this->firstRun)
+                    ->setXAxisVisible(false)
+                    ->setYAxisVisible(true)
             );
 
         $areaChartModel = $payment

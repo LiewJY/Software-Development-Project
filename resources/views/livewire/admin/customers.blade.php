@@ -10,7 +10,7 @@
         @if(count($customers) === 0 )
         <x-emptyTable>
             <x-slot name="header">
-                Location
+                Customer
             </x-slot>
             <x-slot name="content">
                 @if(!empty($search))

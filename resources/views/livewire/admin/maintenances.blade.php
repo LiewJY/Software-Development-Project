@@ -21,10 +21,14 @@
         @if(count($maintenances) === 0 )
         <x-emptyTable>
             <x-slot name="header">
-                Past Booking
+                Maintenance
             </x-slot>
             <x-slot name="content">
-                Looks like there are no maintenance record
+                @if(!empty($search))
+                There are no record of maintenance with the name "{{$search}}"
+                @else
+                Looks like there are no maintenance record.
+                @endif
             </x-slot>
         </x-emptyTable>
         @else

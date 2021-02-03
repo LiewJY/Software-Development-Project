@@ -24,7 +24,7 @@
             </x-slot>
             <x-slot name="content">
                 @if(!empty($search))
-                There are no record of reservation with the room name "{{$search}}"
+                There are no record of reservation with the customer name "{{$search}}"
                 @else
                 Looks like there are no reservation at {{$location->name}}.
                 @endif

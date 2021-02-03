@@ -24,7 +24,11 @@
                 Reservation
             </x-slot>
             <x-slot name="content">
-                Looks like there are no reservation record
+                @if(!empty($search))
+                There are no record of reservation with the name "{{$search}}"
+                @else
+                Looks like there are no reservation record.
+                @endif
             </x-slot>
         </x-emptyTable>
         @else

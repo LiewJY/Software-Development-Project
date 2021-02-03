@@ -25,7 +25,11 @@
                 Membership Plan
             </x-slot>
             <x-slot name="content">
-                Looks like there are no membership plan record.
+                @if(!empty($search))
+                There are no record of membership plans with the name "{{$search}}"
+                @else
+                Looks like there are no membership plans record.
+                @endif
             </x-slot>
         </x-emptyTable>
         @else
