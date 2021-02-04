@@ -16,8 +16,12 @@
     </div>
     <br>
     @endif
-
-
+    @if (session()->has('error'))
+    <div id="alert" class="relative py-3 pl-4 pr-10 leading-normal text-red-700 bg-red-100 rounded-lg">
+        <p>{{ session('error') }}</p>
+    </div>
+    <br>
+    @endif
     <div class="overflow-x-auto mx-1">
         @if(count($membershipplans) === 0 )
         <x-emptyTable>
@@ -105,11 +109,6 @@
             </x-slot>
             <form>
                 <x-slot name="content">
-                    @if (session()->has('error'))
-                    <div class="relative py-0 pl-4 pr-10 leading-normal text-red-700 bg-red-100 rounded-lg">
-                        <p>{{ session('error') }}</p>
-                    </div>
-                    @endif
                     <p>Are you sure you want to remove the membership {{$name}}</p>
                 </x-slot>
                 <x-slot name="footer">

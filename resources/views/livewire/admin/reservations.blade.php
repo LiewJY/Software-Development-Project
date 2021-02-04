@@ -80,19 +80,19 @@
                 <x-jet-label for="customer_id" value="Customer" />
                 <x-slot name="content">
                     @if (session()->has('error'))
-                    <div class="alert alert-success">
-                        {{ session('error') }}
+                    <div class="relative py-3 pl-4 pr-10 leading-normal text-red-700 bg-red-100 rounded-lg">
+                        <p>{{ session('error') }}</p>
                     </div>
+                    <br>
                     @endif
-
-                        <x-jet-label for="customer_id" value="Customer name" />
-                        <select id="customer_id" wire:model.lazy="customer_id" name="customer_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
-                            <option value="default">-- Select a Customer --</option>
-                            @foreach($customers as $customer)
-                            <option value="{{$customer->id}}">{{$customer->first_name}} {{$customer->last_name}}</option>
-                            @endforeach
-                        </select>
-                        <x-jet-input-error for="customer_id" />
+                    <x-jet-label for="customer_id" value="Customer name" />
+                    <select id="customer_id" wire:model.lazy="customer_id" name="customer_id" class="mt-1 block w-full py-2 px-3 border border-gray-300 bg-white rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                        <option value="default">-- Select a Customer --</option>
+                        @foreach($customers as $customer)
+                        <option value="{{$customer->id}}">{{$customer->first_name}} {{$customer->last_name}}</option>
+                        @endforeach
+                    </select>
+                    <x-jet-input-error for="customer_id" />
 
                     @if (is_null($customer_id) || session()->has('error'))
                         <x-jet-label for="selectedLocation" value="Location" />

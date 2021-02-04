@@ -130,10 +130,7 @@ class Maintenances extends Component
     {
         $this->deleteConfirmationForm = true;
         $maintenance = Maintenance::findorFail($id);
-        $room = Room::join('locations', 'rooms.location_id', '=', 'locations.id')
-            ->select('rooms.*', 'locations.name as location_name')
-            ->first();
-        $this->name = $room['name'] . ', ' . $room['location_name'];
+        $this->name = $maintenance->room['name'] . ', ' . $maintenance->room->location['name'];
         $this->maintenance_id = $maintenance->id;
     }
 
