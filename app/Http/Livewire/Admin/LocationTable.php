@@ -117,6 +117,8 @@ class LocationTable extends Component
         } else {
             session()->flash('success', 'Location created');
         };
+
+        return redirect()->route('adminlocation');
     }
 
     /**
@@ -164,5 +166,6 @@ class LocationTable extends Component
         Location::where('id', $id)->delete();
         $this->deleteConfirmationForm = false;
         session()->flash('success', 'Location successfully removed');
+        return redirect()->route('adminlocation');
     }
 }

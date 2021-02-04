@@ -107,6 +107,7 @@ class Bookings extends Component
         $this->bookingsForm = false;
         session()->flash('success', 'Booking successfully created.');
 
+        return redirect()->route('bookings');
     }
 
     /**
@@ -121,7 +122,7 @@ class Bookings extends Component
         ReservationPayment::find($reservation->reservation_payment_id)->delete();
         $this->deleteConfirmationForm = false;
         session()->flash('success', 'Booking successfully canceled.');
-
+        return redirect()->route('bookings');
     }
 
 

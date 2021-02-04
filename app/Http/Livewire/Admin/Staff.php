@@ -92,6 +92,7 @@ class Staff extends Component
 
         $this->employeeForm = false;
         session()->flash('success', 'Employee successfully added.');
+        return redirect()->route('Staff');
     }
 
     /**
@@ -154,6 +155,7 @@ class Staff extends Component
         User::where('id', $employee->user_id)->firstorfail()->delete();
         $this->deleteConEmployeeForm = false;
         session()->flash('success', 'Employee successfully removed.');
+        return redirect()->route('Staff');
     }
 
     /**

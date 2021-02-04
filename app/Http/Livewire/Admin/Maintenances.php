@@ -21,6 +21,7 @@ class Maintenances extends Component
     public $deleteConfirmationForm = false;
     protected $employeeID;
 
+
     /**
      * Validation rules for maintenance class attributes
      *
@@ -40,6 +41,7 @@ class Maintenances extends Component
      */
     public function render()
     {
+
         return view('livewire.admin.maintenances', [
             'maintenances' => maintenance::where('rooms.name', 'like', '%' . $this->search . '%')
                 ->join('rooms', 'maintenances.room_id', '=', 'rooms.id')
@@ -92,6 +94,8 @@ class Maintenances extends Component
         } else {
             session()->flash('success', 'Maintenance successfully created.');
         };
+
+        return redirect()->route('maintenance');
     }
 
 
@@ -145,5 +149,6 @@ class Maintenances extends Component
         $maintenance->delete();
         $this->deleteConfirmationForm = false;
         session()->flash('success', 'Maintenance successfully removed');
+        return redirect()->route('maintenance');
     }
 }

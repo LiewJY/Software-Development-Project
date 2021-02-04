@@ -105,6 +105,7 @@ class Rooms extends Component
             session()->flash('success', 'Room created');
         };
         $this->roomForm = false;
+        return redirect()->route('adminrooms');
     }
 
     /**
@@ -149,6 +150,7 @@ class Rooms extends Component
         $room->delete();
         $this->deleteConfirmationForm = false;
         session()->flash('success', 'Room successfully removed.');
+        return redirect()->route('adminrooms');
     }
 
     /**

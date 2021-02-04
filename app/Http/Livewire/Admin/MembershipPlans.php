@@ -75,6 +75,7 @@ class MembershipPlans extends Component
         } else {
             session()->flash('success', 'Membership Plan successfully added.');
         };
+        return redirect()->route('membership-plans');
     }
 
     /**
@@ -113,6 +114,7 @@ class MembershipPlans extends Component
             $this->deleteConfirmationForm = false;
             session()->flash('success', 'Membership Plan successfully removed.');
         }
+        return redirect()->route('membership-plans');
     }
 
     /**

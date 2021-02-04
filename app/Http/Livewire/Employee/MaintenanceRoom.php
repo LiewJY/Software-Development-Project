@@ -99,6 +99,8 @@ class MaintenanceRoom extends Component
         } else {
             session()->flash('success', 'Maintenance successfully created');
         };
+
+        return redirect()->route('employeemaintenance');
     }
 
 

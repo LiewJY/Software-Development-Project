@@ -28,7 +28,6 @@ class Reservations extends Component
 
     public $ongoingMaintenance = [];
 
-
     /**
      * Show reservation management page
      *
@@ -102,15 +101,17 @@ class Reservations extends Component
             'amount' => $this->price,
         ]);
 
-        $reservation = Reservation::create([
+        // $reservation = Reservation::make();
+
+        $payment->reservation()->create([
             'room_id' => $this->selectedRoom,
             'slot_id' => $this->selectedSlot,
             'reservation_date' => $this->selectedDate,
         ]);
 
-        $payment->reservation()->save($reservation);
-        session()->flash('success', 'Reservation successfully created.');
         $this->ReservationForm = false;
+        session()->flash('success', 'Reservation successfully created.');
+        return redirect()->route('adminreservation');
     }
 
     /**
@@ -214,10 +215,11 @@ class Reservations extends Component
      */
     public function delete($id)
     {
-        $reservation = Reservation::find($id);
+        $reservation = Reservation::where('id', $id)->firstOrFail();
         ReservationPayment::find($reservation->reservation_payment_id)->delete();
         $this->deleteConfirmationForm = false;
         session()->flash('success', 'Reservation sucessfully canceled.');
+        return redirect()->route('adminreservation');
     }
 
     /**
