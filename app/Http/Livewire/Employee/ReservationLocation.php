@@ -118,7 +118,7 @@ class ReservationLocation extends Component
         $payment->reservation()->save($reservation);
         $this->ReservationForm = false;
         session()->flash('success', 'Reservation successfully created.');
-        return redirect()->route('reservationlocation');
+        return redirect()->route('reservationlocation', $this->location_id);
     }
 
     /**
@@ -219,7 +219,7 @@ class ReservationLocation extends Component
         ReservationPayment::find($reservation->reservation_payment_id)->delete();
         $this->deleteConfirmationForm = false;
         session()->flash('success', 'Reservation successfully canceled.');
-        return redirect()->route('reservationlocation');
+        return redirect()->route('reservationlocation', $this->location_id);
     }
 
     /**

@@ -100,7 +100,7 @@ class MaintenanceRoom extends Component
             session()->flash('success', 'Maintenance successfully created');
         };
 
-        return redirect()->route('employeemaintenance');
+        return redirect()->route('employeeroom' , $this->location_id);
     }
 
 
