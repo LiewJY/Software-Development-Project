@@ -60,7 +60,7 @@
                     <td class="border border-gray-400  bg-gray-100 py-1.5">
                         <div class="border-none flex flex-row flex-nowrap justify-center">
                             <x-jet-button class="mx-2" wire:click="edit({{$maintenance ->id}})">Edit</x-jet-button>
-                            <x-jet-button class="mx-2" wire:click="deleteModal({{$maintenance ->id}}, '{{$maintenance ->room_id}}')">Delete</x-jet-button>
+                            <x-jet-button class="mx-2" wire:click="deleteModal({{$maintenance ->id}})">Delete</x-jet-button>
                         </div>
                     </td>
 
