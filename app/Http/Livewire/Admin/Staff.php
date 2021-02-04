@@ -153,6 +153,7 @@ class Staff extends Component
     {
         $employee =  Employee::where('id', $id)->firstorfail();
         User::where('id', $employee->user_id)->firstorfail()->delete();
+        $employee->delete();
         $this->deleteConEmployeeForm = false;
         session()->flash('success', 'Employee successfully removed.');
         return redirect()->route('Staff');

@@ -20,6 +20,7 @@ class CreateRoomsTable extends Migration
             $table->string('description')->nullable();
             $table->decimal('price', 10, 2)->nullable();
             $table->tinyInteger('size')->nullable();
+            $table->softDeletes();
         });
     }
 

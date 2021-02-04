@@ -20,6 +20,7 @@ class CreateEmployeesTable extends Migration
             $table->string('address');
             $table->string('contact_number', 12);
             $table->foreignId('user_id')->nullable()->constrained()->onDelete('cascade');
+            $table->softDeletes();
         });
     }
 

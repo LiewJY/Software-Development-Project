@@ -4,10 +4,11 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Room extends Model
 {
-    use HasFactory;
+    use HasFactory, SoftDeletes;
 
     /**
      * The attributes that are mass assignable
@@ -48,7 +49,7 @@ class Room extends Model
     {
         return $this->hasMany(Maintenance::class);
     }
-    
+
     /**
      * Get the rooms where maintenance is done
      *
